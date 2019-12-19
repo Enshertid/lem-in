@@ -6,7 +6,7 @@
 /*   By: dbendu <dbendu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 18:47:10 by dbendu            #+#    #+#             */
-/*   Updated: 2019/12/19 20:51:00 by dbendu           ###   ########.fr       */
+/*   Updated: 2019/12/19 23:07:47 by dbendu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,13 @@ t_data		get_map(const char *file)
 			continue;
 		}
 		data.ants = ft_atoi(str);
-		free(str);
+		 free(str);
 		break;
 	}
 	while (get_next_line(fd, &str) == 1)
 	{
+		if (ft_strchr(str, '\n'))
+			printf("%s\n", str);
 		if (str[0] != '#' && !ft_strchr(str, ' '))
 			break;
 		if (str[0] != '#' || (str[0] == '#' && str[1] == '#'))
@@ -62,14 +64,14 @@ t_data		get_map(const char *file)
 				room = get_room(str);
 			if (ft_strnequ(str, "##start", 8))
 			{
-				free(str);
+				 free(str);
 				get_next_line(fd, &str);
 				room = get_room(str);
 				data.rooms[0] = room;
 			}
 			else if (ft_strnequ(str, "##end", 6))
 			{
-				free(str);
+				 free(str);
 				get_next_line(fd, &str);
 				room = get_room(str);
 				data.rooms[1] = room;
@@ -77,8 +79,7 @@ t_data		get_map(const char *file)
 			else
 				vec_pushback(&data.rooms, &room);
 		}
-		free(str);
-		printf("ok\n");
+		 free(str);
 	}
 	return (data);
 }

@@ -6,7 +6,7 @@
 /*   By: dbendu <dbendu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 18:15:50 by dbendu            #+#    #+#             */
-/*   Updated: 2019/12/19 20:46:35 by dbendu           ###   ########.fr       */
+/*   Updated: 2019/12/19 21:42:30 by dbendu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int main(int argc, const char **argv)
 	// mlx_hook(wnd.wndptr, 2, 1L << 0, key_press, &wnd);
 	// mlx_hook(wnd.wndptr, 17, 1L << 17, vizu_exit, &wnd);
 	// mlx_loop(wnd.mlxptr);
+	if (argc && !argv)
+		return (0);
 
 	return (0);
 }
