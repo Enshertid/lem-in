@@ -44,7 +44,6 @@ clean:
 
 fclean: clean
 	@make fclean -C $(LIB)
-	@make clean -C ./mlx/
 	@rm -Rf $(NAME)
 	
 re: fclean all

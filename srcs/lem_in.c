@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 19:09:22 by ymanilow          #+#    #+#             */
-/*   Updated: 2019/12/20 13:52:43 by ymanilow         ###   ########.fr       */
+/*   Updated: 2019/12/20 16:41:20 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int						main(int ac, char **av)
 //	ft_printf("name of end room is ==> %s", data.end.name);
 	ft_printf("name of room --> %s number of room i --> %d\n", data.rooms[i].name, data.rooms[i].num_of_room);
 	i = -1;
-	while (++i < data.rooms[i].col)
-		ft_printf("name of link of this room --> %s, number of room (link) --> %d\n", data.rooms->links[i].name,
-				data.rooms->links[i].num_of_room);
+	while (++i < data.rooms[0].col)
+		ft_printf("name of link of this room --> %s, number of room (link) --> %d\n", data.rooms[0].links[i].name,
+				data.rooms[0].links[i].num_of_room);
 	return (0);
 }

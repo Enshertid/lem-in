@@ -6,86 +6,11 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 17:44:34 by ymanilow          #+#    #+#             */
-/*   Updated: 2019/12/20 12:57:54 by ymanilow         ###   ########.fr       */
+/*   Updated: 2019/12/20 16:51:19 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-
-
-static	size_t		ft_sizeofj(char const *s, char c)
-{
-	size_t	j;
-	size_t	i;
-
-	i = 0;
-	j = 0;
-	while (s[i])
-	{
-		while (s[i] == c && s[i] != '\0')
-			i++;
-		if (s[i] == '\0')
-			break ;
-		j++;
-		while (s[i] != c && s[i] != '\0')
-			i++;
-	}
-	return (j);
-}
-
-static	size_t		ft_sizeofword(char const *s, char c)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i] != c && s[i] != '\0')
-		i++;
-	return (i);
-}
-
-char					**ft_free(char **str, size_t i)
-{
-	size_t j;
-
-	j = 0;
-	while (j < i)
-	{
-		free(str[j]);
-		j++;
-	}
-	free(str);
-	return (NULL);
-}
-
-char				**ft_strsplit_1(const char *s, char c)
-{
-	size_t	i;
-	size_t	j;
-	size_t	len;
-	char	**str;
-
-	if (!s)
-		return (NULL);
-	j = ft_sizeofj(s, c);
-	if (!(str = (char**)ft_memalloc(sizeof(char *) * (j + 1))))
-		return (NULL);
-	i = 0;
-	while (i < j)
-	{
-		while (*s == c)
-			s++;
-		len = ft_sizeofword(s, c);
-		if (!(str[i] = (char*)ft_memalloc(len + 1)))
-			return (ft_free(str, i));
-		str[i] = ft_strncpy(str[i], s, len);
-		s = s + len;
-		str[i][len] = '\0';
-		i++;
-	}
-	return (str);
-}
-
 
 void					ft_malloc_rooms(t_data *data)
 {
@@ -139,14 +64,14 @@ void					ft_check_room(t_data *data, char **line)
 		ft_error("link before room", 3);
 	if (data->col <= data->num_of_rooms)
 		ft_malloc_rooms(data);
-	str = ft_strsplit_1(*line, ' ');
+	str = ft_strsplit(*line, ' ');
 	data->rooms[data->num_of_rooms].name = ft_strdup(str[0]);
 	if (ft_check_num(str[1]))
 		data->rooms[data->num_of_rooms].width = ft_atoi(str[1]);
 	if (ft_check_num(str[2]))
 		data->rooms[data->num_of_rooms].hight = ft_atoi(str[2]);
 	data->rooms[data->num_of_rooms].num_of_room = data->num_of_rooms;
-	ft_free(str, 3);
+	ft_free(&str, 3);
 	ft_strdel(line);
 	data->num_of_rooms++;
 }
@@ -164,14 +89,14 @@ void					ft_check_start(t_data *data, char **line, int fd)
 	if (data->flag_link == TRUE)
 		ft_error("link before room", 3);
 	free(data->rooms[0].name);
-	str = ft_strsplit_1(*line, ' ');
+	str = ft_strsplit(*line, ' ');
 	data->rooms[0].name = ft_strdup(str[0]);
 	if (ft_check_num(str[1]))
 		data->rooms[0].width = ft_atoi(str[1]);
 	if (ft_check_num(str[2]))
 		data->rooms[0].hight = ft_atoi(str[2]);
 	data->rooms[0].num_of_room = 0;
-	ft_free(str, 3);
+	ft_free(&str, 3);
 	ft_strdel(line);
 }
 
@@ -187,12 +112,12 @@ void					ft_check_end(t_data *data, char **line, int fd)
 		ft_error("invalid end", 3);
 	if (data->flag_link == TRUE)
 		ft_error("link before room", 3);
-	str = ft_strsplit_1(*line, ' ');
+	str = ft_strsplit(*line, ' ');
 	data->end.name = ft_strdup(str[0]);
 	if (ft_check_num(str[1]))
 		data->end.width = ft_atoi(str[1]);
 	if (ft_check_num(str[2]))
 		data->end.hight = ft_atoi(str[2]);
-	ft_free(str, 3);
+	ft_free(&str, 3);
 	ft_strdel(line);
 }

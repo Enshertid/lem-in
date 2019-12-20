@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 18:41:47 by ymanilow          #+#    #+#             */
-/*   Updated: 2019/12/20 13:19:44 by ymanilow         ###   ########.fr       */
+/*   Updated: 2019/12/20 16:56:55 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void					ft_check_links(t_data *data, char **line)
 
 	i = -1;
 	data->flag_link = TRUE;
-	str = ft_strsplit_1(*line, '-');
+	str = ft_strsplit(*line, '-');
 	while (++i <= data->num_of_rooms)
 	{
 		if (ft_strequ(data->rooms[i].name, str[0]))
@@ -81,5 +81,5 @@ void					ft_check_links(t_data *data, char **line)
 	if (!data->flag_not_error_link1)
 		ft_error("first name in link is invalid\n", 6);
 	ft_strdel(line);
-	ft_free(str, 3);
+	ft_free(&str, 2);
 }

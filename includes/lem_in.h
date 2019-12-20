@@ -56,6 +56,5 @@ void					ft_check_end(t_data *data, char **line, int fd);
 void					ft_check_start(t_data *data, char **line, int fd);
 
 char					**ft_strsplit_1(char const *s, char c);
-char					**ft_free(char **str, size_t i);
 
 #endif //LEM_IN
