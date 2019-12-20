@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 18:41:47 by ymanilow          #+#    #+#             */
-/*   Updated: 2019/12/19 23:20:03 by ymanilow         ###   ########.fr       */
+/*   Updated: 2019/12/20 13:19:44 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void					ft_malloc_links(t_room *room, t_room *link)
 {
 	t_room		*tmp;
+	int			i;
 
 	if (!room->link_presence)
 	{
@@ -23,10 +24,12 @@ void					ft_malloc_links(t_room *room, t_room *link)
 		room->link_presence = TRUE;
 		room->links = malloc(sizeof(t_room) * room->col);
 	}
-	else if (room->col < room->iter)
+	else if (room->iter >= room->col)
 	{
+		i = -1;
 		tmp = malloc(sizeof(t_room) * (room->col + 5));
-		tmp = ft_memcpy(tmp, room->links, room->col);
+		while (++i < room->col)
+			tmp[i].links = room[i].links;
 		free(room->links);
 		room->links = tmp;
 		room->col += 5;
@@ -45,6 +48,7 @@ void					ft_link_found(t_data *data, t_room *room, char *str)
 		if (ft_strequ(data->rooms[i].name, str))
 		{
 			data->flag_not_error_link2 = TRUE;
+			ft_malloc_links(room, &data->rooms[i]);
 			ft_malloc_links(&data->rooms[i], room);
 			break;
 		}
@@ -53,7 +57,6 @@ void					ft_link_found(t_data *data, t_room *room, char *str)
 	}
 	if (!data->flag_not_error_link2)
 		ft_error("second name in link is invalid", 6);
-	ft_malloc_links(room, &data->rooms[i]);
 }
 
 void					ft_check_links(t_data *data, char **line)

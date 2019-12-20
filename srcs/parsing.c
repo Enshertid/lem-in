@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 18:41:07 by ymanilow          #+#    #+#             */
-/*   Updated: 2019/12/19 23:22:43 by ymanilow         ###   ########.fr       */
+/*   Updated: 2019/12/20 13:23:41 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ void					ft_parsing(int ac, char **av, t_data *data)
 	fd = 0;
 	data->num_of_rooms = 1;
 	data->col = 5;
-	data->rooms = malloc(sizeof(t_room*) * data->col);
+	data->rooms = malloc(sizeof(t_room) * data->col);
+	data->rooms[0].name = ft_strnew(0);
 	if (ac != 2)
 		ft_error("hernya vopros", 2);
 	else if ((fd = open(av[1], O_RDONLY)) < 0)
 		ft_error("check fd", 2);
 	while (ft_get_next_line(fd, &line))
 	{
-		write(1, "ok\n", 3);
 		if (*line == '#' && *(line + 1) != '#')
 			ft_check_comment(data, &line);
 		else if (ft_strequ("##start", line))

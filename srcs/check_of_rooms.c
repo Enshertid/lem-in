@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 17:44:34 by ymanilow          #+#    #+#             */
-/*   Updated: 2019/12/19 23:31:01 by ymanilow         ###   ########.fr       */
+/*   Updated: 2019/12/20 12:57:54 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,11 @@ void					ft_malloc_rooms(t_data *data)
 
 	tmp = malloc(sizeof(t_room) * (data->col + 5));
 	int i = -1;
-	while (++i < data->num_of_rooms)
-		tmp[i].name = ft_strdup(data->rooms[i].name);
+	while (++i < data->num_of_rooms )
+			tmp[i].name = data->rooms[i].name;
 	tmp = ft_memcpy(tmp, data->rooms, sizeof(t_room) * data->col);
-	i = -1;
-	while (++i < data->num_of_rooms)
-		free(data->rooms[i].name);
 	free(data->rooms);
+	data->rooms = NULL;
 	data->rooms = tmp;
 	data->col += 5;
 }
@@ -122,6 +120,14 @@ void					ft_pars_rooms(t_data *data)
 				ft_error("same name of rooms", 5);
 			j++;
 		}
+	}
+	i = -1;
+	while (++i <= data->num_of_rooms)
+	{
+		data->rooms[i].iter = 0;
+		data->rooms[i].col = 0;
+		data->rooms[i].link_presence = 0;
+		data->rooms[i].ant_presence = 0;
 	}
 }
 
@@ -157,12 +163,14 @@ void					ft_check_start(t_data *data, char **line, int fd)
 		ft_error("invalid start", 3);
 	if (data->flag_link == TRUE)
 		ft_error("link before room", 3);
+	free(data->rooms[0].name);
 	str = ft_strsplit_1(*line, ' ');
 	data->rooms[0].name = ft_strdup(str[0]);
 	if (ft_check_num(str[1]))
 		data->rooms[0].width = ft_atoi(str[1]);
 	if (ft_check_num(str[2]))
 		data->rooms[0].hight = ft_atoi(str[2]);
+	data->rooms[0].num_of_room = 0;
 	ft_free(str, 3);
 	ft_strdel(line);
 }
