@@ -1,85 +1,118 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   getmap.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dbendu <dbendu@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/19 18:47:10 by dbendu            #+#    #+#             */
-/*   Updated: 2019/12/19 23:07:47 by dbendu           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "vizu.h"
 
-t_room		get_room(char *str)
+static void	get_ants(const int fd, t_data *data)
+{
+	char *str;
+
+	while (TRUE)
+	{
+		get_next_line(fd, &str);
+		if (*str == '#')
+		{
+			free(str);
+			continue;
+		}
+		data->ants = ft_atoi(str);
+		free(str);
+		break;
+	}
+}
+
+static t_room	get_room(char *str)
 {
 	t_room	room;
-	char	*end;
+	char *iter;
 
-	end = ft_strchr(str, ' ');
-	*end = '\0';
+	iter = ft_strchr(str, ' ');
+	*iter = '\0';
 	room.name = ft_strdup(str);
-	str = end + 1;
-	end = ft_strchr(str, ' ');
-	*end = '\0';
+	str = iter + 1;
 	room.x = ft_atoi(str);
-	str = end + 1;
+	str = ft_strchr(str, ' ') + 1;
 	room.y = ft_atoi(str);
+	room.links = vec_init(0, 0, sizeof(t_room*));
 	return (room);
+}
+
+static char	*get_rooms(const int fd, t_data *data)
+{
+	char *str;
+	t_room	room;
+
+	while (TRUE)
+	{
+		get_next_line(fd, &str);
+		if (*str != '#' && !ft_strchr(str, ' '))
+			break;
+		if (ft_strequ(str, "##start"))
+		{
+			free(str);
+			get_next_line(fd, &str);
+			data->rooms[0] = get_room(str);
+		}
+		else if (ft_strequ(str, "##end"))
+		{
+			free(str);
+			get_next_line(fd, &str);
+			data->rooms[1] = get_room(str);
+		}
+		else if (*str != '#')
+		{
+			room = get_room(str);
+			vec_pushback(&data->rooms, &room);
+		}
+		free(str);
+	}
+	return (str);
+}
+
+
+static void	get_links(const int fd, t_data *data, char *str)
+{
+	char *room1_name;
+	char *room2_name;
+	size_t	room1pos;
+	size_t	room2pos;
+
+	while (TRUE)
+	{
+		if (*str != '#')
+		{
+			room2_name = ft_strchr(str, '-') + 1;
+			room2_name[-1] = '\0';
+			room1_name = str;
+			for (size_t i = 0; i < vec_size(data->rooms); ++i)
+			{
+				if (ft_strequ(data->rooms[i].name, room1_name))
+					room1pos = i;
+				else if (ft_strequ(data->rooms[i].name, room2_name))
+					room2pos = i;
+			}
+//			printf("address1: %p\n", data->rooms + room2pos);
+//			printf("name: %s\n", data->rooms[room2pos].name);
+			vec_pushback(&(data->rooms[room1pos].links), &data->rooms[room2pos]);
+			vec_pushback(&(data->rooms[room2pos].links), &data->rooms[room1pos]);
+
+		}
+		free(str);
+		if (get_next_line(fd, &str) != 1)
+			break;
+	}
 }
 
 t_data		get_map(const char *file)
 {
 	t_data	data;
-	t_room	room;
 	char	*str;
-	int fd = open(file, O_RDONLY);
-	if (fd < 0)
-		error(2, "Incorrect file", NULL, 0);
+	int		fd;
 
+	fd = open(file, O_RDONLY);
+	if (fd < 0)
+		error(2, "Invalid file", NULL, 0);
 	data.rooms = vec_init(0, 2, sizeof(t_room));
 	vec_set_size(data.rooms, 2);
-	while (TRUE)
-	{
-		get_next_line(fd, &str);
-		if (str[0] == '#')
-		{
-			free(str);
-			continue;
-		}
-		data.ants = ft_atoi(str);
-		 free(str);
-		break;
-	}
-	while (get_next_line(fd, &str) == 1)
-	{
-		if (ft_strchr(str, '\n'))
-			printf("%s\n", str);
-		if (str[0] != '#' && !ft_strchr(str, ' '))
-			break;
-		if (str[0] != '#' || (str[0] == '#' && str[1] == '#'))
-		{
-			if (str[0] != '#')
-				room = get_room(str);
-			if (ft_strnequ(str, "##start", 8))
-			{
-				 free(str);
-				get_next_line(fd, &str);
-				room = get_room(str);
-				data.rooms[0] = room;
-			}
-			else if (ft_strnequ(str, "##end", 6))
-			{
-				 free(str);
-				get_next_line(fd, &str);
-				room = get_room(str);
-				data.rooms[1] = room;
-			}
-			else
-				vec_pushback(&data.rooms, &room);
-		}
-		 free(str);
-	}
+	get_ants(fd, &data);
+	str = get_rooms(fd, &data);
+	get_links(fd, &data, str);
 	return (data);
 }

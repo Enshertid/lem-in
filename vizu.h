@@ -1,18 +1,5 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   vizu.h                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dbendu <dbendu@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/19 18:16:32 by dbendu            #+#    #+#             */
-/*   Updated: 2019/12/19 20:38:53 by dbendu           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#ifndef VIZU_H
-# define VIZU_H
-
+#ifndef LEM_IN_VIZU_H
+#define LEM_IN_VIZU_H
 
 #include <stdio.h>
 #include "mlx.h"
@@ -39,8 +26,8 @@ typedef struct		s_room
 {
 	t_int32			x;
 	t_int32			y;
-	const char		*name;
-	int				ants;
+	char			*name;
+	struct s_room	**links;
 }					t_room;
 
 typedef struct		s_data
@@ -52,5 +39,6 @@ typedef struct		s_data
 int					vizu_exit(t_wnd *wnd);
 int					key_press(int keycode, t_wnd *wnd);
 t_data				get_map(const char *file);
+
 
 #endif
