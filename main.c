@@ -35,13 +35,15 @@ int main(int argc, const char **argv)
 	for (size_t i = 0; i < vec_size(data.rooms); ++i) {
 		printf("%s: %d - %d\n", data.rooms[i].name, data.rooms[i].x, data.rooms[i].y);
 		if (data.rooms[i].links) {
-			printf("-----> %s\n", data.rooms[i].links[0]->name);
+			for (size_t j = 0; j < vec_size(data.rooms[i].links); ++j)
+				printf("-----> %s\n", data.rooms[i].links[j]->name);
 		}
 	}
 	for (size_t i = 0; i < vec_size(data.rooms); ++i) {
 		free(data.rooms[i].name);
 		if (data.rooms[i].links)
-			free(data.rooms[i].links);
+			vec_clear(&data.rooms[i].links);
+//			free(data.rooms[i].links);
 	}
 	vec_clear(&data.rooms);
 

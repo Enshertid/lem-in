@@ -91,11 +91,15 @@ static	void get_links(const int fd, t_data *data, char *str)
 			}
 			if (pos1 >= 0) {
 				if (!data->rooms[pos1].links)
-					data->rooms[pos1].links = malloc(sizeof(t_data *));
-				data->rooms[pos1].links[0] = data->rooms + pos2;
+					data->rooms[pos1].links = vec_init(0, 1, sizeof(t_data*));
+				void *ptr = data->rooms + pos2;
+				vec_pushback(&data->rooms[pos1].links, &ptr);
+				//				data->rooms[pos1].links[0] = data->rooms + pos2;
 				if (!data->rooms[pos2].links)
-					data->rooms[pos2].links = malloc(sizeof(t_data *));
-				data->rooms[pos2].links[0] = data->rooms + pos1;
+					data->rooms[pos2].links = vec_init(0, 1, sizeof(t_data*));
+				ptr = data->rooms + pos1;
+				vec_pushback(&data->rooms[pos2].links, &ptr);
+//				data->rooms[pos2].links[0] = data->rooms + pos1;
 			}
 			pos1 = -1;
 		}
