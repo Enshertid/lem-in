@@ -9,15 +9,47 @@
 
 # ifdef __unix__
 
+/*
+ * windows size
+ */
+#  define WIDTH			1800
+#  define HEIGHT		1000
+
+/*
+ * arrows
+ */
+#  define UP			65362
+#  define DOWN			65364
+#  define LEFT			65361
+#  define RIGHT			65363
+
+/*
+ * rotate keys
+ */
+#  define W				119
+#  define S				115
+#  define A				97
+#  define D				100
+#  define Q				113
+#  define E				101
+
+/*
+ * exit
+ */
+#  define ESC			65307
+
+/*
+ * mouse
+ */
+#  define LEFT_BUTTON	1
+
 # else
 
 /*
 * window size
 */
-# define WIDTH		2500
-# define HEIGHT		1350
-# define MAX_X (WIDTH - 1)
-# define MAX_Y (HEIGHT - 1)
+# define WIDTH			2500
+# define HEIGHT			1350
 
 /*
 * arrows
@@ -49,6 +81,9 @@
 
 # endif
 
+# define MAX_X			(WIDTH - 1)
+# define MAX_Y			(HEIGHT - 1)
+
 # define __WHITE		16777215
 
 /*
@@ -63,6 +98,13 @@ typedef struct		s_mouse
 	t_bool 			right;
 	t_bool 			left;
 }					t_mouse;
+
+typedef struct		s_angles
+{
+	t_int16			x;
+	t_int16 		y;
+	t_int16			z;
+}					t_angles;
 
 typedef struct		s_wnd
 {
@@ -79,14 +121,8 @@ typedef struct		s_wnd
 	t_int32			y_offset;
 
 	t_mouse 		mouse;
+	t_angles		angles;
 }					t_wnd;
-
-typedef struct		s_angles
-{
-	t_int16			x;
-	t_int16 		y;
-	t_int16			z;
-}					t_angles;
 
 typedef struct		s_room
 {

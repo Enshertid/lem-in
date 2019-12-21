@@ -1,19 +1,13 @@
 42
 ##start
 42_Commandements 215 300
-Filit 277 300
-ft_printf 320 300
 Get_Next_line 300 300
 KFS_1 195 160
-libft 255 300
-Piscine_Reloaded 235 300
 ##end
 KFS_4 185 170
 KFS_3 195 180
 KFS_2 205 170
-roger_skyline_2 410 225
-Piscine_Swift_iOS 210 383
-Piscine_CPP 2400 4039
+Piscine_CPP 240 403
 KFS_1-KFS_2
 KFS_2-KFS_3
 KFS_3-KFS_1

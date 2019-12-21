@@ -26,10 +26,10 @@ int		mouse_move(int x, int y, t_data *data)
 	{
 		data->wnd.x_offset += x - data->wnd.mouse.x;
 		data->wnd.y_offset += y - data->wnd.mouse.y;
+		data->graph.x_center += x - data->wnd.mouse.x;
+		data->graph.y_center += y - data->wnd.mouse.y;
 		data->wnd.mouse.x = x;
 		data->wnd.mouse.y = y;
-		data->graph.x_center += (x - data->wnd.mouse.x);
-		data->graph.y_center += (y - data->wnd.mouse.y);
 	}
 	else
 		return (1);

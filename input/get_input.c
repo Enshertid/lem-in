@@ -68,8 +68,9 @@ static void			some_configs(t_data *data)
 		if (data->graph.rooms[i].y < min_y)
 			min_y = data->graph.rooms[i].y;
 	}
-	data->graph.x_center = (max_x - min_x) / 2;
-	data->graph.y_center = (max_y - min_y) / 2;
+	printf("x: %d - %d\ny: %d - %d\n", max_x, min_x, max_y, min_y);
+	data->graph.x_center = max_x - (max_x - min_x) / 2;
+	data->graph.y_center = max_y - (max_y - min_y) / 2;
 }
 
 t_data				get_input(const char **argv)
