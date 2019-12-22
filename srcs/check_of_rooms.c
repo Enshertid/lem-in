@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 17:44:34 by ymanilow          #+#    #+#             */
-/*   Updated: 2019/12/22 13:09:29 by ymanilow         ###   ########.fr       */
+/*   Updated: 2019/12/22 20:49:07 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void					ft_check_room(t_data *data, char **line)
 	data->num_of_rooms++;
 }
 
-void					ft_check_start(t_data *data, char **line)
+void					пft_check_start(t_data *data, char **line)
 {
 	char			**str;
 
