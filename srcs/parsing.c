@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 18:41:07 by ymanilow          #+#    #+#             */
-/*   Updated: 2019/12/21 21:57:01 by ymanilow         ###   ########.fr       */
+/*   Updated: 2019/12/22 13:09:29 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,21 +54,21 @@ void					ft_parsing(char **av, t_data *data)
 		if (*line == '#' && *(line + 1) != '#')
 			ft_check_comment(&line);
 		else if (ft_strequ("##start", line))
-			ft_add_start(data, &line);
+			ft_check_start(data, &line);
 		else if (ft_strequ("##end", line))
-			ft_add_end(data, &line);
+			ft_check_end(data, &line);
 		else if (ft_count_words(line, ' ') == 3)
-			ft_add_room(data, &line);
+			ft_check_room(data, &line);
 		else if (ft_count_words(line, '-') == 2)
 		{
 			if (!data->flag_link)
-				ft_check_rooms(data);
+				ft_pars_rooms(data);
 			ft_check_links(data, &line);
 		}
-		else if (ft_count_words(line, ' ') == 1 && *line != '#')
+		else if (ft_count_words(line, ' ') == 1)
 			ft_check_ants(data, &line);
 		else
-			ft_error("invalid input (empty line or ## or something)\n", 2);
+			ft_error("invalid input (empty line of something)\n", 2);
 	}
 	check_flags(data);
 }

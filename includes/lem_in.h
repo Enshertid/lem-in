@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 19:07:02 by ymanilow          #+#    #+#             */
-/*   Updated: 2019/12/21 19:28:52 by ymanilow         ###   ########.fr       */
+/*   Updated: 2019/12/22 15:32:12 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,17 @@
 
 #include "libft.h"
 
-# define COF 3
-# define GNL_BUFF 1000
+# define START			MIN_INT
+# define FINISH			-1
+
+typedef struct			s_void
+{
+	void				*data;
+	size_t				data_size;
+	struct s_void		*next;
+}						t_void;
+
+t_void				*storage;
 
 typedef struct			s_room
 {
@@ -28,7 +37,7 @@ typedef struct			s_room
 	int					iter;
 	t_bool				link_presence;
 	t_bool				ant_presence;
-	struct s_room		**links;
+	struct s_room		*links;
 }						t_room;
 
 typedef struct			s_data
@@ -50,10 +59,12 @@ typedef struct			s_data
 
 void					ft_parsing(char **av, t_data *data);
 
-void					ft_add_end(t_data *data, char **line);
-void					ft_add_room(t_data *data, char **line);
-void					ft_add_start(t_data *data, char **line);
-void					ft_check_rooms(t_data *data);
+void					ft_pars_rooms(t_data *data);
+void					ft_check_room(t_data *data, char **line);
 void					ft_check_links(t_data *data, char **line);
+void					ft_check_end(t_data *data, char **line);
+void					ft_check_start(t_data *data, char **line);
+void					*ft_malloc_store(void *data, size_t size);
+void 					ft_free_storage();
 
 #endif //LEM_IN
