@@ -18,12 +18,48 @@ void draw_map(t_data *data)
 	{
 		if (!data->graph.rooms[i].links)
 			continue;
+		a.x = data->graph.rooms[i].x;
+		a.y = data->graph.rooms[i].y;
+		a.z = data->graph.rooms[i].z;
+		int x = a.x;
+		int y = a.y;
+		int z = a.z;
+		a.y = y * cos(data->wnd.angles.x * 3.14 / 180) + z * sin(data->wnd.angles.x * 3.14 / 180);
+		a.z = -y * sin(data->wnd.angles.x * 3.14 / 180) + z * cos(data->wnd.angles.x * 3.14 / 180);
+		x = a.x;
+		y = a.y;
+		z = a.z;
+		a.x = x * cos(data->wnd.angles.y * 3.14 / 180) + z * sin(data->wnd.angles.y * 3.14 / 180);
+		a.z = -x * sin(data->wnd.angles.y * 3.14 / 180) + z * cos(data->wnd.angles.y * 3.14 / 180);
+		x = a.x;
+		y = a.y;
+		z = a.z;
+		a.x = x * cos(data->wnd.angles.z * 3.14 / 180) - y * sin(data->wnd.angles.z * 3.14 / 180);
+		a.y = x * sin(data->wnd.angles.z * 3.14 / 180) + y * cos(data->wnd.angles.z * 3.14 / 180);
+		a.x += data->wnd.x_offset;
+		a.y += data->wnd.y_offset;
 		for (size_t j = 0; j < vec_size(data->graph.rooms[i].links); ++j)
 		{
-			a.x = data->graph.rooms[i].x + data->wnd.x_offset;
-			a.y = data->graph.rooms[i].y + data->wnd.y_offset;
-			b.x = data->graph.rooms[i].links[j]->x + data->wnd.x_offset;
-			b.y = data->graph.rooms[i].links[j]->y + data->wnd.y_offset;
+			b.x = data->graph.rooms[i].links[j]->x;
+			b.y = data->graph.rooms[i].links[j]->y;
+			b.z = data->graph.rooms[i].links[j]->z;
+			x = b.x;
+			y = b.y;
+			z = b.z;
+			b.y = y * cos(data->wnd.angles.x * 3.14 / 180) + z * sin(data->wnd.angles.x * 3.14 / 180);
+			b.z = -y * sin(data->wnd.angles.x * 3.14 / 180) + z * cos(data->wnd.angles.x * 3.14 / 180);
+			x = b.x;
+			y = b.y;
+			z = b.z;
+			b.x = x * cos(data->wnd.angles.y * 3.14 / 180) + z * sin(data->wnd.angles.y * 3.14 / 180);
+			b.z = -x * sin(data->wnd.angles.y * 3.14 / 180) + z * cos(data->wnd.angles.y * 3.14 / 180);
+			x = b.x;
+			y = b.y;
+			z = b.z;
+			b.x = x * cos(data->wnd.angles.z * 3.14 / 180) - y * sin(data->wnd.angles.z * 3.14 / 180);
+			b.y = x * sin(data->wnd.angles.z * 3.14 / 180) + y * cos(data->wnd.angles.z * 3.14 / 180);
+			b.x += data->wnd.x_offset;
+			b.y += data->wnd.y_offset;
 			draw_line(&data->wnd, a, b);
 		}
 	}
@@ -51,7 +87,6 @@ int main(int argc, const char **argv)
 
 	return (argc && !argc);
 }
-
 
 
 

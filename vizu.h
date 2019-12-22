@@ -133,6 +133,13 @@ typedef struct		s_room
 	struct s_room	**links;
 }					t_room;
 
+typedef struct 		s_coord
+{
+	t_int32			x;
+	t_int32			y;
+	t_int32			z;
+}					t_coord;
+
 typedef struct		s_graph
 {
 	t_uint32		ants;
@@ -158,6 +165,7 @@ typedef struct	s_point
 {
 	t_int32		x;
 	t_int32		y;
+	t_int32		z;
 	float		red;
 	float		green;
 	float		blue;

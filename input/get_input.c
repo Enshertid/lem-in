@@ -47,9 +47,11 @@ static void			some_configs(t_data *data)
 	while (i < vec_size(data->graph.rooms))
 	{
 		if (data->flags & FLAG_Z)
-			data->graph.rooms[i].z = rand() % 1000;
+			data->graph.rooms[i].z = rand() % 100;
 		else
 			data->graph.rooms[i].z = 0;
+		if (data->graph.rooms[i].z > 40)
+			data->graph.rooms[i].z *= -1;
 		++i;
 	}
 	min_x = data->graph.rooms[0].x;
@@ -83,7 +85,6 @@ t_data				get_input(const char **argv)
 	some_configs(&data);
 	return (data);
 }
-
 
 
 
