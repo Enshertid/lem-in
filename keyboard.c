@@ -3,6 +3,7 @@
 
 int key_press(int keycode, t_data *data)
 {
+//	printf("%d\n", keycode);
 	if (keycode == ESC)
 		vizu_exit(data);
 	else if (keycode == UP) {
@@ -39,6 +40,12 @@ int key_press(int keycode, t_data *data)
 		data->wnd.angles.y = 0;
 	if (ft_abs(data->wnd.angles.z) == 360)
 		data->wnd.angles.z = 0;
+	else if (keycode == SPACE)
+	{
+		data->wnd.angles.x = 0;
+		data->wnd.angles.y = 0;
+		data->wnd.angles.z = 0;
+	}
 	draw_map(data);
 	return (1);
 }

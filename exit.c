@@ -12,7 +12,7 @@ int		vizu_exit(t_data *data)
 		free(data->graph.rooms[room].name);
 		++room;
 	}
-	mlx_destroy_image(data->wnd.mlxptr, data->wnd.imgptr);
+	mlx_destroy_image(data->wnd.mlxptr, data->wnd.graph_img.imgptr);
 	mlx_destroy_window(data->wnd.mlxptr, data->wnd.wndptr);
 	exit(0);
 	return (0);

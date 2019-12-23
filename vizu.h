@@ -72,7 +72,9 @@
 /*
 * exit
 */
-# define ESC			53
+#  define ESC			53
+
+#  define SPACE			49
 
 /*
 * mouse
@@ -108,16 +110,21 @@ typedef struct		s_angles
 	t_int16			z;
 }					t_angles;
 
+typedef struct		s_image
+{
+	void		*imgptr;
+	char		*img;
+	int			bytes;
+	int			size_line;
+	int			endian;
+}					t_image;
+
 typedef struct		s_wnd
 {
 	void			*mlxptr;
 	void			*wndptr;
-	void			*imgptr;
 
-	char			*img;
-	int				bytes;
-	int				size_line;
-	int				endian;
+	t_image			graph_img;
 
 	t_int32			x_offset;
 	t_int32			y_offset;
@@ -144,12 +151,11 @@ typedef struct 		s_coord
 
 typedef struct		s_graph
 {
-	t_uint32		ants;
 	t_room			*rooms;
+	t_uint32		ants;
+	t_uint32		z_scale;
 	t_int32			x_center;
 	t_int32			y_center;
-	t_coord			*coords;
-	t_uint8			z_scale;
 }					t_graph;
 
 typedef struct		s_animation
@@ -161,7 +167,7 @@ typedef struct		s_data
 {
 	t_wnd 			wnd;
 	t_graph			graph;
-	t_animation		animation;
+	t_coord			*basic_coords;
 	t_uint64 		flags;
 }					t_data;
 
@@ -181,7 +187,7 @@ t_data				get_input(const char **argv);
 t_graph				get_graph(const char **argv);
 
 void				draw_map(t_data *data);
-void				draw_line(t_wnd *wnd, t_point a, t_point b);
+void				draw_line(t_image *img, t_point a, t_point b);
 
 void				some_configs(t_data *data);
 
@@ -190,6 +196,7 @@ int					mouse_release(int button, int x, int y, t_data *data);
 int					mouse_move(int x, int y, t_data *data);
 
 int					key_press(int keycode, t_data *data);
+int					key_release(int keycode, t_data *data);
 
 int					animation(t_data *data);
 

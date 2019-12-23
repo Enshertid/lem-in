@@ -1,77 +1,72 @@
 #include "vizu.h"
 
 
-
-
-void draw_map(t_data *data)
+void	rotate_map(t_data *data)
 {
-	ft_memset(data->wnd.img, 0, HEIGHT * data->wnd.size_line);
+	size_t		i;
+	size_t		rooms;
+	t_int32		x;
+	t_int32		y;
+	t_int32		z;
+
+	rooms = vec_size(data->graph.rooms);
+	i = 0;
+	while (i < rooms)
+	{
+		y = data->basic_coords[i].y;
+		z = data->basic_coords[i].z;
+		data->graph.rooms[i].y = y * cos(data->wnd.angles.x * 3.14 / 180) + z * sin(data->wnd.angles.x * 3.14 / 180);
+		data->graph.rooms[i].z = -y * sin(data->wnd.angles.x * 3.14 / 180) + z * cos(data->wnd.angles.x * 3.14 / 180);
+		x = data->basic_coords[i].x;
+		z = data->graph.rooms[i].z;
+		data->graph.rooms[i].x = x * cos(data->wnd.angles.y * 3.14 / 180) + z * sin(data->wnd.angles.y * 3.14 / 180);
+		data->graph.rooms[i].z = -x * sin(data->wnd.angles.y * 3.14 / 180) + z * cos(data->wnd.angles.y * 3.14 / 180);
+		x = data->graph.rooms[i].x;
+		y = data->graph.rooms[i].y;
+		data->graph.rooms[i].x = x * cos(data->wnd.angles.z * 3.14 / 180) - y * sin(data->wnd.angles.z * 3.14 / 180);
+		data->graph.rooms[i].y = x * sin(data->wnd.angles.z * 3.14 / 180) + y * cos(data->wnd.angles.z * 3.14 / 180);
+		data->graph.rooms[i].x += data->wnd.x_offset;
+		data->graph.rooms[i].y += data->wnd.y_offset;
+		++i;
+	}
+}
+
+static void set_color(t_point *point, int color)
+{
+	point->red = (color >> 16) & 255;
+	point->green = (color >> 8) & 255;
+	point->blue = color & 255;
+}
+
+void	draw_map(t_data *data)
+{
+	ft_memset(data->wnd.graph_img.img, 0, HEIGHT * data->wnd.graph_img.size_line);
+	rotate_map(data);
 	t_point a;
 	t_point b;
-	a.red = (__WHITE >> 16) & 255;
-	a.green = (__WHITE >> 8) & 255;
-	a.blue = __WHITE & 255;
-	b.red = (__WHITE >> 16) & 255;
-	b.green = (__WHITE >> 8) & 255;
-	b.blue = __WHITE & 255;
-	for (size_t i = 0; i < vec_size(data->graph.rooms); ++i)
-	{
-		data->graph.rooms[i].x = data->graph.coords[i].x;
-		data->graph.rooms[i].y = data->graph.coords[i].y;
-		data->graph.rooms[i].z = data->graph.coords[i].z;
-	}
+	set_color(&b, __WHITE);
 	for (size_t i = 0; i < vec_size(data->graph.rooms); ++i)
 	{
 		if (!data->graph.rooms[i].links)
 			continue;
+		if (i == 0)
+			set_color(&a, 255 << 8);
+		else if (i == 1)
+			set_color(&a, 255 << 16);
+		else
+			set_color(&a, __WHITE);
 		a.x = data->graph.rooms[i].x;
 		a.y = data->graph.rooms[i].y;
-		a.z = data->graph.rooms[i].z;
-		int x = a.x;
-		int y = a.y;
-		int z = a.z;
-		a.y = y * cos(data->wnd.angles.x * 3.14 / 180) + z * sin(data->wnd.angles.x * 3.14 / 180);
-		a.z = -y * sin(data->wnd.angles.x * 3.14 / 180) + z * cos(data->wnd.angles.x * 3.14 / 180);
-		x = a.x;
-		y = a.y;
-		z = a.z;
-		a.x = x * cos(data->wnd.angles.y * 3.14 / 180) + z * sin(data->wnd.angles.y * 3.14 / 180);
-		a.z = -x * sin(data->wnd.angles.y * 3.14 / 180) + z * cos(data->wnd.angles.y * 3.14 / 180);
-		x = a.x;
-		y = a.y;
-		z = a.z;
-		a.x = x * cos(data->wnd.angles.z * 3.14 / 180) - y * sin(data->wnd.angles.z * 3.14 / 180);
-		a.y = x * sin(data->wnd.angles.z * 3.14 / 180) + y * cos(data->wnd.angles.z * 3.14 / 180);
-		a.x += data->wnd.x_offset;
-		a.y += data->wnd.y_offset;
-		printf("%s\n", data->graph.rooms[i].name);
 		for (size_t j = 0; j < vec_size(data->graph.rooms[i].links); ++j)
 		{
 			b.x = data->graph.rooms[i].links[j]->x;
 			b.y = data->graph.rooms[i].links[j]->y;
-			b.z = data->graph.rooms[i].links[j]->z;
-			x = b.x;
-			y = b.y;
-			z = b.z;
-			b.y = y * cos(data->wnd.angles.x * 3.14 / 180) + z * sin(data->wnd.angles.x * 3.14 / 180);
-			b.z = -y * sin(data->wnd.angles.x * 3.14 / 180) + z * cos(data->wnd.angles.x * 3.14 / 180);
-			x = b.x;
-			y = b.y;
-			z = b.z;
-			b.x = x * cos(data->wnd.angles.y * 3.14 / 180) + z * sin(data->wnd.angles.y * 3.14 / 180);
-			b.z = -x * sin(data->wnd.angles.y * 3.14 / 180) + z * cos(data->wnd.angles.y * 3.14 / 180);
-			x = b.x;
-			y = b.y;
-			z = b.z;
-			b.x = x * cos(data->wnd.angles.z * 3.14 / 180) - y * sin(data->wnd.angles.z * 3.14 / 180);
-			b.y = x * sin(data->wnd.angles.z * 3.14 / 180) + y * cos(data->wnd.angles.z * 3.14 / 180);
-			b.x += data->wnd.x_offset;
-			b.y += data->wnd.y_offset;
-			printf("\t%d  --  %d\n", b.x, b.y);
-			draw_line(&data->wnd, a, b);
+			draw_line(&data->wnd.graph_img, a, b);
 		}
 	}
-	mlx_put_image_to_window(data->wnd.mlxptr, data->wnd.wndptr, data->wnd.imgptr, 0, 0);
+	mlx_put_image_to_window(data->wnd.mlxptr, data->wnd.wndptr, data->wnd.graph_img.imgptr, 0, 0);
+	mlx_pixel_put(data->wnd.mlxptr,  data->wnd.wndptr, data->graph.x_center, data->graph.y_center, 255 << 16);
+	mlx_pixel_put(data->wnd.mlxptr,  data->wnd.wndptr, data->wnd.x_offset, data->wnd.y_offset, 255 << 8);
 }
 
 
@@ -87,7 +82,6 @@ int main(int argc, const char **argv)
 	for (i = 0; i < vec_size(data.graph.rooms); ++i)
 		if (ft_strequ(data.graph.rooms[i].name, "First_Internship"))
 			break;
-	printf("%d  --  %d -- %d\n", data.graph.rooms[i].x, data.graph.rooms[i].y, data.graph.rooms[i].z);
 	draw_map(&data);
 
 	mlx_hook(data.wnd.wndptr, 2, 1L << 0, key_press, &data);

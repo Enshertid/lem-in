@@ -12,16 +12,33 @@ int		mouse_press(int button, int x, int y, t_data *data)
 	}
 	else if (button == WHEEL_UP)
 	{
+		for (size_t i = 0; i < vec_size(data->basic_coords); ++i)
+		{
+			if (data->basic_coords[i].x + data->wnd.x_offset > data->graph.x_center)
+				data->basic_coords[i].x += 3;
+			else
+				data->basic_coords[i].x -= 3;
+			if (data->basic_coords[i].y + data->wnd.y_offset > data->graph.y_center)
+				data->basic_coords[i].y += 3;
+			else
+				data->basic_coords[i].y -= 3;
+			data->basic_coords[i].z += 3;
+		}
+		draw_map(data);
+	}
+	else if (button == WHEEL_DOWN)
+	{
 		for (size_t i = 0; i < vec_size(data->graph.rooms); ++i)
 		{
-			if (data->graph.coords[i].x > data->graph.x_center)
-				++data->graph.coords[i].x;
+			if (data->basic_coords[i].x + data->wnd.x_offset > data->graph.x_center)
+				--data->basic_coords[i].x;
 			else
-				--data->graph.coords[i].x;
-			if (data->graph.coords[i].y > data->graph.y_center)
-				++data->graph.coords[i].y;
+				++data->basic_coords[i].x;
+			if (data->basic_coords[i].y + data->wnd.y_offset > data->graph.y_center)
+				--data->basic_coords[i].y;
 			else
-				--data->graph.coords[i].y;
+				++data->basic_coords[i].y;
+			data->basic_coords[i].z -= 3;
 		}
 		draw_map(data);
 	}
