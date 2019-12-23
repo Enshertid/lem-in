@@ -20,7 +20,7 @@ void					ft_malloc_rooms(t_data *data)
 	int i = -1;
 	while (++i < data->iters.iter)
 			tmp[i].name = data->rooms[i].name;
-	tmp = ft_memcpy(tmp, data->rooms, sizeof(t_room) * data->iters.col);
+	tmp = ft_memcpy(tmp, data->rooms, sizeof(t_room) * data->iters.col + 5);
 	free(data->rooms);
 	data->rooms = NULL;
 	data->rooms = tmp;

@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 19:07:02 by ymanilow          #+#    #+#             */
-/*   Updated: 2019/12/23 18:18:58 by ymanilow         ###   ########.fr       */
+/*   Updated: 2019/12/23 23:02:05 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct			s_room
 	int					num_of_room;
 	int					num_of_prev_room;
 	int					num_on_the_search;
-	struct s_room		*links;
+	struct s_room		**links;
 }						t_room;
 
 typedef struct			s_ways
@@ -70,15 +70,15 @@ typedef struct			s_ways
 
 typedef struct			s_turn_array
 {
-	t_room				*turn_array;
-	int				col;
-	int				iter;
+	t_room				**turn_array;
+	int					col;
+	int					iter;
 }						t_turn_array;
 
 typedef struct			s_data
 {
 	t_room				*rooms;
-	t_turn_array		*turn;
+	t_turn_array		turn;
 	t_room				end;
 	t_room				tmp;
 	t_flags				flags;
