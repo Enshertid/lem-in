@@ -23,7 +23,7 @@ LIB = ./libft/
 FLAGS = -Wall -Wextra -Werror -I$(DIR_H) -I$(LIB)includes_l -I$(LIB)includes_p
 
 SRCS_C = lem_in.c	parsing.c	check_of_rooms.c	check_links.c	\
-																	\
+	turn_array.c													\
 
 SRCS_O = $(addprefix $(DIR_O)/,$(SRCS_C:.c=.o))
 

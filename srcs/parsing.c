@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 18:41:07 by ymanilow          #+#    #+#             */
-/*   Updated: 2019/12/22 20:49:07 by ymanilow         ###   ########.fr       */
+/*   Updated: 2019/12/22 20:49:35 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,25 @@ void					ft_check_ants(t_data *data, char **line)
 {
 	__int128_t			num;
 
-	if (data->flag_link || data->flag_end || data->flag_start ||
-								data->flag_ants || data->flag_room)
+	if (data->flags.flag_link || data->flags.flag_end || data->flags.flag_start ||
+								data->flags.flag_ants || data->flags.flag_room)
 		ft_error("ants must be first, and only ones!", 10);
 	num = ft_atoi(*line);
 	data->ants = num;
 	if (data->ants != num)
 		ft_error("overflow of int int num of ants\n", 10);
-	data->flag_ants = TRUE;
+	data->flags.flag_ants = TRUE;
 	ft_strdel(line);
 }
 void					check_flags(t_data *data)
 {
-	if (!data->flag_start)
+	if (!data->flags.flag_start)
 		ft_error("have no start\n", 2);
-	if (!data->flag_end)
+	if (!data->flags.flag_end)
 		ft_error("have no end\n", 2);
-	if (!data->flag_link)
+	if (!data->flags.flag_link)
 		ft_error("have no links\n", 2);
-	if (!data->flag_ants)
+	if (!data->flags.flag_ants)
 		ft_error("have no ants\n", 2);
 }
 void					ft_parsing(char **av, t_data *data)
@@ -61,7 +61,7 @@ void					ft_parsing(char **av, t_data *data)
 			ft_check_room(data, &line);
 		else if (ft_count_words(line, '-') == 2)
 		{
-			if (!data->flag_link)
+			if (!data->flags.flag_link)
 				ft_pars_rooms(data);
 			ft_check_links(data, &line);
 		}
