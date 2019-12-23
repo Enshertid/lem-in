@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 19:07:02 by ymanilow          #+#    #+#             */
-/*   Updated: 2019/12/23 18:13:04 by ymanilow         ###   ########.fr       */
+/*   Updated: 2019/12/23 18:18:58 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,7 @@ void					ft_check_links(t_data *data, char **line);
 void					ft_check_end(t_data *data, char **line);
 void					ft_check_start(t_data *data, char **line);
 void					pop_front(t_data *data);
+void					*ft_malloc_store(size_t size);
+void 					ft_free_storage();
 
 #endif //LEM_IN
