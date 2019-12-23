@@ -10,6 +10,21 @@ int		mouse_press(int button, int x, int y, t_data *data)
 		data->wnd.mouse.x = x;
 		data->wnd.mouse.y = y;
 	}
+	else if (button == WHEEL_UP)
+	{
+		for (size_t i = 0; i < vec_size(data->graph.rooms); ++i)
+		{
+			if (data->graph.coords[i].x > data->graph.x_center)
+				++data->graph.coords[i].x;
+			else
+				--data->graph.coords[i].x;
+			if (data->graph.coords[i].y > data->graph.y_center)
+				++data->graph.coords[i].y;
+			else
+				--data->graph.coords[i].y;
+		}
+		draw_map(data);
+	}
 	return (1);
 }
 

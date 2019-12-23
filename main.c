@@ -16,6 +16,12 @@ void draw_map(t_data *data)
 	b.blue = __WHITE & 255;
 	for (size_t i = 0; i < vec_size(data->graph.rooms); ++i)
 	{
+		data->graph.rooms[i].x = data->graph.coords[i].x;
+		data->graph.rooms[i].y = data->graph.coords[i].y;
+		data->graph.rooms[i].z = data->graph.coords[i].z;
+	}
+	for (size_t i = 0; i < vec_size(data->graph.rooms); ++i)
+	{
 		if (!data->graph.rooms[i].links)
 			continue;
 		a.x = data->graph.rooms[i].x;
@@ -38,6 +44,7 @@ void draw_map(t_data *data)
 		a.y = x * sin(data->wnd.angles.z * 3.14 / 180) + y * cos(data->wnd.angles.z * 3.14 / 180);
 		a.x += data->wnd.x_offset;
 		a.y += data->wnd.y_offset;
+		printf("%s\n", data->graph.rooms[i].name);
 		for (size_t j = 0; j < vec_size(data->graph.rooms[i].links); ++j)
 		{
 			b.x = data->graph.rooms[i].links[j]->x;
@@ -60,6 +67,7 @@ void draw_map(t_data *data)
 			b.y = x * sin(data->wnd.angles.z * 3.14 / 180) + y * cos(data->wnd.angles.z * 3.14 / 180);
 			b.x += data->wnd.x_offset;
 			b.y += data->wnd.y_offset;
+			printf("\t%d  --  %d\n", b.x, b.y);
 			draw_line(&data->wnd, a, b);
 		}
 	}
@@ -75,6 +83,11 @@ int main(int argc, const char **argv)
 	t_data	data;
 
 	data = get_input(argv);
+	size_t i;
+	for (i = 0; i < vec_size(data.graph.rooms); ++i)
+		if (ft_strequ(data.graph.rooms[i].name, "First_Internship"))
+			break;
+	printf("%d  --  %d -- %d\n", data.graph.rooms[i].x, data.graph.rooms[i].y, data.graph.rooms[i].z);
 	draw_map(&data);
 
 	mlx_hook(data.wnd.wndptr, 2, 1L << 0, key_press, &data);

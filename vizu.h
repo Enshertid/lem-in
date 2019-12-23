@@ -78,6 +78,8 @@
 * mouse
 */
 #  define LEFT_BUTTON	1
+#  define WHEEL_UP		5
+#  define WHEEL_DOWN	4
 
 # endif
 
@@ -146,6 +148,8 @@ typedef struct		s_graph
 	t_room			*rooms;
 	t_int32			x_center;
 	t_int32			y_center;
+	t_coord			*coords;
+	t_uint8			z_scale;
 }					t_graph;
 
 typedef struct		s_animation
@@ -178,6 +182,8 @@ t_graph				get_graph(const char **argv);
 
 void				draw_map(t_data *data);
 void				draw_line(t_wnd *wnd, t_point a, t_point b);
+
+void				some_configs(t_data *data);
 
 int					mouse_press(int button, int x, int y, t_data *data);
 int					mouse_release(int button, int x, int y, t_data *data);

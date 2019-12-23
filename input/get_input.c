@@ -34,47 +34,6 @@ static t_uint64		get_flags(const char **argv)
 	return (flags);
 }
 
-static void			some_configs(t_data *data)
-{
-	size_t i;
-	t_int32	min_x;
-	t_int32	min_y;
-	t_int32	max_x;
-	t_int32	max_y;
-
-	srand(time(0));
-	i = 0;
-	while (i < vec_size(data->graph.rooms))
-	{
-		if (data->flags & FLAG_Z)
-			data->graph.rooms[i].z = rand() % 100;
-		else
-			data->graph.rooms[i].z = 0;
-		if (data->graph.rooms[i].z > 40)
-			data->graph.rooms[i].z *= -1;
-		++i;
-	}
-	min_x = data->graph.rooms[0].x;
-	min_y = data->graph.rooms[0].y;
-	max_x = data->graph.rooms[0].x;
-	max_y = data->graph.rooms[0].y;
-	i = 0;
-	while (++i < vec_size(data->graph.rooms))
-	{
-		if (data->graph.rooms[i].x > max_x)
-			max_x = data->graph.rooms[i].x;
-		if (data->graph.rooms[i].x < min_x)
-			min_x = data->graph.rooms[i].x;
-		if (data->graph.rooms[i].y > max_y)
-			max_y = data->graph.rooms[i].y;
-		if (data->graph.rooms[i].y < min_y)
-			min_y = data->graph.rooms[i].y;
-	}
-	printf("x: %d - %d\ny: %d - %d\n", max_x, min_x, max_y, min_y);
-	data->graph.x_center = max_x - (max_x - min_x) / 2;
-	data->graph.y_center = max_y - (max_y - min_y) / 2;
-}
-
 t_data				get_input(const char **argv)
 {
 	t_data	data;
