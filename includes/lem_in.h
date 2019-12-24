@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 19:07:02 by ymanilow          #+#    #+#             */
-/*   Updated: 2019/12/23 23:02:05 by ymanilow         ###   ########.fr       */
+/*   Updated: 2019/12/24 15:14:32 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct			s_room
 	t_bool				ant_presence;
 	t_bool				link_presence;
 	t_bool				flag_of_presence;
+	t_bool				another;
 	int					num_of_room;
 	int					num_of_prev_room;
 	int					num_on_the_search;

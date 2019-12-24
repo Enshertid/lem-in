@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 17:44:34 by ymanilow          #+#    #+#             */
-/*   Updated: 2019/12/24 13:40:38 by ymanilow         ###   ########.fr       */
+/*   Updated: 2019/12/24 15:14:36 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void					ft_pars_rooms(t_data *data)
 		data->rooms[i].iters.col = 0;
 		data->rooms[i].link_presence = 0;
 		data->rooms[i].ant_presence = 0;
+		data->rooms[i].num_on_the_search = 0;
 	}
 }
 

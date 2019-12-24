@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 18:41:47 by ymanilow          #+#    #+#             */
-/*   Updated: 2019/12/24 14:46:04 by ymanilow         ###   ########.fr       */
+/*   Updated: 2019/12/24 17:22:25 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,21 @@ void					ft_malloc_links(t_room *room, t_room *link)
 		room->iters.col = 5;
 		room->iters.iter = 0;
 		room->link_presence = TRUE;
-		room->links = malloc(sizeof(t_room) * room->iters.col);
+		room->links = malloc(sizeof(t_room*) * room->iters.col);
 	}
 	else if (room->iters.iter >= room->iters.col)
 	{
 		i = -1;
-		tmp = malloc(sizeof(t_room) * (room->iters.col + 5));
+		tmp = malloc(sizeof(t_room*) * (room->iters.col + 5));
 		while (++i < room->iters.col)
-			tmp[i]->links = room[i].links;
+			(*tmp)->links[i] = room->links[i];
 		free(room->links);
 		room->links = tmp;
 		room->iters.col += 5;
 	}
 	room->links[room->iters.iter] = link;
+	link->flag_of_presence = 0;
+	link->num_on_the_search = 0;
 	room->iters.iter++;
 }
 
