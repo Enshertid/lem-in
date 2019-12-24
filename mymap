@@ -1,0 +1,8 @@
+42
+##start
+start 100 100
+##end
+end 300 300
+middle 200 200
+start-middle
+end-middle

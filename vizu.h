@@ -125,6 +125,7 @@ typedef struct		s_wnd
 	void			*wndptr;
 
 	t_image			graph_img;
+	t_image			ant_img;
 
 	t_int32			x_offset;
 	t_int32			y_offset;
@@ -140,6 +141,7 @@ typedef struct		s_room
 	t_int32 		z;
 	char			*name;
 	struct s_room	**links;
+	t_bool			is_draw;
 }					t_room;
 
 typedef struct 		s_coord

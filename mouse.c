@@ -22,7 +22,7 @@ int		mouse_press(int button, int x, int y, t_data *data)
 				data->basic_coords[i].y += 3;
 			else
 				data->basic_coords[i].y -= 3;
-			data->basic_coords[i].z += 3;
+			data->basic_coords[i].z += data->basic_coords[i].z > 0 ? 3 : -3;
 		}
 		draw_map(data);
 	}
@@ -38,7 +38,7 @@ int		mouse_press(int button, int x, int y, t_data *data)
 				--data->basic_coords[i].y;
 			else
 				++data->basic_coords[i].y;
-			data->basic_coords[i].z -= 3;
+			data->basic_coords[i].z += data->basic_coords[i].z > 0 ? -3 : 3;
 		}
 		draw_map(data);
 	}
