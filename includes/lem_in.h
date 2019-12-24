@@ -55,6 +55,7 @@ typedef struct			s_room
 	t_coord				coord;
 	t_bool				ant_presence;
 	t_bool				link_presence;
+	t_bool				flag_of_presence;
 	int					num_of_room;
 	int					num_of_prev_room;
 	int					num_on_the_search;

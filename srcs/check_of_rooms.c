@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 17:44:34 by ymanilow          #+#    #+#             */
-/*   Updated: 2019/12/22 22:42:34 by ymanilow         ###   ########.fr       */
+/*   Updated: 2019/12/24 13:40:38 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void					ft_malloc_rooms(t_data *data)
 	int i = -1;
 	while (++i < data->iters.iter)
 			tmp[i].name = data->rooms[i].name;
-	tmp = ft_memcpy(tmp, data->rooms, sizeof(t_room) * data->iters.col + 5);
+	tmp = ft_memcpy(tmp, data->rooms, sizeof(t_room) * data->iters.col);
 	free(data->rooms);
 	data->rooms = NULL;
 	data->rooms = tmp;

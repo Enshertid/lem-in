@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 18:41:47 by ymanilow          #+#    #+#             */
-/*   Updated: 2019/12/23 22:32:40 by ymanilow         ###   ########.fr       */
+/*   Updated: 2019/12/24 14:46:04 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void					ft_malloc_links(t_room *room, t_room *link)
 		room->link_presence = TRUE;
 		room->links = malloc(sizeof(t_room) * room->iters.col);
 	}
-	else if (room->iters.iter == room->iters.col)
+	else if (room->iters.iter >= room->iters.col)
 	{
 		i = -1;
-		tmp = malloc(sizeof(t_room*) * (room->iters.col + 5));
+		tmp = malloc(sizeof(t_room) * (room->iters.col + 5));
 		while (++i < room->iters.col)
 			tmp[i]->links = room[i].links;
 		free(room->links);
@@ -44,7 +44,7 @@ void					ft_link_found(t_data *data, t_room *room, char *str)
 	int			i;
 
 	i = -1;
-	while (++i <= data->iters.col)
+	while (++i <= data->iters.iter)
 	{
 		if (ft_strequ(data->rooms[i].name, str))
 		{
@@ -68,7 +68,7 @@ void					ft_check_links(t_data *data, char **line)
 	i = -1;
 	data->flags.flag_link = TRUE;
 	str = ft_strsplit(*line, '-');
-	while (++i < data->iters.col)
+	while (++i <= data->iters.iter)
 	{
 		if (ft_strequ(data->rooms[i].name, str[0]))
 		{

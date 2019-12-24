@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 19:09:22 by ymanilow          #+#    #+#             */
-/*   Updated: 2019/12/23 23:19:04 by ymanilow         ###   ########.fr       */
+/*   Updated: 2019/12/24 14:08:50 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@ void					data_first_set(t_data *data)
 	data->rooms[0].name = ft_strnew(0);
 }
 
-void 					add_to_end_of_turn(t_data *data, t_room *new)
+void 					add_to_end_of_turn(t_data *data, t_room *new, int num)
 {
+	new->num_on_the_search = num + 1;
 	data->turn.turn_array[data->turn.col] = new;
 	data->turn.col++;
 }
@@ -54,33 +55,29 @@ void					delete_from_start(t_data *data)
 
 void					turn(t_data *data)
 {
-	int			i;
-	int			j;
+	int				i;
+	int				j;
+	int					kost;
 
-	i = 0;
 	data->turn.turn_array = ft_memalloc(sizeof(t_room*) * data->iters.col);
-	add_to_end_of_turn(data, &data->rooms[0]);
-	while(data->turn.col && data->rooms[data->iters.col].num_on_the_search == 0)
+	data->turn.turn_array[data->turn.col] = &data->rooms[0];
+	data->turn.col++;
+	while (data->turn.col && !data->end.num_on_the_search)
 	{
 		j = -1;
+		i = -1;
+		kost = data->turn.col;
+		while(++j < kost)
+			while (++i < data->turn.turn_array[j]->iters.col && !data->turn.turn_array[j]->links[i]->num_on_the_search)
+			{
+				add_to_end_of_turn(data, data->turn.turn_array[j]->links[i], data->turn.turn_array[j]->num_on_the_search);
+				data->turn.turn_array[j]->flag_of_presence = 1;
+			}
+		j = -1;
 		while(++j < data->turn.col)
-			if(!data->turn.turn_array[0][j].num_on_the_search &&
-					data->turn.turn_array[0][j].num_of_room != 0)
+			if(data->turn.turn_array[j]->flag_of_presence == 1)
 				delete_from_start(data);
-		j = -1;
-		while(++j < data->turn.turn_array[0][i].iters.col)
-			if (!data->turn.turn_array[0][i].links[0][j].num_on_the_search)
-				add_to_end_of_turn(data, data->turn.turn_array[i]->links[j]);
-		j = -1;
-		while(++j < data->turn.turn_array[i]->iters.col)
-		{
-			if (!data->turn.turn_array[i]->links[0][j].num_on_the_search)
-				data->turn.turn_array[0][i].links[0][j].num_on_the_search = i + 1;
-		}
-		if (data->turn.turn_array[0]->num_of_room == 0)
-			delete_from_start(data);
-		if (data->rooms[++i].num_on_the_search == 0 && i != 0)
-			add_to_end_of_turn(data, &data->rooms[i]);
+
 	}
 	ft_printf("the shortest way is ===> %d\n", data->rooms[data->iters.col].num_on_the_search);
 }
@@ -92,15 +89,18 @@ void					remalloc_links(t_data *data)
 
 	i = -1;
 	while(++i < data->iters.col)
+	{
 		if (data->rooms[i].iters.iter < data->rooms[i].iters.col)
 		{
-			tmp = malloc(sizeof(t_room*) * (data->rooms[i].iters.iter));
-			ft_memcpy(tmp, data->rooms[i].links, sizeof(t_room*) * (data->rooms[i].iters.iter));
-//			(*tmp)->links = data->rooms[i].links;
+			tmp = malloc(sizeof(t_room *) * (data->rooms[i].iters.iter));
+			ft_memcpy(tmp, data->rooms[i].links, sizeof(t_room *) * (data->rooms[i].iters.iter));
 			free(data->rooms[i].links);
 			data->rooms[i].links = tmp;
 			data->rooms[i].iters.col = data->rooms[i].iters.iter;
+			data->rooms[i].iters.iter = 0;
 		}
+		data->rooms[i].num_on_the_search = 0;
+	}
 }
 
 void					final_remalloc_rooms(t_data *data)
@@ -111,6 +111,7 @@ void					final_remalloc_rooms(t_data *data)
 	i = -1;
 	tmp = malloc(sizeof(t_room) * data->iters.iter);
 	data->iters.col = data->iters.iter;
+	data->iters.iter = 0;
 	while(++i < data->iters.col)
 		tmp[i] = data->rooms[i];
 	free(data->rooms);
