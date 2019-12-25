@@ -6,7 +6,7 @@
 #    By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/14 10:58:26 by ymanilow          #+#    #+#              #
-#    Updated: 2019/12/24 15:14:33 by ymanilow         ###   ########.fr        #
+#    Updated: 2019/12/25 14:50:45 by ymanilow         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ LIB = ./libft/
 FLAGS = -Wall -Wextra -Werror -I$(DIR_H) -I$(LIB)includes_l -I$(LIB)includes_p
 
 SRCS_C = lem_in.c	parsing.c	check_of_rooms.c	check_links.c	\
-	turn_array.c	ft_malloc_store.c								\
+	turns.c								\
 
 SRCS_O = $(addprefix $(DIR_O)/,$(SRCS_C:.c=.o))
 

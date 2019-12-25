@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 19:07:02 by ymanilow          #+#    #+#             */
-/*   Updated: 2019/12/24 15:14:32 by ymanilow         ###   ########.fr       */
+/*   Updated: 2019/12/25 15:34:29 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,6 @@
 
 # define START			MIN_INT
 # define FINISH			-1
-
-typedef struct			s_void
-{
-	void				*data;
-	struct s_void		*next;
-}						t_void;
 
 typedef struct			s_iters
 {
@@ -56,9 +50,7 @@ typedef struct			s_room
 	t_bool				ant_presence;
 	t_bool				link_presence;
 	t_bool				flag_of_presence;
-	t_bool				another;
 	int					num_of_room;
-	int					num_of_prev_room;
 	int					num_on_the_search;
 	struct s_room		**links;
 }						t_room;
@@ -72,15 +64,23 @@ typedef struct			s_ways
 
 typedef struct			s_turn_array
 {
-	t_room				**turn_array;
+	t_room				**array;
 	int					col;
-	int					iter;
+	int					i;
+	int					j;
+	int					count;
 }						t_turn_array;
+
+typedef struct			s_turn_list
+{
+	t_room				*room;
+	struct s_turn_list	*next;
+	struct s_turn_list	*last;
+}						t_turn_list;
 
 typedef struct			s_data
 {
 	t_room				*rooms;
-	t_turn_array		turn;
 	t_room				end;
 	t_room				tmp;
 	t_flags				flags;
@@ -96,8 +96,7 @@ void					ft_check_room(t_data *data, char **line);
 void					ft_check_links(t_data *data, char **line);
 void					ft_check_end(t_data *data, char **line);
 void					ft_check_start(t_data *data, char **line);
-void					pop_front(t_data *data);
-void					*ft_malloc_store(size_t size);
-void 					ft_free_storage();
+void 					add_to_end_of_turn(t_turn_array *turn, t_room *new, int num);
+void					delete_from_start(t_turn_array *turn, int *num);
 
 #endif //LEM_IN

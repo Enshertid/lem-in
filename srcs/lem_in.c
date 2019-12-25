@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 19:09:22 by ymanilow          #+#    #+#             */
-/*   Updated: 2019/12/24 22:39:11 by ymanilow         ###   ########.fr       */
+/*   Updated: 2019/12/25 16:58:59 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,12 @@ void					free_data(t_data *data)
 	int				i;
 
 	i = -1;
-	while (++i < data->iters.iter)
+	while (++i <= data->iters.iter)
 	{
 		free(data->rooms[i].links);
 		free(data->rooms[i].name);
 	}
 	free(data->rooms);
-	free(data->end.links);
 }
 
 void					data_first_set(t_data *data)
@@ -35,108 +34,56 @@ void					data_first_set(t_data *data)
 	data->rooms[0].name = ft_strnew(0);
 }
 
-void 					add_to_end_of_turn(t_data *data, t_room *new, int num)
+void					bfs(t_data *data, t_turn_array *turn)
 {
-	new->num_on_the_search = num + 1;
-	data->turn.turn_array[data->turn.col] = new;
-	data->turn.col++;
-}
-void					delete_from_start(t_data *data)
-{
-	int					i;
-	int					j;
-
-	i = -1;
-	j = 0;
-	while(++i < data->turn.col)
-		data->turn.turn_array[i] = data->turn.turn_array[++j];
-	data->turn.col--;
-}
-
-void					turn(t_data *data)
-{
-	int				i;
-	int				j;
-	int					kost;
-
-	data->turn.turn_array = ft_memalloc(sizeof(t_room*) * (data->iters.col));
-	data->turn.turn_array[data->turn.col] = &data->rooms[0];
-	data->turn.turn_array[data->turn.col]->another = 1;
-	data->turn.turn_array[data->turn.col]->flag_of_presence =1;
-	data->turn.col++;
-	while (data->turn.col && !data->rooms[data->iters.iter].num_on_the_search)
+	while (turn->col && !data->rooms[data->iters.iter].num_on_the_search)
 	{
-		j = -1;
-		i = -1;
-		kost = data->turn.col;
-		while(++j < kost)
+		turn->i = -1;
+		turn->j = -1;
+		turn->count = turn->col;
+		while(++turn->j < turn->count)
 		{
-			while (++i < data->turn.turn_array[j]->iters.iter)
+			while (++turn->i < turn->array[turn->j]->iters.iter)
 			{
-				if (data->turn.turn_array[j]->links[i]->flag_of_presence)
+				if (turn->array[turn->j]->links[turn->i]->num_on_the_search)
 				{
-					data->turn.turn_array[j]->another = 1;
-//					data->turn.turn_array[j]->links[i]->flag_of_presence = 1;
+					turn->array[turn->j]->flag_of_presence = 1;
 					continue;
 				}
-				add_to_end_of_turn(data, data->turn.turn_array[j]->links[i],
-						data->turn.turn_array[j]->num_on_the_search);
-//				data->turn.turn_array[j]->flag_of_presence = 1;
-				data->turn.turn_array[j]->links[i]->flag_of_presence = 1;
+				add_to_end_of_turn(turn,turn->array[turn->j]->
+				links[turn->i],turn->array[turn->j]->num_on_the_search);
 			}
-			i = -1;
+			turn->i = -1;
 		}
-		j = -1;
-		while(++j < data->turn.col)
-			if(data->turn.turn_array[j]->another == 1)
-				delete_from_start(data);
-
-	}
-	ft_printf("the shortest way is ===> %d\n", data->rooms[11].num_on_the_search);
-}
-
-void					remalloc_links(t_data *data)
-{
-	int			i;
-//	int			j;
-	void		*tmp;
-
-	i = -1;
-	while(++i < data->iters.col)
-	{
-		if (data->rooms[i].iters.iter < data->rooms[i].iters.col)
-		{
-			data->rooms[i].iters.col = data->rooms[i].iters.iter;
-			tmp = ft_memalloc(sizeof(t_room*) * (data->rooms[i].iters.iter));
-			ft_memcpy(tmp, data->rooms[i].links, data->rooms[i].iters.iter * sizeof(void*));
-//			j = -1;
-//			(*tmp)->links = data->rooms[i].links;
-//			free(data->rooms[i].links);
-//			data->rooms[i].links = tmp;
-			free(data->rooms[i].links);
-			data->rooms[i].links = tmp;
-			data->rooms[i].iters.iter = 0;
-		}
+		turn->j = -1;
+		while(++turn->j < turn->col)
+			if(turn->array[turn->j]->flag_of_presence == 1)
+				delete_from_start(turn, &turn->j);
 	}
 }
 
-void					final_remalloc_rooms(t_data *data)
+void					bfs_array(t_data *data)
 {
-	t_room			*tmp;
-	int				i;
+	t_turn_array	turn;
 
-	i = -1;
-	tmp = ft_memalloc(sizeof(t_room) * data->iters.iter);
-	data->iters.col = data->iters.iter;
-	data->iters.iter = 0;
-	while(++i < data->iters.col)
-		ft_memcpy(&tmp[i], &data->rooms[i], sizeof(t_room));
-	free(data->rooms);
-	data->rooms = tmp;
-	i = -1;
-//	while(++i < data->iters.col)
-//		data->rooms[i].num_on_the_search = 0;
+	ft_memset(&turn, 0, sizeof(t_turn_array));
+	turn.array = ft_memalloc(sizeof(t_room*) * (data->iters.col));
+	add_to_end_of_turn(&turn, &data->rooms[0], -1);
+	bfs(data, &turn);
+	ft_printf("the shortest way is ===> %d\n",data->rooms[data->iters.iter].num_on_the_search);
+	free(turn.array);
 }
+
+void					bfs_list(t_data *data)
+{
+	t_turn_list *turn;
+
+	turn = malloc(sizeof(t_turn_list));
+	turn->next = NULL;
+	turn->last = turn;
+	turn->room = &data->rooms[0];
+}
+
 int						main(int ac, char **av)
 {
 	t_data			data;
@@ -148,40 +95,8 @@ int						main(int ac, char **av)
 	if (!data.rooms[0].link_presence ||
 		!data.rooms[data.iters.iter].link_presence)
 		ft_error("have no links\n", 1000);
-//	int 	i = -1;
-//	int 	j;
-//	int g = -1;
-//	while(++i < data.iters.iter)
-//	{
-//		j = -1;
-//		while(++j < data.rooms[i].iters.iter)
-//			ft_printf("g==>%d data->rooms[%d]->links[%d] num ==> %d\n", ++g, i, j, data.rooms[i].links[j]->num_of_room);
-//	}
-//	data.turn.turn_array = ft_memalloc(sizeof(t_room*) * 26);
-//	i = -1;
-//	g = -1;
-//	while(++i < data.iters.iter)
-//	{
-//		j = -1;
-//		while(++j < data.rooms[i].iters.iter && ++g < 26)
-//			data.turn.turn_array[g] = data.rooms[i].links[j];
-//	}
-//	g = -1;
-//	while (++g < 26)
-//		data.turn.turn_array[g]->num_of_room++;
-//	ft_printf("loading...\n...\n...\n");
-//	i = -1;
-//	g = -1;
-//	while(++i < data.iters.iter)
-//	{
-//		j = -1;
-//		while(++j < data.rooms[i].iters.iter)
-//			ft_printf("g==> %d data->rooms[%d]->links[%d] num ==> %d\n",++g, i, j, data.rooms[i].links[j]->num_of_room);
-//	}
-//	if (data.iters.col != data.iters.iter)
-//		final_remalloc_rooms(&data);
-//	remalloc_links(&data);
-	turn(&data);
+//	bfs_list(&data);
+	bfs_array(&data);
 	free_data(&data);
 	ft_printf("all is fine\n");
 	return (0);
