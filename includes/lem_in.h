@@ -18,11 +18,7 @@
 # define START			MIN_INT
 # define FINISH			-1
 
-typedef struct			s_void
-{
-	void				*data;
-	struct s_void		*next;
-}						t_void;
+
 
 typedef struct			s_iters
 {

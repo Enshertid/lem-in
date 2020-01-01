@@ -32,10 +32,10 @@ void					ft_malloc_links(t_room *room, t_room *link)
 		while (++i < room->iters.col)
 			tmp[i].links = room[i].links;
 		free(room->links);
-		room->links = tmp;
+		room->links = &tmp;
 		room->iters.col += 5;
 	}
-	room->links[room->iters.iter] = *link;
+	room->links[room->iters.iter] = link;
 	room->iters.iter++;
 }
 
