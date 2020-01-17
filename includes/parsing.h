@@ -1,33 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   turn_array.c                                       :+:      :+:    :+:   */
+/*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/22 22:45:36 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/16 15:51:57 by ymanilow         ###   ########.fr       */
+/*   Created: 2020/01/17 21:32:08 by ymanilow          #+#    #+#             */
+/*   Updated: 2020/01/17 21:42:54 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
+#ifndef PARSING_H
+#define PARSING_H
+
 #include "lem_in.h"
+#include "graph.h"
 
-void 					add_to_end_of_turn(t_turn_array *turn, t_room *new, int num)
-{
-	new->num_on_the_search = ++num;
-	turn->array[turn->col] = new;
-	turn->col++;
-}
+void					check_side_room(t_data *data);
+void					check_rooms(t_data *data);
+void					check_links(t_data *data);
 
-void					delete_from_start(t_turn_array *turn)
-{
-	int					i;
-	int					j;
-
-	i = -1;
-	j = 0;
-	while(++i < turn->col)
-		turn->array[i] = turn->array[++j];
-	turn->col--;
-}
-
+#endif

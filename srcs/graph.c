@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_in.c                                           :+:      :+:    :+:   */
+/*   graph.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/17 19:43:23 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/17 20:12:38 by ymanilow         ###   ########.fr       */
+/*   Created: 2020/01/17 19:59:56 by ymanilow          #+#    #+#             */
+/*   Updated: 2020/01/17 21:43:05 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
 
-int					main(int ac, char **av)
+#include "graph.h"
+
+t_graph						set_graph()
 {
-	t_data				data;
+	t_graph			graph;
 
-	if (ac < 0)
-		ft_error("haha, ac < 0\n", 1);
-	ft_memset(&data, 0, sizeof(t_data));
-	data.graph = set_graph();
-	parsing(&data, av);
-	return(0);
+	ft_memset(&graph, 0, sizeof(t_graph));
+	graph.iter.col = 5;
+	graph.iter.i = 2;
+	graph.rooms = ft_memalloc(sizeof(t_room) * graph.iter.col);
+	return(graph);
 }

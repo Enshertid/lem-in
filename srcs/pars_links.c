@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_in.c                                           :+:      :+:    :+:   */
+/*   pars_links.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/17 19:43:23 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/17 20:12:38 by ymanilow         ###   ########.fr       */
+/*   Created: 2020/01/17 21:35:03 by ymanilow          #+#    #+#             */
+/*   Updated: 2020/01/17 21:43:41 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "parsing.h"
 
-int					main(int ac, char **av)
+void					check_links(t_data *data)
 {
-	t_data				data;
-
-	if (ac < 0)
-		ft_error("haha, ac < 0\n", 1);
-	ft_memset(&data, 0, sizeof(t_data));
-	data.graph = set_graph();
-	parsing(&data, av);
-	return(0);
+	ft_printf("%s", data->line);
 }

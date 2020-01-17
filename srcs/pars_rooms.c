@@ -1,35 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   data.c                                             :+:      :+:    :+:   */
+/*   pars_rooms.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/16 17:20:32 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/16 17:20:32 by ymanilow         ###   ########.fr       */
+/*   Created: 2020/01/17 21:31:52 by ymanilow          #+#    #+#             */
+/*   Updated: 2020/01/17 22:27:30 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "parsing.h"
 
-void					free_data(t_data *data)
+void					check_start(t_data *data)
 {
-	int				i;
-
-	i = -1;
-	while (++i <= data->iters.iter)
-	{
-		free(data->graph[i].links);
-		free(data->graph[i].name);
-	}
-	free(data->graph);
+	ft_printf("%s", data->line);
 }
 
-void					data_first_set(t_data *data)
+void					check_end(t_data *data)
 {
-	ft_memset(data, 0 , sizeof(t_data));
-	data->iters.iter = 1;
-	data->iters.col = 1;
-	data->graph = ft_memalloc(sizeof(t_room) * data->iters.col);
-	data->graph[0].name = ft_strnew(0);
+	ft_printf("%s", data->line);
+}
+
+void					check_side_room(t_data *data)
+{
+	if (ft_strequ(*(data->line), "#start"))
+		check_start(data);
+	else if (ft_strequ(*(data->line), "#end"))
+		check_end(data);
+}
+
+void					check_rooms(t_data *data)
+{
+	ft_printf("%s", data->line);
 }
