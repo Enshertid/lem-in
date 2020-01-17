@@ -48,11 +48,11 @@ void					ft_link_found(t_data *data, t_room *room, char *str)
 	i = -1;
 	while (++i <= data->iters.iter)
 	{
-		if (ft_strequ(data->rooms[i].name, str))
+		if (ft_strequ(data->graph[i].name, str))
 		{
 			data->flags.flag_not_error_link2 = TRUE;
-			ft_malloc_links(room, &data->rooms[i]);
-			ft_malloc_links(&data->rooms[i], room);
+			ft_malloc_links(room, &data->graph[i]);
+			ft_malloc_links(&data->graph[i], room);
 			break;
 		}
 		else
@@ -72,17 +72,20 @@ void					ft_check_links(t_data *data, char **line)
 	str = ft_strsplit(*line, '-');
 	while (++i <= data->iters.iter)
 	{
-		if (ft_strequ(data->rooms[i].name, str[0]))
+		if (ft_strequ(data->graph[i].name, str[0]))
 		{
 			data->flags.flag_not_error_link1 = TRUE;
-			ft_link_found(data, &data->rooms[i], str[1]);
+			ft_link_found(data, &data->graph[i], str[1]);
 			break;
 		}
 		else
 			data->flags.flag_not_error_link1 = FALSE;
 	}
 	if (!data->flags.flag_not_error_link1)
+	{
 		ft_error("first name in link is invalid\n", 6);
+		ft_printf("%s", data->graph[i].name);
+	}
 	ft_strdel(line);
 	ft_free(str, 2);
 }

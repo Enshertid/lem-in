@@ -1,33 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   turn_array.c                                       :+:      :+:    :+:   */
+/*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/22 22:45:36 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/16 15:51:57 by ymanilow         ###   ########.fr       */
+/*   Created: 2020/01/16 17:20:32 by ymanilow          #+#    #+#             */
+/*   Updated: 2020/01/16 17:20:32 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void 					add_to_end_of_turn(t_turn_array *turn, t_room *new, int num)
+void					free_data(t_data *data)
 {
-	new->num_on_the_search = ++num;
-	turn->array[turn->col] = new;
-	turn->col++;
-}
-
-void					delete_from_start(t_turn_array *turn)
-{
-	int					i;
-	int					j;
+	int				i;
 
 	i = -1;
-	j = 0;
-	while(++i < turn->col)
-		turn->array[i] = turn->array[++j];
-	turn->col--;
+	while (++i <= data->iters.iter)
+	{
+		free(data->graph[i].links);
+		free(data->graph[i].name);
+	}
+	free(data->graph);
 }
 
+void					data_first_set(t_data *data)
+{
+	ft_memset(data, 0 , sizeof(t_data));
+	data->iters.iter = 1;
+	data->iters.col = 1;
+	data->graph = ft_memalloc(sizeof(t_room) * data->iters.col);
+	data->graph[0].name = ft_strnew(0);
+}

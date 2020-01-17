@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 18:41:07 by ymanilow          #+#    #+#             */
-/*   Updated: 2019/12/22 20:49:35 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/01/17 16:06:50 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void					ft_check_ants(t_data *data, char **line)
 	__int128_t			num;
 
 	if (data->flags.flag_link || data->flags.flag_end || data->flags.flag_start ||
-								data->flags.flag_ants || data->flags.flag_room)
+		data->flags.flag_ants || data->flags.flag_room)
 		ft_error("ants must be first, and only ones!", 10);
 	num = ft_atoi(*line);
 	data->ants = num;
