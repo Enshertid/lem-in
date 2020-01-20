@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 21:35:03 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/20 17:16:42 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/01/20 21:27:27 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@ void					finish_rooms(t_data *data)
 {
 	t_room			*end;
 
+	if (!data->flags.flag_end)
+		ft_error("have no end room\n", 2);
+	else if (!data->flags.flag_start)
+		ft_error("have no start room\n",2 );
 	data->flags.flag_links = TRUE;
 	end = data->graph.rooms[data->graph.iter.i - 1];
 	data->graph.rooms[data->graph.iter.i - 1] = data->graph.rooms[1];
@@ -92,4 +96,6 @@ void					check_links(t_data *data)
 												data->pars.room_s;
 	data->pars.room_s->links[data->pars.room_s->iter.i++].link =
 												data->pars.room_f;
+	free(data->pars.line);
+	ft_free(data->pars.str, 2);
 }

@@ -1,34 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hash_table_malloc.c                                :+:      :+:    :+:   */
+/*   ways.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/19 13:35:58 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/20 13:17:02 by ymanilow         ###   ########.fr       */
+/*   Created: 2020/01/20 23:00:09 by ymanilow          #+#    #+#             */
+/*   Updated: 2020/01/20 23:00:09 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "hash_table.h"
 
-void						hash_free(t_hash_table *hash)
+#ifndef WAYS_H
+#define WAYS_H
+
+#include "lem_in.h"
+
+typedef struct					s_way
 {
-	int					i;
+	struct s_way				*next;
+	t_room						*room;
+}								t_way;
 
-	i = -1;
-	while(++i < hash->size)
-	{
-		if (hash->hash_table[i].iter.col)
-			free(hash->hash_table[i].rooms);
-	}
-	free(hash->hash_table);
-}
-
-t_hash						*hash_array_create(int size)
+typedef struct					s_ways
 {
-	t_hash			*hash;
+	int							col;
+	t_way						**ways;
+}								t_ways;
 
-	hash = ft_memalloc(sizeof(t_hash) * size);
-	return(hash);
-}
+#endif

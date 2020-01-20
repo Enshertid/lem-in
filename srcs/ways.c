@@ -1,34 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hash_table_malloc.c                                :+:      :+:    :+:   */
+/*   ways.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/19 13:35:58 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/20 13:17:02 by ymanilow         ###   ########.fr       */
+/*   Created: 2020/01/20 23:04:20 by ymanilow          #+#    #+#             */
+/*   Updated: 2020/01/20 23:10:49 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "hash_table.h"
+#include "ways.h"
 
-void						hash_free(t_hash_table *hash)
+
+
+void						room_add_to_way(t_way *way, t_room *room)
 {
-	int					i;
+	t_way		*new;
+	t_way		*tmp;
 
-	i = -1;
-	while(++i < hash->size)
+	if (way)
 	{
-		if (hash->hash_table[i].iter.col)
-			free(hash->hash_table[i].rooms);
+		new = ft_memalloc(sizeof(t_way));
+		new->room = room;
+		new->next = NULL;
+		tmp = way;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
 	}
-	free(hash->hash_table);
-}
-
-t_hash						*hash_array_create(int size)
-{
-	t_hash			*hash;
-
-	hash = ft_memalloc(sizeof(t_hash) * size);
-	return(hash);
+	else
+	{
+		way = ft_memalloc(sizeof(t_way));
+		way->room = room;
+		way->next = NULL;
+	}
 }

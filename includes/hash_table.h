@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 21:54:57 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/20 17:12:57 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/01/20 17:24:08 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int								hash_check(t_hash_table *hash,
 void							hash_add(t_hash_table *hash, t_room *room);
 
 t_hash							*hash_array_create(int size);
-//void							hash_free(t_hash_table *hash);
-int								get_next_line(const int fd, char **line);
+void							hash_free(t_hash_table *hash);
 
 #endif

@@ -1,34 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hash_table_malloc.c                                :+:      :+:    :+:   */
+/*   turn.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/19 13:35:58 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/20 13:17:02 by ymanilow         ###   ########.fr       */
+/*   Created: 2020/01/20 18:52:44 by ymanilow          #+#    #+#             */
+/*   Updated: 2020/01/20 18:57:08 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "hash_table.h"
 
-void						hash_free(t_hash_table *hash)
+#ifndef TURN_H
+#define TURN_H
+
+#include "graph.h"
+
+typedef struct					s_turn
 {
-	int					i;
+	t_room 			**arr;
+	ssize_t			size;
+	ssize_t			col;
+}								t_turn;
 
-	i = -1;
-	while(++i < hash->size)
-	{
-		if (hash->hash_table[i].iter.col)
-			free(hash->hash_table[i].rooms);
-	}
-	free(hash->hash_table);
-}
+t_room						**turn_create(int size);
+void 						turn_add(t_turn *turn, t_room *room);
+void 						turn_del(t_turn *turn);
 
-t_hash						*hash_array_create(int size)
-{
-	t_hash			*hash;
-
-	hash = ft_memalloc(sizeof(t_hash) * size);
-	return(hash);
-}
+#endif

@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 19:57:23 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/20 17:06:10 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/01/20 22:41:07 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,12 @@ typedef struct				s_room
 {
 	char					*name;
 	t_link					*links;
+	t_link					prev_in_algo;
 	t_iters					iter;
 	t_coord					coord;
 	int						hash_index;
+	int						distance;
+	int						flag;
 }							t_room;
 
 typedef struct				s_graph
@@ -55,6 +58,7 @@ typedef struct				s_graph
 	t_iters					iter;
 }							t_graph;
 
-t_graph						set_graph();
+t_graph						set_graph(void);
+void						graph_free(t_graph *graph);
 
 #endif

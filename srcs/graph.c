@@ -6,14 +6,28 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 19:59:56 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/20 17:12:10 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/01/20 18:11:39 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "graph.h"
 
-t_graph						set_graph()
+void						graph_free(t_graph *graph)
+{
+	int					i;
+
+	i = -1;
+	while(++i < graph->iter.col)
+	{
+		free(graph->rooms[i]->name);
+		free(graph->rooms[i]->links);
+		free(graph->rooms[i]);
+	}
+	free(graph->rooms);
+}
+
+t_graph						set_graph(void)
 {
 	t_graph			graph;
 

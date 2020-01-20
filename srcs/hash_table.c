@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 21:54:43 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/20 15:53:21 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/01/20 20:59:26 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int						hash_index_create(int size, char *str)
 	name = str;
 	hash = 0;
 	lenght = (int)ft_strlen(name) + 1;
+	if (lenght > 6)
+		lenght = 6;
 	while (--lenght > 0)
 		hash += *name++ * ft_pow(31, lenght);
 	if (hash < 0)
