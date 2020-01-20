@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 19:57:23 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/19 19:40:15 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/01/20 17:06:10 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ typedef struct				s_link
 
 typedef struct				s_room
 {
-	t_link					*links;
 	char					*name;
+	t_link					*links;
 	t_iters					iter;
 	t_coord					coord;
 	int						hash_index;

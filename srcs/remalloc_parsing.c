@@ -6,33 +6,25 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:12:38 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/20 13:17:02 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/01/20 16:58:01 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-void						set_hash_to_null(t_hash_table *hash, t_graph *graph, int size)
+void						set_hash_to_null(t_hash_table *hash)
 {
 	int					i;
-	t_hash				*tmp;
+	int					j;
 
 	i = -1;
-	while(++i < size)
+	while(++i < hash->size)
 	{
-		if (hash->hash_table[graph->rooms[i]->hash_index].room)
-			hash->hash_table[graph->rooms[i]->hash_index].room = NULL;
-		else
+		if(hash->hash_table[i].iter.col)
 		{
-			if (hash->hash_table[graph->rooms[i]->hash_index].next)
-			{
-				tmp = hash->hash_table[graph->rooms[i]->hash_index].next;
-				while (tmp)
-				{
-					tmp->room = NULL;
-					tmp = tmp->next;
-				}
-			}
+			j = -1;
+			while(++j < hash->hash_table[i].iter.i)
+				hash->hash_table[i].rooms[j] = NULL;
 		}
 	}
 }
@@ -40,28 +32,25 @@ void						set_hash_to_null(t_hash_table *hash, t_graph *graph, int size)
 void						set_relink(t_hash_table *hash, t_graph *graph, int size)
 {
 	int					i;
-	t_hash				*tmp;
+	int					j;
 
 	i = -1;
 	while(++i < size)
 	{
-		if (!hash->hash_table[graph->rooms[i]->hash_index].room)
-			hash->hash_table[graph->rooms[i]->hash_index].room =
-					graph->rooms[i];
-		else if (hash->hash_table[graph->rooms[i]->hash_index].next)
+		j = 0;
+		if (hash->hash_table[graph->rooms[i]->hash_index].iter.i)
 		{
-			tmp = hash->hash_table[graph->rooms[i]->hash_index].next;
-			while (tmp && tmp->room)
-				tmp = tmp->next;
-			if (tmp)
-				tmp->room = graph->rooms[i];
+			while (j < hash->hash_table[graph->rooms[i]->hash_index].iter.i &&
+					hash->hash_table[graph->rooms[i]->hash_index].rooms[j])
+				j++;
+			hash->hash_table[graph->rooms[i]->hash_index].rooms[j] = graph->rooms[i];
 		}
 	}
 }
 
 void						relink_hash_table(t_hash_table *hash, t_graph *graph, int size)
 {
-	set_hash_to_null(hash, graph, size);
+	set_hash_to_null(hash);
 	set_relink(hash, graph, size);
 }
 

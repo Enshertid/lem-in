@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 21:35:03 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/20 13:28:07 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/01/20 17:16:42 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,19 +62,9 @@ int						check_repeated_link(t_room *room_f, t_room *room_s)
 			flag = 1;
 	i = -1;
 	while (++i < room_s->iter.i)
-		if (ft_strequ(room_s->links[i].link->name , room_s->name))
+		if (ft_strequ(room_s->links[i].link->name , room_f->name))
 			flag = 1;
 	return (flag);
-}
-
-void					print_hash_table(t_data *data)
-{
-	int					i;
-
-	i = -1;
-	while (++i < data->graph.iter.col)
-		ft_printf("%s\n", data->hash.hash_table
-		[data->graph.rooms[i]->hash_index].room->name);
 }
 
 void					check_links(t_data *data)
