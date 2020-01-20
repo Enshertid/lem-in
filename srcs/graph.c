@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 19:59:56 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/17 21:43:05 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/01/20 13:24:01 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ t_graph						set_graph()
 	t_graph			graph;
 
 	ft_memset(&graph, 0, sizeof(t_graph));
-	graph.iter.col = 5;
+	graph.iter.col = 3000;
 	graph.iter.i = 2;
-	graph.rooms = ft_memalloc(sizeof(t_room) * graph.iter.col);
+	graph.rooms = ft_memalloc(sizeof(t_room*) * graph.iter.col);
 	return(graph);
 }

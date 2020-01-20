@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 20:12:52 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/18 18:23:55 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/01/20 14:02:24 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void					check_flags(t_data *data)
 
 void					check_comment(t_data *data)
 {
-	ft_printf("%s\n", *(data->pars.line));
+	ft_printf("%s\n", (data->pars.line));
 	free(data->pars.line);
 }
 
@@ -64,6 +64,7 @@ void					parsing(t_data *data, char **av)
 			check_rooms(data);
 		else if (ft_count_words(data->pars.line, '-') == 2)
 			check_links(data);
+//			continue;
 		else if (ft_count_words(data->pars.line, ' ') == 1)
 			check_ants(data);
 		else

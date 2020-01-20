@@ -6,29 +6,29 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 21:31:52 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/18 19:57:37 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/01/20 13:33:58 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-void					fill_room(t_data *data, t_room *room)
+void					fill_room(t_data *data, t_room **room)
 {
 	__int128_t				num;
 
+	*room = ft_memalloc(sizeof(t_room));
 	data->pars.str = ft_strsplit(data->pars.line, ' ');
-	room->name = ft_strdup(data->pars.str[0]);
+	(*room)->name = ft_strdup(data->pars.str[0]);
 	num = ft_atoi(data->pars.str[1]);
-	if (num != (room->coord.x = num))
+	if (num != ((*room)->coord.x = num))
 		ft_error("overflow int in x coord of room" , 4);
 	num = ft_atoi(data->pars.str[2]);
-	room->coord.y = num;
-	if (num != room->coord.y)
+	if (num != ((*room)->coord.y = num))
 		ft_error("overflow int in y coord of room", 4);
-	room->hash_index = hash_index_create(data->hash.size, room->name);
-	if (hash_check(&data->hash, room->hash_index, room->name))
+	(*room)->hash_index = hash_index_create(data->hash.size, (*room)->name);
+	if (hash_check(&data->hash, (*room)->hash_index, (*room)->name))
 		ft_error("same names in rooms\n", 4);
-	hash_add(data->hash.hash_table, room);
+	hash_add(&data->hash, (*room));
 }
 
 void					check_start(t_data *data)
@@ -89,6 +89,7 @@ void					check_rooms(t_data *data)
 		ft_error("room after links\n", 3);
 	if (!data->flags.flag_ants)
 		ft_error("room before ants\n", 3);
+	data->flags.flag_rooms = 1;
 	if (data->graph.iter.i == data->graph.iter.col)
 		remalloc_of_graph(data);
 	fill_room(data, &data->graph.rooms[data->graph.iter.i++]);
