@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 19:57:23 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/20 22:41:07 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/01/21 17:01:52 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,8 @@ typedef struct				s_graph
 
 t_graph						set_graph(void);
 void						graph_free(t_graph *graph);
+
+void						turn_on_the_link(t_room *room_s, t_room *room_f);
+void						turn_off_the_link(t_room *room_s, t_room *room_f);
 
 #endif

@@ -6,33 +6,38 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 23:04:20 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/20 23:10:49 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/01/21 17:08:25 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ways.h"
 
-
-
-void						room_add_to_way(t_way *way, t_room *room)
+void						ways_array_malloc(t_ways *ways)
 {
-	t_way		*new;
-	t_way		*tmp;
+	t_way					**ways_array;
+	int						i;
 
-	if (way)
-	{
-		new = ft_memalloc(sizeof(t_way));
-		new->room = room;
-		new->next = NULL;
-		tmp = way;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new;
-	}
+	if (!ways->iters.col)
+		ways->iters.col = 5;
 	else
+		ways->iters.col *= 5;
+	ways_array = ft_memalloc(sizeof(t_way*) * ways->iters.col);
+	if (ways->iters.col != 5)
 	{
-		way = ft_memalloc(sizeof(t_way));
-		way->room = room;
-		way->next = NULL;
+		i = -1;
+		while (++i < ways->iters.i)
+			ways_array[i] = ways->way_ar[i];
+		free(ways->way_ar);
 	}
+	ways->way_ar = ways_array;
+}
+
+t_way						*point_of_way_create(t_room *room)
+{
+	t_way					*point;
+
+	point = ft_memalloc(sizeof(t_way));
+	point->room = room;
+	point->next = NULL;
+	return (point);
 }

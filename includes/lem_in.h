@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 19:07:02 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/20 21:46:29 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/01/21 15:25:07 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,12 @@ typedef struct				s_data
 	t_turn					turn;
 	t_pars					pars;
 	t_ways					ways;
+	t_ways					ways_for_algo;
 	int						ants;
 }							t_data;
 
 void						parsing(t_data *data, char **av);
+void		 				suurballe_algo(t_data *data);
 int							get_next_line(const int fd, char **line);
 
 #endif

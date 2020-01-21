@@ -40,7 +40,7 @@ void					check_flags(t_data *data)
 	else if (!data->flags.flag_ants)
 		ft_error("have no ants\n", 2);
 	else if (!data->flags.flag_room)
-		ft_error("have no rooms\n", 2);
+		ft_error("have no r-ooms\n", 2);
 
 }
 
