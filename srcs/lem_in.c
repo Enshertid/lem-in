@@ -21,7 +21,7 @@ void				free_data(t_data *data)
 int					main(int ac, char **av)
 {
 	t_data				data;
-	
+
 	if (ac < 0)
 		ft_error("haha, ac < 0\n", 1);
 	ft_memset(&data, 0, sizeof(t_data));
