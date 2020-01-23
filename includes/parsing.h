@@ -1,35 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_in.c                                           :+:      :+:    :+:   */
+/*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/17 19:43:23 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/23 22:38:04 by ymanilow         ###   ########.fr       */
+/*   Created: 2020/01/17 21:32:08 by ymanilow          #+#    #+#             */
+/*   Updated: 2020/01/23 22:30:57 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
+#ifndef PARSING_H
+#define PARSING_H
+
 #include "lem_in.h"
+#include "graph.h"
 
-void				free_data(t_data *data)
-{
-	hash_free(&data->hash);
-	graph_free(&data->graph);
-}
+void					check_comment(t_data *data);
+void					check_side_room(t_data *data);
+void					check_rooms(t_data *data);
+void					check_links(t_data *data);
 
-int					main(int ac, char **av)
-{
-	t_data				data;
+void					relink_hash_table(t_hash_table *hash, t_graph *graph, int size);
+void					remalloc_of_graph(t_data *data);
+void					final_remalloc_graph(t_data *data);
 
-	if (ac < 0)
-		ft_error("haha, ac < 0\n", 1);
-	ft_memset(&data, 0, sizeof(t_data));
-	data.hash.hash_table = hash_array_create(HASH_SIZE);
-	data.hash.size = HASH_SIZE;
-	data.graph = set_graph();
-	parsing(&data, av);
-	suurballe_algo(&data);
-	free_data(&data);
-	return(0);
-}
+#endif

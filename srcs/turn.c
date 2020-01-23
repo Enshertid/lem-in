@@ -1,35 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_in.c                                           :+:      :+:    :+:   */
+/*   turn.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/17 19:43:23 by ymanilow          #+#    #+#             */
+/*   Created: 2020/01/20 18:51:48 by ymanilow          #+#    #+#             */
 /*   Updated: 2020/01/23 22:38:04 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
 
-void				free_data(t_data *data)
+#include "turn.h"
+
+t_room						**turn_create(int size)
 {
-	hash_free(&data->hash);
-	graph_free(&data->graph);
+	t_room				**turn;
+
+	turn = ft_memalloc(sizeof(t_room*) * size);
+	return (turn);
+}
+void 						turn_add(t_turn *turn, t_room *room)
+{
+	turn->arr[turn->col++] = room;
 }
 
-int					main(int ac, char **av)
+void 						turn_del(t_turn *turn)
 {
-	t_data				data;
+	ssize_t					i;
+	ssize_t					j;
 
-	if (ac < 0)
-		ft_error("haha, ac < 0\n", 1);
-	ft_memset(&data, 0, sizeof(t_data));
-	data.hash.hash_table = hash_array_create(HASH_SIZE);
-	data.hash.size = HASH_SIZE;
-	data.graph = set_graph();
-	parsing(&data, av);
-	suurballe_algo(&data);
-	free_data(&data);
-	return(0);
+	if (turn->col > 0)
+	{
+		i = -1;
+		j = 0;
+		while(++i < turn->col - 1 && ++j < turn->col)
+			turn->arr[i] = turn->arr[j];
+		turn->col--;
+		turn->arr[turn->col] = NULL;
+	}
+	else if (turn->arr[0])
+		turn->arr[0] = NULL;
 }
