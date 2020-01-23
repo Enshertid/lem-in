@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 19:43:23 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/23 22:38:04 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/01/23 23:05:44 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,13 @@ int					main(int ac, char **av)
 	data.hash.size = HASH_SIZE;
 	data.graph = set_graph();
 	parsing(&data, av);
-	suurballe_algo(&data);
+	int i;
+	i = -1;
+	while (++i < data.graph.iter.col)
+	{
+		ft_printf("%s\n",data.graph.rooms[i]->name);
+	}
+//	suurballe_algo(&data);
 	free_data(&data);
 	return(0);
 }
