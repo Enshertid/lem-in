@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 13:54:43 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/24 21:52:15 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/01/24 23:06:08 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void					dijkstra_algo(t_graph *graph, t_turn *turn, t_way *way)
 			while(++i < turn->arr[0]->iter.i)
 				if (turn->arr[0]->links[i].status &&
 					turn->arr[0]->distance + 1 < turn->arr[0]->links[i].
-					link->distance && turn->arr[0]->links[i].condition)
+					link->distance && !turn->arr[0]->links[i].condition)
 				{
 					turn->arr[0]->links[i].link->prev_in_algo.link
 							= turn->arr[0];
@@ -77,19 +77,24 @@ void					dijkstra_algo_modifide(t_graph *graph, t_turn *turn, t_way *way)
 		i = -1;
 		while(++i < turn->arr[0]->iter.i)
 		{
-			if (turn->arr[0]->flag_of_way && !turn->arr[0]->links[i].link->flag_of_way)
-				continue;
 			if (turn->arr[0]->links[i].status &&
 				turn->arr[0]->distance + 1 < turn->arr[0]->links[i].
-						link->distance && turn->arr[0]->links[i].condition)
+						link->distance && !turn->arr[0]->links[i].condition)
 			{
 				turn->arr[0]->links[i].link->prev_in_algo.link
 						= turn->arr[0];
 				turn->arr[0]->links[i].link->distance = turn->arr[0]->
 						distance + 1;
-				if (!turn->arr[0]->links[i].link->flag)
+				if (turn->arr[0]->prev_in_algo.link && !turn->arr[0]->prev_in_algo.link->flag_of_way &&
+					turn->arr[0]->flag_of_way && !turn->arr[0]->links[i].link->flag_of_way)
 				{
-					turn->arr[0]->links[i].link->flag = 1;
+					turn->arr[0]->distance = MAX_INT;
+					turn->arr[0]->prev_in_algo.link = NULL;
+					turn->arr[0]->flag = FALSE;
+				}
+				else if (!turn->arr[0]->links[i].link->flag)
+				{
+					turn->arr[0]->links[i].link->flag = TRUE;
 					turn_add(turn, turn->arr[0]->links[i].link);
 				}
 			}

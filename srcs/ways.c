@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 23:04:20 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/24 20:27:52 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/01/24 22:42:11 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void						way_storage_set(t_graph *graph, t_storage_w *ways)
 {
 	int						i;
 
-	ft_memset(&ways, 0, sizeof(t_storage_w));
 	ways->iters.i = -1;
 	ways->iters.col = graph->rooms[0]->iter.i;
 	if (ways->iters.col > graph->rooms[graph->iter.col - 1]->iter.i)
@@ -50,7 +49,7 @@ void						way_storage_set(t_graph *graph, t_storage_w *ways)
 	while (++i < ways->iters.col)
 	{
 		ways->ways[i].iters.col = i + 1;
-		ways->ways[i].way_ar = ft_memalloc(sizeof(ways->ways[i].iters.col));
+		ways->ways[i].way_ar = ft_memalloc(sizeof(t_way) * ways->ways[i].iters.col);
 	}
 }
 
