@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 19:57:23 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/23 22:30:57 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/01/24 16:51:27 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,11 @@ typedef struct				s_coord
 	int						y;
 }							t_coord;
 
-//typedef struct s_room;
-//typedef struct s_room t_room;
-//
-//struct s_link;
-//typedef struct s_link t_link;
-
 typedef struct				s_link
 {
 	struct s_room			*link;
-	int						status;
+	t_bool					status;
+	t_bool					condition;
 }							t_link;
 
 typedef struct				s_room
@@ -50,6 +45,7 @@ typedef struct				s_room
 	int						hash_index;
 	int						distance;
 	int						flag;
+	int						flag_of_way;
 }							t_room;
 
 typedef struct				s_graph
@@ -60,8 +56,5 @@ typedef struct				s_graph
 
 t_graph						set_graph(void);
 void						graph_free(t_graph *graph);
-
-void						turn_on_the_link(t_room *room_s, t_room *room_f);
-void						turn_off_the_link(t_room *room_s, t_room *room_f);
 
 #endif
