@@ -32,6 +32,7 @@ void					fill_room(t_data *data, t_room **room)
 		ft_error("same names in rooms\n", 4);
 	hash_add(&data->hash, (*room));
 	(*room)->distance = MAX_INT;
+	(*room)->prev_in_algo = ft_memalloc(sizeof(t_link) * 2);
 }
 
 void					check_start(t_data *data)

@@ -16,6 +16,13 @@
 
 #include "libft.h"
 
+typedef struct				s_flags_algo
+{
+	t_bool					flag_of_way;
+	t_bool					flag_of_algo;
+	t_bool					flag;
+}							t_flags_algo;
+
 typedef struct				s_iters
 {
 	int						i;
@@ -39,13 +46,12 @@ typedef struct				s_room
 {
 	char					*name;
 	t_link					*links;
-	t_link					prev_in_algo;
+	t_link					*prev_in_algo;
 	t_iters					iter;
 	t_coord					coord;
+	t_flags_algo			flags;
 	int						hash_index;
 	int						distance;
-	int						flag;
-	int						flag_of_way;
 }							t_room;
 
 typedef struct				s_graph

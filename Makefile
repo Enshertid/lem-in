@@ -6,7 +6,7 @@
 #    By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/14 10:58:26 by ymanilow          #+#    #+#              #
-#    Updated: 2020/01/23 23:11:15 by ymanilow         ###   ########.fr        #
+#    Updated: 2020/01/26 17:13:37 by ymanilow         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ LIB = ./libft/
 FLAGS = -Wall -Wextra -Werror -I$(DIR_H) -I$(LIB)includes_l -I$(LIB)includes_p
 
 SRCS_C = lem_in.c	parsing.c	pars_rooms.c	pars_links.c	remalloc_parsing.c	\
-hash_table.c	hash_table_malloc.c	graph.c		get_next_line1.c					\
+hash_table.c	hash_table_malloc.c	graph.c		get_next_line1.c	suurballe_algo.c\
+search_of_shortest_way.c	ways.c		ways_operations.c	turn.c\
 
 
 SRCS_O = $(addprefix $(DIR_O)/,$(SRCS_C:.c=.o))

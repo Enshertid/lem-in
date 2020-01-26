@@ -38,10 +38,10 @@ void				wrap_directions(t_way *way)
 			if (tmp->room->links[i].link == tmp->next->room)
 			{
 				tmp->room->links[i].status = FALSE;
-				tmp->room->flag_of_way = TRUE;
+				tmp->room->flags.flag_of_way = TRUE;
 			}
 		tmp = tmp->next;
 	}
-	way->head->room->flag_of_way = FALSE;
-	way->tail->room->flag_of_way = FALSE;
+	way->head->room->flags.flag_of_way = FALSE;
+	way->tail->room->flags.flag_of_way = FALSE;
 }

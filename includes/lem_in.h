@@ -13,20 +13,20 @@
 #ifndef LEM_IN
 #define LEM_IN
 
- #include "libft.h"
+#include "libft.h"
 #include "graph.h"
 #include "hash_table.h"
 #include "turn.h"
 #include "ways.h"
 
-typedef struct				s_flags
+typedef struct				s_flags_pars
 {
 	t_bool					flag_ants;
 	t_bool					flag_links;
 	t_bool					flag_start;
 	t_bool					flag_end;
 	t_bool					flag_room;
-}							t_flags;
+}							t_flags_pars;
 
 typedef struct				s_pars
 {
@@ -42,7 +42,7 @@ typedef struct				s_pars
 typedef struct				s_data
 {
 	t_graph					graph;
-	t_flags					flags;
+	t_flags_pars			flags;
 	t_hash_table			hash;
 	t_turn					turn;
 	t_pars					pars;
