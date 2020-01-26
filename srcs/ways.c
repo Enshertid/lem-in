@@ -6,11 +6,26 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 23:04:20 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/24 22:42:11 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/01/25 20:04:28 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ways.h"
+
+int							way_weight(t_way *way)
+{
+	int weight;
+	t_way_room *tmp;
+
+	weight = 0;
+	tmp = way->head;
+	while (tmp)
+	{
+		tmp = tmp->next;
+		weight++;
+	}
+	return(weight);
+}
 
 t_way_room					*way_point_create(t_room *room)
 {
@@ -44,6 +59,7 @@ void						way_storage_set(t_graph *graph, t_storage_w *ways)
 	ways->iters.col = graph->rooms[0]->iter.i;
 	if (ways->iters.col > graph->rooms[graph->iter.col - 1]->iter.i)
 		ways->iters.col = graph->rooms[graph->iter.col - 1]->iter.i;
+	ways->iters.col++;
 	ways->ways = ft_memalloc(sizeof(t_ways) * ways->iters.col);
 	i = -1;
 	while (++i < ways->iters.col)

@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 21:16:18 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/24 21:40:47 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/01/25 18:41:49 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,14 @@
 void						 set_ways_to_the_next_iteration(t_ways *prev, t_ways *new)
 {
 	prev->iters.i = -1;
+	new->iters.i = -1;
 	while (++prev->iters.i < prev->iters.col)
+	{
 		get_copy_of_way(&prev->way_ar[prev->iters.i],
 						&new->way_ar[prev->iters.i]);
+		new->iters.i++;
+	}
+	new->iters.i++;
 }
 
 void				wrap_directions(t_way *way)

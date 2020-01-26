@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 13:54:43 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/24 23:06:08 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/01/25 22:54:58 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,18 +81,18 @@ void					dijkstra_algo_modifide(t_graph *graph, t_turn *turn, t_way *way)
 				turn->arr[0]->distance + 1 < turn->arr[0]->links[i].
 						link->distance && !turn->arr[0]->links[i].condition)
 			{
-				turn->arr[0]->links[i].link->prev_in_algo.link
-						= turn->arr[0];
-				turn->arr[0]->links[i].link->distance = turn->arr[0]->
-						distance + 1;
 				if (turn->arr[0]->prev_in_algo.link && !turn->arr[0]->prev_in_algo.link->flag_of_way &&
 					turn->arr[0]->flag_of_way && !turn->arr[0]->links[i].link->flag_of_way)
-				{
-					turn->arr[0]->distance = MAX_INT;
-					turn->arr[0]->prev_in_algo.link = NULL;
-					turn->arr[0]->flag = FALSE;
-				}
-				else if (!turn->arr[0]->links[i].link->flag)
+					continue;
+				else if ((turn->arr[0]->prev_in_algo.link && turn->arr[0]->prev_in_algo.link->flag_of_way &&
+					turn->arr[0]->flag_of_way && turn->arr[0]->links[i].link->flag_of_way))
+					continue;
+				turn->arr[0]->links[i].link->prev_in_algo.link
+ 						= turn->arr[0];
+				turn->arr[0]->links[i].link->distance = turn->arr[0]->
+						distance + 1;
+//				turn->arr[0]->links[i].link->flag = FALSE;
+				if (!turn->arr[0]->links[i].link->flag)
 				{
 					turn->arr[0]->links[i].link->flag = TRUE;
 					turn_add(turn, turn->arr[0]->links[i].link);
@@ -109,18 +109,29 @@ void					bfs_algo(t_graph *graph, t_turn *turn, t_way *way)
 	ssize_t						i;
 
 	turn_add(turn, graph->rooms[0]);
+	turn->arr[0]->flag = TRUE;
 	while (turn->arr[0])
 	{
 		i = -1;
 		while (++i < turn->arr[0]->iter.i)
-			if (!turn->arr[0]->links->link->flag &&
-			turn->arr[0]->links[i].status && !turn->arr[0]->links[i].condition)
+			if (!turn->arr[0]->links[i].link->flag &&
+					turn->arr[0]->links[i].status && !turn->arr[0]->links[i].condition)
 			{
 				turn->arr[0]->links[i].link->flag = TRUE;
+				if (turn->arr[0]->prev_in_algo.link && !turn->arr[0]->prev_in_algo.link->flag_of_way &&
+					turn->arr[0]->flag_of_way && !turn->arr[0]->links[i].link->flag_of_way)
+				{
+					turn->arr[0]->links[i].link->flag = FALSE;
+					turn->arr[0]->flag = FALSE;
+				}
 				turn->arr[0]->links[i].link->distance = turn->arr[0]->
 						distance + 1;
 				turn->arr[0]->links[i].link->prev_in_algo.link = turn->arr[0];
-				turn_add(turn, turn->arr[0]->links[i].link);
+				if (turn->arr[0]->links[i].link->flag)
+					turn_add(turn, turn->arr[0]->links[i].link);
+//				if (turn->arr[0]->prev_in_algo.link && turn->arr[0]->prev_in_algo.link->flag_of_way &&
+//					turn->arr[0]->flag_of_way && turn->arr[0]->links[i].link->flag_of_way)
+//					turn->arr[0]->links[i].link->flag = FALSE;
 			}
 		turn_del(turn);
 	}

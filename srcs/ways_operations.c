@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 17:25:00 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/24 21:24:21 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/01/25 18:06:25 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,21 @@ void				combine_ways_and_cut_common_link(t_way *way_f, t_way *way_s)
 			tmp_f = tmp_f->next;
 		}
 		tmp_s = tmp_s->prev;
+	}
+	tmp_f = way_f->head->next;
+	tmp_s = way_f->head;
+	while (tmp_f)
+	{
+		tmp_f->prev = tmp_s;
+		tmp_f = tmp_f->next;
+		tmp_s = tmp_s->next;
+	}
+	tmp_f = way_s->head->next;
+	tmp_s = way_s->head;
+	while (tmp_f)
+	{
+		tmp_f->prev = tmp_s;
+		tmp_f = tmp_f->next;
+		tmp_s = tmp_s->next;
 	}
 }
