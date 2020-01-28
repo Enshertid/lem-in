@@ -19,6 +19,7 @@
 typedef struct				s_flags_algo
 {
 	t_bool					flag_of_way;
+	t_bool					flag_of_first;
 	t_bool					flag_of_algo;
 	t_bool					flag;
 }							t_flags_algo;
@@ -51,7 +52,9 @@ typedef struct				s_room
 	t_coord					coord;
 	t_flags_algo			flags;
 	int						hash_index;
-	int						distance;
+	int						distance_firs;
+	int						distance_second;
+	int						num_of_way;
 }							t_room;
 
 typedef struct				s_graph

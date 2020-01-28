@@ -25,7 +25,7 @@ void						 set_ways_to_the_next_iteration(t_ways *prev, t_ways *new)
 	new->iters.i++;
 }
 
-void				wrap_directions(t_way *way)
+void				wrap_directions(t_way *way, int num_of_way)
 {
 	t_way_room			*tmp;
 	ssize_t				i;
@@ -39,9 +39,12 @@ void				wrap_directions(t_way *way)
 			{
 				tmp->room->links[i].status = FALSE;
 				tmp->room->flags.flag_of_way = TRUE;
+				tmp->room->num_of_way = num_of_way;
 			}
 		tmp = tmp->next;
 	}
 	way->head->room->flags.flag_of_way = FALSE;
 	way->tail->room->flags.flag_of_way = FALSE;
+	way->head->room->num_of_way = 0;
+	way->tail->room->num_of_way = 0;
 }

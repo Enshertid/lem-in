@@ -12,6 +12,8 @@
 
 #include "lem_in.h"
 
+void get_way(t_graph *pGraph, t_way *pWay);
+
 void				free_data(t_data *data)
 {
 	hash_free(&data->hash);
@@ -38,6 +40,63 @@ void 				add_algo_way_to_array(t_ways *ways, t_way *new)
 	new->tail = NULL;
 }
 
+void				rooms_of_way(t_turn *turn, int i)
+{
+	if (!turn->arr[0]->flags.flag_of_first)
+	{
+
+	}
+}
+
+void				get_out_of_way(t_turn *turn, int i)
+{
+
+}
+
+void				usual_rooms(t_turn *turn, int i)
+{
+	if (turn->arr[0]->distance_firs + 1 <
+	turn->arr[0]->links[i].link->distance_firs)
+	{
+		turn->arr[0]->links[i].link->distance_firs = turn->arr[0]->distance_firs + 1;
+		turn->arr[0]->links[i].link->prev_in_algo[1].link = turn->arr[0];
+}
+
+void				search_graph_for_ways_with_common_links(t_graph *graph, t_turn *turn, t_way *way)
+{
+	int					i;
+
+	turn_add(turn, graph->rooms[0], FALSE);
+	while (turn->arr[0])
+	{
+		i = -1;
+		while (++i < turn->arr[0]->iter.i)
+		{
+			if (turn->arr[0]->links[i].status &&
+			!turn->arr[0]->links[i].condition)
+			{
+				if (turn->arr[0]->prev_in_algo[1].link &&
+					!turn->arr[0]->prev_in_algo[1].link->flags.flag_of_way
+					&& turn->arr[0]->flags.flag_of_way &&
+					!turn->arr[0]->links[i].link->flags.flag_of_way)
+					continue;
+				else if (turn->arr[0]->flags.flag_of_way &&
+						 turn->arr[0]->links[i].link->flags.flag_of_way)
+					rooms_of_way(turn, i);
+				else if (turn->arr[0]->prev_in_algo[1].link &&
+						 turn->arr[0]->prev_in_algo->link->flags.flag_of_way
+						 && turn->arr[0]->flags.flag_of_way &&
+						 !turn->arr[0]->links[i].link->flags.flag_of_way)
+					get_out_of_way(turn, i);
+				else
+					usual_rooms(turn, i);
+			}
+		}
+		turn_del(turn);
+	}
+	get_way(graph, way);
+}
+
 void				algo(t_data *data)
 {
 	int					i;
@@ -51,20 +110,7 @@ void				algo(t_data *data)
 	{
 		i = -1;
 		while (++i < data->ways.ways[j].iters.i)
-			wrap_directions(&data->ways.ways[j].way_ar[i]);
-		ft_printf("\n");
-		i = -1;
-		while (++i < data->ways.ways[j].iters.col)
-		{
-			tmp = data->ways.ways[j].way_ar[i].head;
-			while (tmp)
-			{
-				ft_printf("%s\n", tmp->room->name);
-				tmp = tmp->next;
-			}
-			ft_printf("\n");
-		}
-		bfs_algo(&data->graph, &data->turn, &data->way_for_algo);
+			wrap_directions(&data->ways.ways[j].way_ar[i], i + 1);
 		i = -1;
 		while (++i < data->ways.ways[j].iters.i)
 			combine_ways_and_cut_common_link(&data->ways.ways[j].way_ar[i], &data->way_for_algo);

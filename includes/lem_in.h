@@ -54,9 +54,10 @@ typedef struct				s_data
 void						parsing(t_data *data, char **av);
 int							get_next_line(const int fd, char **line);
 
+void						get_way(t_graph *graph, t_way *way);
 void						bfs_algo(t_graph *graph, t_turn *turn, t_way *way);
 void						dijkstra_algo(t_graph *graph, t_turn *turn, t_way *way);
-void						wrap_directions(t_way *way);
+void						wrap_directions(t_way *way, int num_of_way);
 void						set_ways_to_the_next_iteration(t_ways *prev_iter, t_ways *next_iter);
 void						dijkstra_algo_modifide(t_graph *graph, t_turn *turn, t_way *way);
 
