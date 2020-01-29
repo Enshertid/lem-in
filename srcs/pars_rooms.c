@@ -31,7 +31,8 @@ void					fill_room(t_data *data, t_room **room)
 	if (hash_check(&data->hash, (*room)->hash_index, (*room)->name))
 		ft_error("same names in rooms\n", 4);
 	hash_add(&data->hash, (*room));
-	(*room)->distance = MAX_INT;
+	(*room)->distance_first = MAX_INT;
+	(*room)->distance_second = MAX_INT;
 	(*room)->prev_in_algo = ft_memalloc(sizeof(t_link) * 2);
 }
 
@@ -53,7 +54,7 @@ void					check_start(t_data *data)
 	if (ft_count_words(data->pars.line, ' ') != 3)
 		ft_error("wrong format of start\n",3);
 	fill_room(data, &data->graph.rooms[0]);
-	data->graph.rooms[0]->distance = 0;
+	data->graph.rooms[0]->distance_first = 0;
 	free(data->pars.line);
 	ft_free(data->pars.str, 3);
 }

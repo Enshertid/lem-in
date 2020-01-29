@@ -12,8 +12,6 @@
 
 #include "lem_in.h"
 
-void get_way(t_graph *pGraph, t_way *pWay);
-
 void				free_data(t_data *data)
 {
 	hash_free(&data->hash);
@@ -40,29 +38,118 @@ void 				add_algo_way_to_array(t_ways *ways, t_way *new)
 	new->tail = NULL;
 }
 
+void				get_way1(t_graph *graph, t_way *way)
+{
+		t_room					*tmp;
+		ssize_t					i;
+		ssize_t					j;
+
+		tmp = graph->rooms[graph->iter.col - 1];
+		while (tmp)
+		{
+			if (tmp->flags.flag_of_second)
+			{
+				way_point_add(way, way_point_create(tmp));
+				tmp->flags.flag_of_second = FALSE;
+				tmp = tmp->prev_in_algo[1].link;
+			}
+			else
+			{
+				way_point_add(way, way_point_create(tmp));
+				tmp->flags.flag_of_first = FALSE;
+				tmp = tmp->prev_in_algo[0].link;
+			}
+		}
+		i = -1;
+		while (++i < graph->iter.col)
+		{
+			j = -1;
+			while (++j < graph->rooms[i]->iter.i)
+			{
+				graph->rooms[i]->links[j].link->flags.flag = FALSE;
+				graph->rooms[i]->links[j].link->prev_in_algo[1].link = NULL;
+				graph->rooms[i]->links[j].link->distance_first = MAX_INT;
+			}
+		}
+		graph->rooms[0]->distance_first = 0;
+
+}
+
 void				rooms_of_way(t_turn *turn, int i)
 {
-	if (!turn->arr[0]->flags.flag_of_first)
+	if (turn->arr[0]->links[i].link->flags.flag_of_first &&
+	turn->arr[0]->distance_first - 1 < turn->arr[0]->links[i].link->distance_second)
 	{
+		turn->arr[0]->links[i].link->distance_second = turn->arr[0]->distance_first - 1;
+		turn->arr[0]->links[i].link->prev_in_algo[1].link = turn->arr[0];
+		turn->arr[0]->links[i].link->flags.flag_of_second = TRUE;
+	}
+	else if (turn->arr[0]->distance_first - 1 < turn->arr[0]->links[i].link->distance_first)
+	{
+		turn->arr[0]->links[i].link->distance_first = turn->arr[0]->distance_first - 1;
+		turn->arr[0]->links[i].link->prev_in_algo[0].link = turn->arr[0];
+		turn->arr[0]->links[i].link->flags.flag_of_first = TRUE;
+	}
+	turn_add(turn, turn->arr[0]->links[i].link, FALSE);
+}
 
+void				welcome_to_way(t_turn *turn, int i)
+{
+	if (turn->arr[0]->distance_first + 1 <= turn->arr[0]->links[i].link->distance_first)
+	{
+		turn->arr[0]->links[i].link->distance_first = turn->arr[0]->distance_first + 1;
+		turn->arr[0]->links[i].link->prev_in_algo[0].link = turn->arr[0];
+		turn->arr[0]->links[i].link->flags.flag_of_first = TRUE;
+		turn_add(turn, turn->arr[0]->links[i].link, FALSE);
 	}
 }
 
 void				get_out_of_way(t_turn *turn, int i)
 {
-
+	if (turn->arr[0]->flags.flag_of_first)
+	{
+		if (!turn->arr[0]->flags.flag_of_second &&
+		turn->arr[0]->distance_first + 1 <= turn->arr[0]->links[i].link->distance_first)
+		{
+			turn->arr[0]->links[i].link->distance_first = turn->arr[0]->distance_first + 1;
+			turn->arr[0]->links[i].link->prev_in_algo[0].link = turn->arr[0];
+			turn->arr[0]->links[i].link->flags.flag_of_first = TRUE;
+			turn_add(turn, turn->arr[0]->links[i].link, FALSE);
+		}
+		else if (turn->arr[0]->flags.flag_of_second &&
+		turn->arr[0]->distance_second + 1 <= turn->arr[0]->links[i].link->distance_first)
+		{
+			turn->arr[0]->links[i].link->distance_first = turn->arr[0]->distance_second + 1;
+			turn->arr[0]->links[i].link->prev_in_algo[0].link = turn->arr[0];
+			turn->arr[0]->links[i].link->flags.flag_of_first = TRUE;
+			turn_add(turn, turn->arr[0]->links[i].link, FALSE);
+		}
+	}
 }
 
 void				usual_rooms(t_turn *turn, int i)
 {
-	if (turn->arr[0]->distance_firs + 1 <
-	turn->arr[0]->links[i].link->distance_firs)
+	if (turn->arr[0]->distance_first + 1 < turn->arr[0]->links[i].link->distance_first)
 	{
-		turn->arr[0]->links[i].link->distance_firs = turn->arr[0]->distance_firs + 1;
-		turn->arr[0]->links[i].link->prev_in_algo[1].link = turn->arr[0];
+		turn->arr[0]->links[i].link->distance_first = turn->arr[0]->distance_first + 1;
+		turn->arr[0]->links[i].link->prev_in_algo[0].link = turn->arr[0];
+		turn->arr[0]->links[i].link->flags.flag_of_first = TRUE;
+		turn_add(turn, turn->arr[0]->links[i].link, FALSE);
+	}
 }
 
-void				search_graph_for_ways_with_common_links(t_graph *graph, t_turn *turn, t_way *way)
+void				low_priority(t_turn *turn, int i)
+{
+	if (turn->arr[0]->distance_first + 2 < turn->arr[0]->links[i].link->distance_first)
+	{
+		turn->arr[0]->links[i].link->distance_first = turn->arr[0]->distance_first + 2;
+		turn_add(turn, turn->arr[0]->links[i].link, FALSE);
+		turn->arr[0]->links[i].link->flags.flag_of_first = TRUE;
+	}
+
+}
+
+void			search_graph_for_ways_with_common_links(t_graph *graph, t_turn *turn, t_way *way)
 {
 	int					i;
 
@@ -75,26 +162,33 @@ void				search_graph_for_ways_with_common_links(t_graph *graph, t_turn *turn, t_
 			if (turn->arr[0]->links[i].status &&
 			!turn->arr[0]->links[i].condition)
 			{
-				if (turn->arr[0]->prev_in_algo[1].link &&
-					!turn->arr[0]->prev_in_algo[1].link->flags.flag_of_way
+				if (turn->arr[0]->prev_in_algo[0].link &&
+					!turn->arr[0]->prev_in_algo->link->flags.flag_of_first&&``
+					!turn->arr[0]->prev_in_algo[0].link->flags.flag_of_way
 					&& turn->arr[0]->flags.flag_of_way &&
 					!turn->arr[0]->links[i].link->flags.flag_of_way)
-					continue;
+					low_priority(turn, i);
 				else if (turn->arr[0]->flags.flag_of_way &&
-						 turn->arr[0]->links[i].link->flags.flag_of_way)
+				turn->arr[0]->links[i].link->flags.flag_of_way &&
+				turn->arr[0]->num_of_way == turn->arr[0]->links[i].link->num_of_way)
 					rooms_of_way(turn, i);
-				else if (turn->arr[0]->prev_in_algo[1].link &&
-						 turn->arr[0]->prev_in_algo->link->flags.flag_of_way
-						 && turn->arr[0]->flags.flag_of_way &&
-						 !turn->arr[0]->links[i].link->flags.flag_of_way)
+				else if (turn->arr[0]->prev_in_algo->link &&
+				turn->arr[0]->prev_in_algo->link->flags.flag_of_way &&
+				turn->arr[0]->flags.flag_of_way &&
+				turn->arr[0]->num_of_way ==
+				turn->arr[0]->prev_in_algo->link->num_of_way &&
+				!turn->arr[0]->links[i].link->flags.flag_of_way)
 					get_out_of_way(turn, i);
+				else if (!turn->arr[0]->flags.flag_of_way &&
+				turn->arr[0]->links[i].link->flags.flag_of_way)
+					welcome_to_way(turn, i);
 				else
 					usual_rooms(turn, i);
 			}
 		}
 		turn_del(turn);
 	}
-	get_way(graph, way);
+	get_way1(graph, way);
 }
 
 void				algo(t_data *data)
@@ -111,6 +205,17 @@ void				algo(t_data *data)
 		i = -1;
 		while (++i < data->ways.ways[j].iters.i)
 			wrap_directions(&data->ways.ways[j].way_ar[i], i + 1);
+		search_graph_for_ways_with_common_links(&data->graph, &data->turn, &data->way_for_algo);
+		i = -1;
+		while (++i < data->ways.ways[j].iters.i)
+		{
+			tmp = data->ways.ways[j].way_ar[i].head;
+			while (tmp)
+			{
+				ft_printf("%s\n",tmp->room->name);
+				tmp = tmp->next;
+			}
+		}
 		i = -1;
 		while (++i < data->ways.ways[j].iters.i)
 			combine_ways_and_cut_common_link(&data->ways.ways[j].way_ar[i], &data->way_for_algo);
