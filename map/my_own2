@@ -1,6 +1,6 @@
-50
-##start
+100
 #start
+##start
 start 0 0
 ##end
 end 100 200
@@ -13,10 +13,10 @@ end 100 200
 start-1
 start-2
 1-4
+1-2
 2-3
 2-5
 4-5
 5-end
 3-6
 6-end
-

@@ -59,7 +59,6 @@ void						way_storage_set(t_graph *graph, t_storage_w *ways)
 	ways->iters.col = graph->rooms[0]->iter.i;
 	if (ways->iters.col > graph->rooms[graph->iter.col - 1]->iter.i)
 		ways->iters.col = graph->rooms[graph->iter.col - 1]->iter.i;
-	ways->iters.col++;
 	ways->ways = ft_memalloc(sizeof(t_ways) * ways->iters.col);
 	i = -1;
 	while (++i < ways->iters.col)
@@ -67,6 +66,32 @@ void						way_storage_set(t_graph *graph, t_storage_w *ways)
 		ways->ways[i].iters.col = i + 1;
 		ways->ways[i].way_ar = ft_memalloc(sizeof(t_way) * ways->ways[i].iters.col);
 	}
+}
+
+void						way_storage_free(t_storage_w *ways)
+{
+	t_way_room *tmp;
+	t_way_room *tmp1;
+
+	ways->iters.i = -1;
+	while (++ways->iters.i < ways->iters.col)
+	{
+		ways->ways[ways->iters.i].iters.i = -1;
+		while (++ways->ways[ways->iters.i].iters.i <
+				ways->ways[ways->iters.i].iters.col)
+		{
+			tmp = ways->ways[ways->iters.i].way_ar[ways->ways[ways->iters.i].iters.i].head;
+			while (tmp)
+			{
+				tmp1 = tmp;
+				tmp = tmp->next;
+				ft_memset(tmp1, 0, sizeof(t_way_room));
+				free(tmp1);
+			}
+		}
+		free(ways->ways[ways->iters.i].way_ar);
+	}
+	free(ways->ways);
 }
 
 void						way_clear(t_way *way)

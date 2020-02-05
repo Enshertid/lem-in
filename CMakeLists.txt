@@ -27,6 +27,6 @@ add_executable(lem_in
         srcs/suurballe_algo.c
         srcs/turn.c
         srcs/ways.c
-        srcs/ways_operations.c)
+        srcs/ways_operations.c srcs/garbage.c)
 
 target_link_libraries(lem_in ~/curcus42/lem-in/libft/libft.a)

@@ -34,9 +34,13 @@ void				wrap_directions(t_way *way, int num_of_way)
 	while (tmp->next)
 	{
 		i = -1;
+
 		while (++i < tmp->room->iter.i)
 			if (tmp->room->links[i].link == tmp->next->room)
 			{
+				if (tmp->room->flags.flag_of_second)
+					tmp->room->prev_in_algo[1].link = NULL;
+				tmp->room->prev_in_algo->link = NULL;
 				tmp->room->links[i].status = FALSE;
 				tmp->room->flags.flag_of_way = TRUE;
 				tmp->room->num_of_way = num_of_way;

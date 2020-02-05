@@ -20,6 +20,14 @@ t_room						**turn_create(int size)
 	turn = ft_memalloc(sizeof(t_room*) * size);
 	return (turn);
 }
+
+void						turn_free(t_turn *turn)
+{
+	turn->col = 0;
+	turn->size = 0;
+	free(turn->arr);
+}
+
 void 						turn_add(t_turn *turn, t_room *room, t_bool priority)
 {
 	int					i;

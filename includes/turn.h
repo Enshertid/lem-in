@@ -26,5 +26,6 @@ typedef struct					s_turn
 t_room						**turn_create(int size);
 void						turn_add(t_turn *turn, t_room *room, t_bool priority);
 void						turn_del(t_turn *turn);
+void						turn_free(t_turn *turn);
 
 #endif

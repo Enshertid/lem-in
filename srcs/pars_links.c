@@ -91,7 +91,10 @@ void					check_links(t_data *data)
 	if (data->pars.room_s->iter.i == data->pars.room_s->iter.col)
 		malloc_links(data->pars.room_s);
 	if (check_repeated_link(data->pars.room_f, data->pars.room_s))
+	{
+		ft_printf("%s-%s\n", data->pars.room_f->name, data->pars.room_s->name);
 		ft_error("link has been repeat\n", 5);
+	}
 	data->pars.room_f->links[data->pars.room_f->iter.i++].link =
 												data->pars.room_s;
 	data->pars.room_s->links[data->pars.room_s->iter.i++].link =

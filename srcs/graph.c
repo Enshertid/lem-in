@@ -48,6 +48,7 @@ void						graph_free(t_graph *graph)
 	{
 		free(graph->rooms[i]->name);
 		free(graph->rooms[i]->links);
+		free(graph->rooms[i]->prev_in_algo);
 		free(graph->rooms[i]);
 	}
 	free(graph->rooms);

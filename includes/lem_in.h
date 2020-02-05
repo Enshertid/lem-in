@@ -61,4 +61,9 @@ void						wrap_directions(t_way *way, int num_of_way);
 void						set_ways_to_the_next_iteration(t_ways *prev_iter, t_ways *next_iter);
 void						dijkstra_algo_modifide(t_graph *graph, t_turn *turn, t_way *way);
 
+
+void						put_out_links_of_rooms(t_data *data);
+void						put_out_array_of_ways(t_ways *ways);
+void						put_out_way(t_way way);
+void						controller_of_condition(t_room *room);
 #endif

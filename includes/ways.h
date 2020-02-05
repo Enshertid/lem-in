@@ -47,8 +47,11 @@ t_way_room						*way_point_create(t_room *room);
 
 void							combine_ways_and_cut_common_link(t_way *way_f,
 																t_way *way_s);
+
 void							way_storage_set(t_graph *graph, t_storage_w *ways);
+void							way_storage_free(t_storage_w *ways);
 void							way_clear(t_way *way);
+
 void							get_copy_of_way(t_way *prev, t_way *new);
 int								way_weight(t_way *way);
 
