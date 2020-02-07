@@ -40,7 +40,7 @@ typedef struct				s_link
 {
 	struct s_room			*link;
 	t_bool					status;
-	t_bool					condition;
+	t_bool					cutout;
 }							t_link;
 
 typedef struct				s_room

@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 13:54:43 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/26 16:39:38 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/07 21:22:56 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,14 @@ void					dijkstra_algo(t_graph *graph, t_turn *turn, t_way *way)
 			while(++i < turn->arr[0]->iter.i)
 				if (turn->arr[0]->links[i].status &&
 					turn->arr[0]->distance_first + 1 < turn->arr[0]->links[i].
-					link->distance_first && !turn->arr[0]->links[i].condition)
+					link->distance_first && !turn->arr[0]->links[i].cutout &&
+					!turn->arr[0]->flags.flag)
 				{
 					turn->arr[0]->links[i].link->prev_in_algo[1].link
 							= turn->arr[0];
 					turn->arr[0]->links[i].link->distance_first = turn->arr[0]->
 							distance_first + 1;
-					if (!turn->arr[0]->links[i].link->flags.flag)
-					{
-						turn->arr[0]->links[i].link->flags.flag = 1;
-						turn_add(turn, turn->arr[0]->links[i].link, FALSE);
-					}
+					turn_add(turn, turn->arr[0]->links[i].link, FALSE);
 				}
 			turn_del(turn);
 		}

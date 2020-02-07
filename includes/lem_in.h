@@ -65,5 +65,5 @@ void						dijkstra_algo_modifide(t_graph *graph, t_turn *turn, t_way *way);
 void						put_out_links_of_rooms(t_data *data);
 void						put_out_array_of_ways(t_ways *ways);
 void						put_out_way(t_way way);
-void						controller_of_condition(t_room *room);
+void						controller_of_cutout(t_room *room);
 #endif

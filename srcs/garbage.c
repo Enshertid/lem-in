@@ -4,7 +4,7 @@
 
 #include "lem_in.h"
 
-void				controller_of_condition(t_room *room)
+void				controller_of_cutout(t_room *room)
 {
 	int i;
 
@@ -12,10 +12,10 @@ void				controller_of_condition(t_room *room)
 	ft_printf("name of room is %s\n", room->name);
 	while (++i < room->iter.i)
 	{
-		if (room->links[i].condition)
-			ft_printf("condition of link with room %s is TRUE\n",room->links[i].link->name);
+		if (room->links[i].cutout)
+			ft_printf("cutout of link with room %s is TRUE\n",room->links[i].link->name);
 		else
-			ft_printf("condition of link with room %s is FALSE\n", room->links[i].link->name);
+			ft_printf("cutout of link with room %s is FALSE\n", room->links[i].link->name);
 	}
 }
 

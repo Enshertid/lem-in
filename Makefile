@@ -24,7 +24,7 @@ FLAGS = -Wall -Wextra -Werror -I$(DIR_H) -I$(LIB)includes_l -I$(LIB)includes_p
 
 SRCS_C = lem_in.c	parsing.c	pars_rooms.c	pars_links.c	remalloc_parsing.c	\
 hash_table.c	hash_table_malloc.c	graph.c		get_next_line1.c	suurballe_algo.c\
-search_of_shortest_way.c	ways.c		ways_operations.c	turn.c\
+search_of_shortest_way.c	ways.c		ways_operations.c	turn.c	garbage.c\
 
 
 SRCS_O = $(addprefix $(DIR_O)/,$(SRCS_C:.c=.o))

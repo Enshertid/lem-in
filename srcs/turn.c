@@ -55,6 +55,7 @@ void 						turn_del(t_turn *turn)
 	{
 		i = -1;
 		j = 0;
+		turn->arr[0]->flags.flag = TRUE;
 		while(++i < turn->col - 1 && ++j < turn->col)
 			turn->arr[i] = turn->arr[j];
 		turn->col--;

@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 17:25:00 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/25 18:06:25 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/07 22:37:47 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,97 +26,79 @@ void				get_copy_of_way(t_way *prev, t_way *new)
 
 void				throw_links(t_way_room **way_s, t_way_room **way_f)
 {
-	t_way_room				*tmp_f;
-	t_way_room				*tmp_s;
-	t_way_room				*tmp;
-	t_way_room				*tmp_tmp;
-	ssize_t					i;
+		t_way_room				*tmp_f;
+		t_way_room				*tmp_s;
+		t_way_room				*tmp;
+		t_way_room				*tmp_tmp;
+		ssize_t					i;
 
-	tmp_f = *way_f;
-	tmp_s = *way_s;
-	i = -1;
-	while(++i < tmp_f->prev->room->iter.i)
-		if (tmp_f->prev->room->links[i].link == tmp_s->room)
- 			tmp_f->prev->room->links[i].condition = TRUE;
-	i = -1;
-	while (++i < tmp_s->room->iter.i)
-		if (tmp_s->room->links[i].link == tmp_f->prev->room)
-			tmp_s->room->links[i].condition = TRUE;
-	tmp = tmp_f;
-	tmp_f = tmp_f->prev;
-	tmp->prev = tmp_s->prev;
-	tmp_f->next = tmp_s;
-	tmp_tmp = tmp_s->prev;
-	tmp_tmp->next = tmp;
-	tmp_s->prev = tmp_f;
-	tmp_f->next = tmp_s->next->next;
-	tmp_s = tmp_s->next;
-	free(tmp_s->prev);
-	tmp_s = tmp_s->next;
-	free(tmp_s->prev);
-	tmp_s->prev = tmp_f;
+		tmp_f = *way_f;
+		tmp_s = *way_s;
+		i = -1;
+		while(++i < tmp_f->prev->room->iter.i)
+			if (tmp_f->prev->room->links[i].link == tmp_s->room)
+				tmp_f->prev->room->links[i].cutout = TRUE;
+		i = -1;
+		while (++i < tmp_s->room->iter.i)
+			if (tmp_s->room->links[i].link == tmp_f->prev->room)
+				tmp_s->room->links[i].cutout = TRUE;
+		tmp = tmp_f;
+		tmp_f = tmp_f->prev;
+		tmp->prev = tmp_s->prev;
+		tmp_f->next = tmp_s;
+		tmp_tmp = tmp_s->prev;
+		tmp_tmp->next = tmp;
+		tmp_s->prev = tmp_f;
+		tmp_f->next = tmp_s->next->next;
+		tmp_s = tmp_s->next;
+		free(tmp_s->prev);
+		tmp_s = tmp_s->next;
+		free(tmp_s->prev);
+		tmp_s->prev = tmp_f;
 }
 
-void				put_out_way1(t_way way)
+int					check_coincidence(t_way_room **first, t_way_room **second, int count)
 {
 	t_way_room *tmp;
+	t_way_room *tmp_s;
 
-	tmp = way.head;
-	while (tmp)
+	tmp_s = *second;
+	while(count-- > 0 && tmp_s->next)
+		tmp_s = tmp_s->next;
+	tmp = *first;
+	if (tmp->room == tmp_s->room && tmp->prev->room == tmp_s->next->room)
 	{
-		ft_printf("%s\n",tmp->room->name);
-		tmp = tmp->next;
+		throw_links(&tmp, &tmp_s);
+		return (1);
 	}
+	return(0);
 }
 
-void				combine_ways_and_cut_common_link(t_way *way_f, t_way *way_s)
+void				combine_ways_and_cut_common_link(t_way *way_f, t_ways *ways)
 {
-	t_way_room				*tmp_f;
-	t_way_room				*tmp_s;
-	t_way_room				*tmp;
-	int						i;
+	t_way_room			*tmp;
+	int					count;
+	int					i;
+	t_bool				flag;
 
-	tmp_f = way_f->tail->prev;
-	while (tmp_f->prev)
+	tmp = way_f->tail->prev;
+	while (tmp->room != way_f->head->room)
 	{
-		tmp_s = way_s->head->next;
-		while (tmp_s->next)
+		tmp = way_f->tail->prev;
+		while (tmp->prev)
 		{
-			if (tmp_f->room == tmp_s->room &&
-			tmp_f->prev->room == tmp_s->next->room)
+			count = 0;
+			flag = 0;
+			i = -1;
+			while (++i < ways->iters.i)
 			{
-				tmp_f = tmp_f->prev;
-				tmp_s = tmp_s->prev;
-				throw_links(&tmp_s->next, &tmp_f->next);
-				if (tmp_f->next->room == tmp_f->prev->room)
-				{
-					tmp_f = tmp_f->prev;
-					tmp = tmp_f->next;
-					i = -1;
-					while (++i < tmp_f->room->iter.i)
-						if (tmp_f->room->links[i].link == tmp->room)
-						{
-							tmp_f->room->links[i].link->flags.flag_of_way = FALSE;
-							tmp_f->room->links[i].condition = TRUE;
-						}
-					i = -1;
-					while (++i < tmp->room->iter.i)
-						if(tmp->room->links[i].link == tmp_f->room)
-						{
-							tmp->room->links[i].condition = TRUE;
-							tmp->room->links[i].link->flags.flag_of_way = FALSE;
-						}
-					tmp->prev = NULL;
-					tmp_f->next = tmp->next->next;
-					tmp->next->next->prev = tmp_f;
-					tmp->next->prev = NULL;
-					tmp->next->next = NULL;
-					free(tmp->next);
-					free(tmp);
-				}
+				count++;
+				if ((flag = check_coincidence(&tmp, &ways->way_ar[i].head, count)))
+					break;
 			}
-			tmp_s = tmp_s->next;
+			if (flag)
+				break;
+			tmp = tmp->prev;
 		}
-		tmp_f = tmp_f->prev;
 	}
 }
