@@ -19,7 +19,8 @@
 typedef struct				s_flags_algo
 {
 	t_bool					flag_of_way;
-	t_bool					flag_of_first;
+	t_bool					flag1;
+	t_bool					flag2;
 	t_bool					flag_of_second;
 	t_bool					flag;
 }							t_flags_algo;

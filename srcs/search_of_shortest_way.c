@@ -49,7 +49,7 @@ void					dijkstra_algo(t_graph *graph, t_turn *turn, t_way *way)
 			i = -1;
 			while(++i < turn->arr[0]->iter.i)
 				if (turn->arr[0]->links[i].status &&
-					turn->arr[0]->distance_first + 1 < turn->arr[0]->links[i].
+					turn->arr[0]->distance_first + 1 <= turn->arr[0]->links[i].
 					link->distance_first && !turn->arr[0]->links[i].cutout &&
 					!turn->arr[0]->flags.flag)
 				{

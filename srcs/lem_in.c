@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 19:43:23 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/07 21:50:27 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/09 19:01:24 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,11 @@ void				get_way1(t_graph *graph, t_way *way)
 {
 		t_room					*tmp;
 		ssize_t					i;
-		ssize_t					j;
 
 		tmp = graph->rooms[graph->iter.col - 1];
 		while (tmp)
 		{
-			if (tmp->flags.flag_of_second && tmp->prev_in_algo[1].link->flags.flag_of_first && tmp->num_of_way ==
-			tmp->prev_in_algo[1].link->num_of_way)
+			if (tmp->flags.flag_of_second && tmp->flags.flag2)
 			{
 				way_point_add(way, way_point_create(tmp));
 				tmp->flags.flag_of_second = FALSE;
@@ -59,10 +57,10 @@ void				get_way1(t_graph *graph, t_way *way)
 			else
 			{
 				way_point_add(way, way_point_create(tmp));
-				tmp->flags.flag_of_first = FALSE;
 				tmp = tmp->prev_in_algo[0].link;
 			}
 		}
+//		way_point_add(way, way_point_create(tmp));
 		i = -1;
 		while (++i < graph->iter.col)
 		{
@@ -72,7 +70,6 @@ void				get_way1(t_graph *graph, t_way *way)
 			graph->rooms[i]->prev_in_algo[1].link = NULL;
 			graph->rooms[i]->distance_first = MAX_INT;
 			graph->rooms[i]->distance_second = MAX_INT;
-			graph->rooms[i]->flags.flag_of_first = FALSE;
 			graph->rooms[i]->flags.flag_of_second = FALSE;
 		}
 		graph->rooms[0]->distance_first = 0;
@@ -85,13 +82,12 @@ void				usual_rooms(t_turn *turn, int i)
 	{
 		turn->arr[0]->links[i].link->distance_first = turn->arr[0]->distance_first + 1;
 		turn->arr[0]->links[i].link->prev_in_algo[0].link = turn->arr[0];
-		turn->arr[0]->links[i].link->flags.flag_of_first = TRUE;
 		turn_add(turn, turn->arr[0]->links[i].link, FALSE);
 	}
 }
 
-void 				rooms_of_ways(void)
-{
+	//void 				rooms_of_ways(void)
+	//{
 	/* if (номера путей одинаковы)
 	 * 		if (текущая комната только с флагом первого вхождения)
 	 * 		{
@@ -119,7 +115,7 @@ void 				rooms_of_ways(void)
 	 *
 	 * 		}
 	 */
-}
+//}
 
 void				rooms_of_way(t_turn *turn, int i)
 {
@@ -127,27 +123,26 @@ void				rooms_of_way(t_turn *turn, int i)
 	{
 		if (!turn->arr[0]->flags.flag_of_second)
 		{
-			if (!turn->arr[0]->links[i].link->flags.flag_of_first &&
-				!turn->arr[0]->links[i].link->flags.flag_of_second)
+			if (turn->arr[0]->distance_first - 1 < turn->arr[0]->links[i].link->distance_second)
 			{
-				if (turn->arr[0]->distance_first - 1 < turn->arr[0]->links[i].link->distance_first)
-				{
-					turn->arr[0]->links[i].link->distance_first = turn->arr[0]->distance_first - 1;
-					turn->arr[0]->links[i].link->prev_in_algo[0].link = turn->arr[0];
-					turn->arr[0]->links[i].link->flags.flag_of_first = TRUE;
-					turn_add(turn, turn->arr[0]->links[i].link, FALSE);
-				}
+				if (!turn->arr[0]->flags.flag1)
+					turn->arr[0]->flags.flag2 = TRUE;
+				turn->arr[0]->links[i].link->distance_second = turn->arr[0]->distance_first - 1;
+				turn->arr[0]->links[i].link->prev_in_algo[1].link = turn->arr[0];
+				turn->arr[0]->links[i].link->flags.flag_of_second = TRUE;
+				turn_add(turn, turn->arr[0]->links[i].link, FALSE);
 			}
-			else if (turn->arr[0]->links[i].link->flags.flag_of_first &&
-						!turn->arr[0]->links[i].link->flags.flag_of_second)
+		}
+		else
+		{
+			if (turn->arr[0]->distance_second - 1 < turn->arr[0]->links[i].link->distance_second)
 			{
-				if (turn->arr[0]->distance_first - 1 < turn->arr[0]->links[i].link->distance_second)
-				{
-					turn->arr[0]->links[i].link->distance_second = turn->arr[0]->distance_first - 1;
-					turn->arr[0]->links[i].link->prev_in_algo[1].link = turn->arr[0];
-					turn->arr[0]->links[i].link->flags.flag_of_second = TRUE;
-					turn_add(turn, turn->arr[0]->links[i].link, FALSE);
-				}
+				if (!turn->arr[0]->flags.flag1)
+					turn->arr[0]->flags.flag2 = TRUE;
+				turn->arr[0]->links[i].link->distance_second = turn->arr[0]->distance_second - 1;
+				turn->arr[0]->links[i].link->prev_in_algo[1].link = turn->arr[0];
+				turn->arr[0]->links[i].link->flags.flag_of_second = TRUE;
+				turn_add(turn, turn->arr[0]->links[i].link, FALSE);
 			}
 		}
 	}
@@ -155,21 +150,23 @@ void				rooms_of_way(t_turn *turn, int i)
 	{
 		if (!turn->arr[0]->flags.flag_of_second)
 		{
-			if (turn->arr[0]->distance_first + 2 < turn->arr[0]->links[i].link->distance_first)
+			if (turn->arr[0]->distance_first + 1 < turn->arr[0]->links[i].link->distance_first)
 			{
-				turn->arr[0]->links[i].link->distance_first = turn->arr[0]->distance_first + 2;
+				if (!turn->arr[0]->flags.flag2)
+					turn->arr[0]->flags.flag1 = TRUE;
+				turn->arr[0]->links[i].link->distance_first = turn->arr[0]->distance_first + 1;
 				turn->arr[0]->links[i].link->prev_in_algo[0].link = turn->arr[0];
-				turn->arr[0]->links[i].link->flags.flag_of_first = TRUE;
 				turn_add(turn, turn->arr[0]->links[i].link, FALSE);
 			}
 		}
-		if (turn->arr[0]->flags.flag_of_second)
+		else if (turn->arr[0]->flags.flag_of_second)
 		{
 			if (turn->arr[0]->distance_second + 1 < turn->arr[0]->links[i].link->distance_first)
 			{
+				if (!turn->arr[0]->flags.flag2)
+					turn->arr[0]->flags.flag1 = TRUE;
 				turn->arr[0]->links[i].link->distance_first = turn->arr[0]->distance_second + 1;
 				turn->arr[0]->links[i].link->prev_in_algo[0].link = turn->arr[0];
-				turn->arr[0]->links[i].link->flags.flag_of_first = TRUE;
 				turn_add(turn, turn->arr[0]->links[i].link, FALSE);
 			}
 		}
@@ -178,23 +175,22 @@ void				rooms_of_way(t_turn *turn, int i)
 
 void				get_out_of_way(t_turn *turn, int i)
 {
-	if (!turn->arr[0]->flags.flag_of_second)
-	{
-		if (turn->arr[0]->distance_first + 2 < turn->arr[0]->links[i].link->distance_first)
-		{
-			turn->arr[0]->links[i].link->distance_first = turn->arr[0]->distance_first + 2;
-			turn->arr[0]->links[i].link->prev_in_algo[0].link = turn->arr[0];
-			turn->arr[0]->links[i].link->flags.flag_of_first = TRUE;
-			turn_add(turn, turn->arr[0]->links[i].link, FALSE);
-		}
-	}
-	else if (turn->arr[0]->flags.flag_of_second)
+//	if (!turn->arr[0]->flags.flag_of_second && !turn->arr[0]->flags.flag)
+//	{
+//		if (turn->arr[0]->distance_first + 1 < turn->arr[0]->links[i].link->distance_first)
+//		{
+//			turn->arr[0]->links[i].link->distance_first = turn->arr[0]->distance_first + 1;
+//			turn->arr[0]->links[i].link->prev_in_algo[0].link = turn->arr[0];
+//			turn->arr[0]->links[i].link->flags.flag_of_first = TRUE;
+//			turn_add(turn, turn->arr[0]->links[i].link, FALSE);
+//		}
+//	}
+	if (turn->arr[0]->flags.flag_of_second)
 	{
 		if (turn->arr[0]->distance_second + 1 < turn->arr[0]->links[i].link->distance_first)
 		{
 			turn->arr[0]->links[i].link->distance_first = turn->arr[0]->distance_second + 1;
 			turn->arr[0]->links[i].link->prev_in_algo[0].link = turn->arr[0];
-			turn->arr[0]->links[i].link->flags.flag_of_first = TRUE;
 			turn_add(turn, turn->arr[0]->links[i].link, FALSE);
 		}
 	}
@@ -208,11 +204,10 @@ void				search_graph_for_way_with_common_links(t_graph *graph, t_turn *turn, t_w
 	turn_add(turn, graph->rooms[0], FALSE);
 	while (turn->arr[0])
 	{
-		i = -1;
+ 		i = -1;
 		while (++i < turn->arr[0]->iter.i)
 		{
 			if (turn->arr[0]->links[i].status &&
-			!turn->arr[0]->links[i].cutout &&
 			turn->arr[0]->links[i].link != graph->rooms[0] &&
 			turn->arr[0] != graph->rooms[graph->iter.col - 1])
 			{
