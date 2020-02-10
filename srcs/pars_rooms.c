@@ -6,11 +6,23 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 21:31:52 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/23 23:11:15 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/10 12:48:12 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+void					pre_fill_fork(t_room **room)
+{
+	int i;
+
+	i = -1;
+	while (++i < 2)
+		(*room)->fork[i].distance = MAX_INT;
+	i = -1;
+	while (++i < 2)
+		(*room)->fork[i].room = *room;
+}
 
 void					fill_room(t_data *data, t_room **room)
 {
@@ -31,9 +43,8 @@ void					fill_room(t_data *data, t_room **room)
 	if (hash_check(&data->hash, (*room)->hash_index, (*room)->name))
 		ft_error("same names in rooms\n", 4);
 	hash_add(&data->hash, (*room));
-	(*room)->distance_first = MAX_INT;
-	(*room)->distance_second = MAX_INT;
-	(*room)->prev_in_algo = ft_memalloc(sizeof(t_link) * 2);
+	(*room)->fork = ft_memalloc(sizeof(t_fork) * 2);
+	pre_fill_fork(room);
 }
 
 void					check_start(t_data *data)
@@ -54,7 +65,6 @@ void					check_start(t_data *data)
 	if (ft_count_words(data->pars.line, ' ') != 3)
 		ft_error("wrong format of start\n",3);
 	fill_room(data, &data->graph.rooms[0]);
-	data->graph.rooms[0]->distance_first = 0;
 	free(data->pars.line);
 	ft_free(data->pars.str, 3);
 }

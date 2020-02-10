@@ -32,7 +32,7 @@ typedef struct					s_hash_table
 
 t_room							*hash_search(t_hash_table *hash,
 												int index, char *name);
-int								hash_index_create(int size, char *str);
+int								hash_index_create(int size, const char *str);
 int								hash_check(t_hash_table *hash,
 												int index, char *name);
 void							hash_add(t_hash_table *hash, t_room *room);

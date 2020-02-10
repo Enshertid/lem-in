@@ -13,7 +13,7 @@
 #include <stdio.h>
 #include "hash_table.h"
 
-int						hash_index_create(int size, char *str)
+int						hash_index_create(int size, const char *str)
 {
 	const char			*name;
 	int					lenght;

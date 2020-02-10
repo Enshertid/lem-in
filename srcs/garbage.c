@@ -1,34 +1,37 @@
-//
-// Created by Naumenko on 03.02.2020.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   garbage.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/10 19:01:08 by ymanilow          #+#    #+#             */
+/*   Updated: 2020/02/10 19:01:08 by ymanilow         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "lem_in.h"
-
-void				controller_of_cutout(t_room *room)
-{
-	int i;
-
-	i = -1;
-	ft_printf("name of room is %s\n", room->name);
-	while (++i < room->iter.i)
-	{
-		if (room->links[i].cutout)
-			ft_printf("cutout of link with room %s is TRUE\n",room->links[i].link->name);
-		else
-			ft_printf("cutout of link with room %s is FALSE\n", room->links[i].link->name);
-	}
-}
 
 void				put_out_links_of_rooms(t_data *data)
 {
 	int i = -1;
 	int j;
+	ft_printf("\nlinks of OUT room\n");
 	while (++i < data->graph.iter.col)
 	{
 		j = -1;
 		ft_printf("room %s has next links:\n",data->graph.rooms[i]->name);
-		while (++j < data->graph.rooms[i]->iter.i)
-			ft_printf("%s\n",data->graph.rooms[i]->links[j].link->name);
+		while (++j < data->graph.rooms[i]->fork[0].iter.col)
+			ft_printf("%s\n",data->graph.rooms[i]->fork[0].links[j].link->room->name);
+	}
+	i = -1;
+	ft_printf("\nlinks of IN part\n");
+	while (++i < data->graph.iter.col)
+	{
+		j = -1;
+		ft_printf("room %s has next links:\n",data->graph.rooms[i]->name);
+		while (++j < data->graph.rooms[i]->fork[1].iter.col)
+			ft_printf("%s\n",data->graph.rooms[i]->fork[1].links[j].link->room->name);
 	}
 }
 
