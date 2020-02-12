@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 19:43:23 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/12 11:54:19 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/12 15:46:57 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,14 @@ void				init_data(t_data *data)
 
 int					main(int ac, char **av)
 {
-	t_data data;
+	t_data			data;
+	int				i;
 
 	if (ac < 0)
 		ft_error("haha, ac < 0\n", 1);
 	init_data(&data);
 	parsing(&data, av);
-	int i = -1;
+	i = -1;
 	while (++i < data.graph.iter.col)
 		duplicate_place_for_links(&data.graph.rooms[i]->fork[0],
 				&data.graph.rooms[i]->fork[1]);
@@ -45,5 +46,5 @@ int					main(int ac, char **av)
 	data.turn.arr = turn_create(data.turn.size);
 	algo(&data);
 	free_data(&data);
-	return(0);
+	return (0);
 }

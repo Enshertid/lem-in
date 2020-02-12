@@ -6,17 +6,18 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 19:59:56 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/11 15:39:43 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/12 15:30:53 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "graph.h"
 
-void						duplicate_place_for_links(t_fork *first, t_fork *second)
+void						duplicate_place_for_links(t_fork *first,
+														t_fork *second)
 {
 	second->iter.col = first->iter.i + 1;
-	second->links = ft_memalloc(sizeof(t_link) * second->iter.col);
+	if (!(second->links = ft_memalloc(sizeof(t_link) * second->iter.col)))
+		ft_error("error in malloc\n", 9);
 	second->iter.i = -1;
 	while (++second->iter.i < second->iter.col - 1)
 	{
@@ -25,7 +26,8 @@ void						duplicate_place_for_links(t_fork *first, t_fork *second)
 	}
 	free(first->links);
 	first->iter.col = second->iter.col;
-	first->links = ft_memalloc(sizeof(t_link) * first->iter.col);
+	if (!(first->links = ft_memalloc(sizeof(t_link) * first->iter.col)))
+		ft_error("error in malloc\n", 9);
 	first->iter.i = -1;
 	while (++first->iter.i < first->iter.col - 1)
 	{
@@ -43,7 +45,7 @@ void						graph_free(t_graph *graph)
 	int					i;
 
 	i = -1;
-	while(++i < graph->iter.col)
+	while (++i < graph->iter.col)
 	{
 		free(graph->rooms[i]->name);
 		free(graph->rooms[i]->fork[0].links);
@@ -56,11 +58,12 @@ void						graph_free(t_graph *graph)
 
 t_graph						set_graph(void)
 {
-	t_graph			graph;
+	t_graph				graph;
 
 	ft_memset(&graph, 0, sizeof(t_graph));
 	graph.iter.col = 5000;
 	graph.iter.i = 2;
-	graph.rooms = ft_memalloc(sizeof(t_room*) * graph.iter.col);
-	return(graph);
+	if (!(graph.rooms = ft_memalloc(sizeof(t_room*) * graph.iter.col)))
+		ft_error("error in malloc\n", 9);
+	return (graph);
 }

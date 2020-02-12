@@ -6,13 +6,14 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 21:16:18 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/12 12:30:02 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/12 15:37:16 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void						 set_ways_to_the_next_iteration(t_ways *prev, t_ways *new)
+void						set_ways_to_the_next_iteration(t_ways *prev,
+																t_ways *new)
 {
 	prev->iters.i = -1;
 	new->iters.i = -1;
@@ -25,7 +26,8 @@ void						 set_ways_to_the_next_iteration(t_ways *prev, t_ways *new)
 	new->iters.i++;
 }
 
-void				get_ready_room_of_way(t_room *room, t_room *prev, t_room *next, int num_of_way)
+void						get_ready_room_of_way(t_room *room,
+									t_room *prev, t_room *next, int num_of_way)
 {
 	int				i;
 
@@ -47,10 +49,9 @@ void				get_ready_room_of_way(t_room *room, t_room *prev, t_room *next, int num_
 	}
 	room->fork[0].num_of_way = num_of_way;
 	room->fork[1].num_of_way = num_of_way;
-//	room->flags.in_out_switch = TRUE;
 }
 
-void					wrap_directions(t_way *way, int num_of_way)
+void						wrap_directions(t_way *way, int num_of_way)
 {
 	t_way_room			*tmp;
 	int					i;
@@ -65,9 +66,9 @@ void					wrap_directions(t_way *way, int num_of_way)
 	tmp = tmp->next;
 	while (tmp->next)
 	{
-		get_ready_room_of_way(tmp->room, tmp->prev->room, tmp->next->room, num_of_way);
+		get_ready_room_of_way(tmp->room, tmp->prev->room,
+							tmp->next->room, num_of_way);
 		tmp = tmp->next;
 	}
 	tmp->room->fork[0].prev_in_algo = NULL;
 }
-

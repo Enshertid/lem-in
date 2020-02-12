@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 20:12:52 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/10 18:20:36 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/12 14:00:55 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "graph.h"
 #include "parsing.h"
 
-void				check_coord(t_data *data)
+void					check_coord(t_data *data)
 {
 	int			i;
 	int			j;
@@ -62,7 +62,7 @@ void					check_ants(t_data *data)
 
 void					ants(t_data *data)
 {
-	while(get_next_line(data->pars.fd, &data->pars.line) > 0 &&
+	while (get_next_line(data->pars.fd, &data->pars.line) > 0 &&
 			((*data->pars.line == '#' && *(data->pars.line + 1) != '#') ||
 			(ft_count_words(data->pars.line, ' ') == 1 &&
 			!ft_count_symbol(data->pars.line, '-'))))
@@ -70,9 +70,9 @@ void					ants(t_data *data)
 		if ((*data->pars.line == '#' && *(data->pars.line + 1) != '#'))
 			check_comment(data);
 		else if (*(data->pars.line) == '#' && *(data->pars.line + 1) == '#')
-			break;
+			break ;
 		else if (ft_count_words(data->pars.line, ' ') == 1 &&
-				 !ft_count_symbol(data->pars.line, '-'))
+			!ft_count_symbol(data->pars.line, '-'))
 			check_ants(data);
 	}
 }
@@ -82,7 +82,7 @@ void					parsing(t_data *data, char **av)
 	data->pars.fd = open(av[1], O_RDONLY);
 	ants(data);
 	check_side_room(data);
-	while(get_next_line(data->pars.fd, &data->pars.line) > 0)
+	while (get_next_line(data->pars.fd, &data->pars.line) > 0)
 	{
 		if (*(data->pars.line) == '#' && *(data->pars.line + 1) == '#')
 			check_side_room(data);

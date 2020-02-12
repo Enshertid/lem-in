@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 21:54:43 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/12 12:02:22 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/12 15:31:36 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include "hash_table.h"
 
-int						hash_index_create(int size, char *str)
+int							hash_index_create(int size, char *str)
 {
 	const char			*name;
 	int					lenght;
@@ -32,7 +32,8 @@ int						hash_index_create(int size, char *str)
 	return (hash);
 }
 
-int						hash_check(t_hash_table *hash, int index, char *name)
+int							hash_check(t_hash_table *hash, int index,
+																char *name)
 {
 	t_hash				*tmp;
 
@@ -49,7 +50,8 @@ int						hash_check(t_hash_table *hash, int index, char *name)
 	return (0);
 }
 
-t_room						*hash_search(t_hash_table *hash, int index, char *name)
+t_room						*hash_search(t_hash_table *hash, int index,
+																char *name)
 {
 	t_hash				*tmp;
 

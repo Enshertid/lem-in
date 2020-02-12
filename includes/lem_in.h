@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 19:07:02 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/11 17:06:39 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/12 15:12:46 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,6 @@ void						algo(t_data *data);
 void						search_graph_for_way_with_common_links(t_graph *graph, t_turn *turn, t_way *way);
 
 void						put_out_links_of_rooms(t_data *data);
-void						put_out_array_of_ways(t_ways *ways);
+void						put_out_array_of_ways(t_ways ways);
 void						put_out_way(t_way way);
 #endif

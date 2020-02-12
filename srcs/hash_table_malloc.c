@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/19 13:35:58 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/23 22:30:57 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/12 15:31:13 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,5 @@ t_hash						*hash_array_create(int size)
 	t_hash			*hash;
 
 	hash = ft_memalloc(sizeof(t_hash) * size);
-	return(hash);
+	return (hash);
 }

@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 21:31:52 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/10 15:36:18 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/12 13:59:00 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,11 @@ void					fill_room(t_data *data, t_room **room)
 {
 	__int128_t				num;
 
-	*room = ft_memalloc(sizeof(t_room));
+	if (!(*room = ft_memalloc(sizeof(t_room))))
+		ft_error("error in malloc\n", 9);
 	data->pars.str = ft_strsplit(data->pars.line, ' ');
-	(*room)->name = ft_strdup(data->pars.str[0]);
+	if (!((*room)->name = ft_strdup(data->pars.str[0])))
+		ft_error("error in malloc\n", 9);
 	num = ft_atoi(data->pars.str[1]);
 	if (num != ((*room)->coord.x = num))
 		ft_error("overflow int in x coord of room" , 4);
@@ -43,7 +45,8 @@ void					fill_room(t_data *data, t_room **room)
 	if (hash_check(&data->hash, (*room)->hash_index, (*room)->name))
 		ft_error("same names in rooms\n", 4);
 	hash_add(&data->hash, (*room));
-	(*room)->fork = ft_memalloc(sizeof(t_fork) * 2);
+	if (!((*room)->fork = ft_memalloc(sizeof(t_fork) * 2)))
+		ft_error("error in malloc\n", 9);
 	pre_fill_fork(room);
 }
 

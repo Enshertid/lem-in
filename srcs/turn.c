@@ -6,16 +6,15 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 18:51:48 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/11 21:13:17 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/12 15:38:56 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "turn.h"
 
 t_fork						**turn_create(int size)
 {
-	t_fork 				**turn;
+	t_fork			**turn;
 
 	turn = ft_memalloc(sizeof(t_fork*) * size);
 	return (turn);
@@ -28,10 +27,11 @@ void						turn_free(t_turn *turn)
 	free(turn->arr);
 }
 
-void 						turn_add(t_turn *turn, t_fork *room, t_bool priority)
+void						turn_add(t_turn *turn, t_fork *room,
+													t_bool priority)
 {
-	int					i;
-	int					j;
+	int				i;
+	int				j;
 
 	if (!priority)
 		turn->arr[turn->col++] = room;
@@ -46,17 +46,17 @@ void 						turn_add(t_turn *turn, t_fork *room, t_bool priority)
 	}
 }
 
-void 						turn_del(t_turn *turn)
+void						turn_del(t_turn *turn)
 {
-	ssize_t					i;
-	ssize_t					j;
+	ssize_t			i;
+	ssize_t			j;
 
 	if (turn->col > 0)
 	{
 		i = -1;
 		j = 0;
 		turn->arr[0]->flag = TRUE;
-		while(++i < turn->col - 1 && ++j < turn->col)
+		while (++i < turn->col - 1 && ++j < turn->col)
 			turn->arr[i] = turn->arr[j];
 		turn->col--;
 		turn->arr[turn->col] = NULL;

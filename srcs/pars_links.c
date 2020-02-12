@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 21:35:03 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/11 19:41:51 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/12 14:05:50 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void					finish_rooms(t_data *data)
 	if (!data->flags.flag_end)
 		ft_error("have no end room\n", 2);
 	else if (!data->flags.flag_start)
-		ft_error("have no start room\n",2 );
+		ft_error("have no start room\n", 2);
 	data->flags.flag_links = TRUE;
 	end = data->graph.rooms[data->graph.iter.i - 1];
 	data->graph.rooms[data->graph.iter.i - 1] = data->graph.rooms[1];
@@ -28,7 +28,7 @@ void					finish_rooms(t_data *data)
 		final_remalloc_graph(data);
 }
 
-void			malloc_links(t_room *room)
+void					malloc_links(t_room *room)
 {
 	t_link					*links;
 	int						i;
@@ -67,7 +67,7 @@ int						check_repeated_link(t_room *room_f, t_room *room_s)
 			flag = 1;
 	i = -1;
 	while (++i < room_s->fork[0].iter.i)
-		if (ft_strequ(room_s->fork[0].links[i].link->room->name , room_f->name))
+		if (ft_strequ(room_s->fork[0].links[i].link->room->name, room_f->name))
 			flag = 1;
 	return (flag);
 }
@@ -93,10 +93,10 @@ void					pars_link(t_data *data)
 		malloc_links(data->pars.room_s);
 	if (check_repeated_link(data->pars.room_f, data->pars.room_s))
 		ft_error("link has been repeat\n", 5);
-	data->pars.room_f->fork[0].links[data->pars.room_f->fork[0].iter.i++].link
-												= &data->pars.room_s->fork[0];
-	data->pars.room_s->fork[0].links[data->pars.room_s->fork[0].iter.i++].link
-												= &data->pars.room_f->fork[0];
+	data->pars.room_f->fork[0].links[data->pars.room_f->fork[0].iter.i++].
+											link = &data->pars.room_s->fork[0];
+	data->pars.room_s->fork[0].links[data->pars.room_s->fork[0].iter.i++].
+											link = &data->pars.room_f->fork[0];
 	free(data->pars.line);
 	ft_free(data->pars.str, 2);
 }
