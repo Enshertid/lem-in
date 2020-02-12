@@ -14,13 +14,24 @@
 
 void						hash_free(t_hash_table *hash)
 {
+	t_hash				*tmp;
+	t_hash				*tmp_1;
 	int					i;
 
 	i = -1;
-	while(++i < hash->size)
+	while (++i < hash->size)
 	{
-		if (hash->hash_table[i].iter.col)
-			free(hash->hash_table[i].rooms);
+		if (hash->hash_table[i].next)
+		{
+			tmp = hash->hash_table[i].next;
+			tmp_1 = tmp;
+			while (tmp)
+			{
+				tmp = tmp->next;
+				free(tmp_1);
+				tmp_1 = tmp;
+			}
+		}
 	}
 	free(hash->hash_table);
 }

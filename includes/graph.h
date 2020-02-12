@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 19:57:23 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/11 18:42:00 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/12 12:31:29 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,6 @@
 #define GRAPH_H
 
 #include "libft.h"
-
-typedef struct				s_flags_algo
-{
-	t_bool					flag;
-	t_bool					in_out_switch;
-}							t_flags_algo;
 
 typedef struct				s_iters
 {
@@ -57,7 +51,7 @@ typedef struct				s_room
 	char					*name;
 	t_fork					*fork;
 	t_coord					coord;
-	t_flags_algo			flags;
+	t_bool					flag;
 	int						hash_index;
 }							t_room;
 

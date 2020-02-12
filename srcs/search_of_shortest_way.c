@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 13:54:43 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/11 18:49:31 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/12 12:31:29 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void					get_way(t_graph *graph, t_way *way)
 		j = -1;
 		while (++j < graph->rooms[i]->fork[0].iter.col - 1)
 		{
-			graph->rooms[i]->fork[0].links[j].link->room->flags.flag = FALSE;
+			graph->rooms[i]->fork[0].links[j].link->room->flag = FALSE;
 			graph->rooms[i]->fork[0].links[j].link->prev_in_algo = NULL;
 			graph->rooms[i]->fork[0].links[j].link->distance = MAX_INT;
 		}

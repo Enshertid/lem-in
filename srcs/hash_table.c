@@ -6,14 +6,16 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 21:54:43 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/23 23:11:15 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/12 12:02:22 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "hash_table.h"
 
-int						hash_index_create(int size, const char *str)
+#include "hash_table.h"
+
+int						hash_index_create(int size, char *str)
 {
 	const char			*name;
 	int					lenght;
@@ -22,8 +24,6 @@ int						hash_index_create(int size, const char *str)
 	name = str;
 	hash = 0;
 	lenght = (int)ft_strlen(name) + 1;
-	if (lenght > 6)
-		lenght = 6;
 	while (--lenght > 0)
 		hash += *name++ * ft_pow(31, lenght);
 	if (hash < 0)
@@ -34,55 +34,46 @@ int						hash_index_create(int size, const char *str)
 
 int						hash_check(t_hash_table *hash, int index, char *name)
 {
-	int					i;
+	t_hash				*tmp;
 
-	i = -1;
-	while (++i < hash->hash_table[index].iter.i)
-		if (ft_strequ(hash->hash_table[index].rooms[i]->name, name))
-			return (1);
+	if (hash->hash_table[index].room)
+	{
+		tmp = &hash->hash_table[index];
+		while (tmp)
+		{
+			if (ft_strequ(tmp->room->name, name))
+				return (1);
+			tmp = tmp->next;
+		}
+	}
 	return (0);
 }
 
 t_room						*hash_search(t_hash_table *hash, int index, char *name)
 {
-	int					i;
+	t_hash				*tmp;
 
-	i = -1;
-	while (++i < hash->hash_table[index].iter.i)
-		if (ft_strequ(hash->hash_table[index].rooms[i]->name, name))
-			return (hash->hash_table[index].rooms[i]);
+	tmp = &hash->hash_table[index];
+	while (tmp)
+	{
+		if (ft_strequ(tmp->room->name, name))
+			return (tmp->room);
+		tmp = tmp->next;
+	}
 	return (NULL);
-}
-
-void						remalloc_hash_array(t_hash *hash)
-{
-	t_room		**new;
-	int			i;
-
-	hash->iter.col *= 2;
-	new = ft_memalloc(sizeof(t_room*) * hash->iter.col);
-	i = -1;
-	while (++i < hash->iter.i)
-		new[i] = hash->rooms[i];
-	free(hash->rooms);
-	hash->rooms = new;
 }
 
 void						hash_add(t_hash_table *hash, t_room *room)
 {
-	if (hash->hash_table[room->hash_index].iter.col)
+	t_hash				*new;
+
+	if (hash->hash_table[room->hash_index].room)
 	{
-		if (hash->hash_table[room->hash_index].iter.i ==
-						hash->hash_table[room->hash_index].iter.col)
-			remalloc_hash_array(&hash->hash_table[room->hash_index]);
-		hash->hash_table[room->hash_index].rooms[hash->hash_table[room->hash_index].iter.i++] = room;
+		new = ft_memalloc(sizeof(t_hash));
+		new->room = room;
+		new->next = hash->hash_table[room->hash_index].next;
+		hash->hash_table[room->hash_index].next = new;
 	}
 	else
-	{
-		hash->hash_table[room->hash_index].iter.col = HASH_ARRAY;
-		hash->hash_table[room->hash_index].iter.i = 1;
-		hash->hash_table[room->hash_index].rooms = ft_memalloc(sizeof(t_room*)
-				* hash->hash_table[room->hash_index].iter.col);
-		hash->hash_table[room->hash_index].rooms[0] = room;
-	}
+		hash->hash_table[room->hash_index].room = room;
 }
