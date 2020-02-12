@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 21:31:52 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/10 12:48:12 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/10 15:36:18 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void					check_start(t_data *data)
 	if (ft_count_words(data->pars.line, ' ') != 3)
 		ft_error("wrong format of start\n",3);
 	fill_room(data, &data->graph.rooms[0]);
+	data->graph.rooms[0]->fork->distance = 0;
 	free(data->pars.line);
 	ft_free(data->pars.str, 3);
 }

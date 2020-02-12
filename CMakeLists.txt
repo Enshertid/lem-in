@@ -28,6 +28,6 @@ add_executable(lem_in
         srcs/turn.c
         srcs/ways.c
         srcs/ways_operations.c
-        srcs/garbage.c)
+        srcs/garbage.c srcs/algo.c srcs/dijkstra_modifide.c)
 
 target_link_libraries(lem_in ~/curcus42/lem-in/libft/libft.a)

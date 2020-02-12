@@ -51,7 +51,7 @@ void						way_point_add(t_way *storage, t_way_room *new)
 	}
 }
 
-void						way_storage_set(t_graph *graph, t_storage_w *ways)
+void							way_storage_set(t_graph *graph, t_storage_w *ways)
 {
 	int						i;
 
@@ -92,23 +92,4 @@ void						way_storage_free(t_storage_w *ways)
 		free(ways->ways[ways->iters.i].way_ar);
 	}
 	free(ways->ways);
-}
-
-void						way_clear(t_way *way)
-{
-	t_way_room				*tmp;
-	t_way_room				*tmp_s;
-
-	tmp = way->head;
-	tmp_s = way->head;
-	while (tmp)
-	{
-		tmp = tmp->next;
-		tmp_s->prev = NULL;
-		tmp_s->next = NULL;
-		free(tmp_s);
-		tmp_s = tmp;
-	}
-	way->head = NULL;
-	way->tail = NULL;
 }

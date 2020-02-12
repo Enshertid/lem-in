@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 19:07:02 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/24 21:24:21 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/11 17:06:39 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,12 @@ int							get_next_line(const int fd, char **line);
 void						get_way(t_graph *graph, t_way *way);
 void						bfs_algo(t_graph *graph, t_turn *turn, t_way *way);
 void						dijkstra_algo(t_graph *graph, t_turn *turn, t_way *way);
-void						wrap_directions(t_way *way, int num_of_way);
+void						wrap_directions(t_way *way, int  );
 void						set_ways_to_the_next_iteration(t_ways *prev_iter, t_ways *next_iter);
 void						dijkstra_algo_modifide(t_graph *graph, t_turn *turn, t_way *way);
 
+void						algo(t_data *data);
+void						search_graph_for_way_with_common_links(t_graph *graph, t_turn *turn, t_way *way);
 
 void						put_out_links_of_rooms(t_data *data);
 void						put_out_array_of_ways(t_ways *ways);

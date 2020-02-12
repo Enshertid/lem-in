@@ -6,18 +6,18 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 18:51:48 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/10 13:47:16 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/11 21:13:17 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "turn.h"
 
-t_room						**turn_create(int size)
+t_fork						**turn_create(int size)
 {
-	t_room				**turn;
+	t_fork 				**turn;
 
-	turn = ft_memalloc(sizeof(t_room*) * size);
+	turn = ft_memalloc(sizeof(t_fork*) * size);
 	return (turn);
 }
 
@@ -28,7 +28,7 @@ void						turn_free(t_turn *turn)
 	free(turn->arr);
 }
 
-void 						turn_add(t_turn *turn, t_room *room, t_bool priority)
+void 						turn_add(t_turn *turn, t_fork *room, t_bool priority)
 {
 	int					i;
 	int					j;
@@ -55,7 +55,7 @@ void 						turn_del(t_turn *turn)
 	{
 		i = -1;
 		j = 0;
-		turn->arr[0]->flags.flag = TRUE;
+		turn->arr[0]->flag = TRUE;
 		while(++i < turn->col - 1 && ++j < turn->col)
 			turn->arr[i] = turn->arr[j];
 		turn->col--;

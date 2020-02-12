@@ -146,17 +146,11 @@ void				combine_ways_and_cut_common_link(t_way *way_f, t_ways *ways)
 		if ((i = check_coincidence(tmp, ways, &array)) >= 0)
 		{
 			pre_throw_links(&tmp, &ways->way_ar[i].head);
-//			ft_printf("\n\n!!!!HELLO!!!!!\n\n");
-//			ft_printf("%s\n", ways->way_ar[i].tail->room->name);
 			ft_memset(array, TRUE, ways->iters.i);
 			tmp1 = way_f->tail->prev;
 			way_f->tail = ways->way_ar[i].tail;
 			ways->way_ar[i].tail = tmp1;
 			tmp = way_f->tail->prev;
-//			ft_printf("\n\nHELLO\n\nWAY_FOR_HELP\n");
-//			put_out_way1(*way_f);
-//			ft_printf("\nPART OF ARRAY\n");
-//			put_out_way1(ways->way_ar[i]);
 		}
 		else
 		{

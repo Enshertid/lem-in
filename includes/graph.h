@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 19:57:23 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/10 17:30:13 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/11 18:42:00 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,8 @@
 
 typedef struct				s_flags_algo
 {
-	t_bool					in_out_switch;
-	t_bool					flag_of_way;
 	t_bool					flag;
+	t_bool					in_out_switch;
 }							t_flags_algo;
 
 typedef struct				s_iters
@@ -43,12 +42,14 @@ typedef struct				s_link
 
 typedef struct				s_fork
 {
+	struct s_fork			*prev_in_algo;
+	struct s_room			*room;
 	t_link					*links;
+	t_bool					flag;
+	t_bool					in_out;
 	t_iters					iter;
 	int						distance;
 	int						num_of_way;
-	struct s_room			*room;
-	struct s_room			*prev_in_algo;
 }							t_fork;
 
 typedef struct				s_room

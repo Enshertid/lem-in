@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 19:59:56 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/10 19:30:43 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/11 15:39:43 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,27 @@
 
 void						duplicate_place_for_links(t_fork *first, t_fork *second)
 {
-	second->iter.col = first->iter.i;
-	ft_printf("%s\n", first->room->name);
-	second->links = ft_memalloc(sizeof(t_link) * (second->iter.col + 1));
+	second->iter.col = first->iter.i + 1;
+	second->links = ft_memalloc(sizeof(t_link) * second->iter.col);
 	second->iter.i = -1;
-	while (++second->iter.i < second->iter.col)
+	while (++second->iter.i < second->iter.col - 1)
 	{
 		second->links[second->iter.i].link = first->links[second->iter.i].link;
 		second->links[second->iter.i].status = TRUE;
 	}
-	second->links[second->iter.i].link = first;
-	second->links[second->iter.col].status = TRUE;
 	free(first->links);
 	first->iter.col = second->iter.col;
 	first->links = ft_memalloc(sizeof(t_link) * first->iter.col);
 	first->iter.i = -1;
-	while (++first->iter.i < first->iter.col)
+	while (++first->iter.i < first->iter.col - 1)
 	{
 		first->links[first->iter.i] = second->links[first->iter.i];
 		first->links[first->iter.i].status = TRUE;
 	}
-	first->iter.i = 0;
-	second->iter.i = 0;
-	second->iter.col++;
+	second->links[second->iter.i].link = first;
+	second->links[second->iter.i].status = TRUE;
+	first->in_out = FALSE;
+	second->in_out = TRUE;
 }
 
 void						graph_free(t_graph *graph)
@@ -49,9 +47,7 @@ void						graph_free(t_graph *graph)
 	{
 		free(graph->rooms[i]->name);
 		free(graph->rooms[i]->fork[0].links);
-//		free(graph->rooms[i]->fork[0].prev_in_algo);
 		free(graph->rooms[i]->fork[1].links);
-//		free(graph->rooms[i]->fork[1].prev_in_algo);
 		free(graph->rooms[i]->fork);
 		free(graph->rooms[i]);
 	}
