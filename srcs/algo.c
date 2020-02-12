@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 16:10:59 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/12 16:18:01 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/12 18:19:24 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,21 @@ void				algo(t_data *data)
 	set_ways_to_the_next_iteration(&data->ways.ways[0], &data->ways.ways[1]);
 	while (!optimal(&data->ways.ways[j], data->ants))
 	{
+		ft_printf("ways:\n");
 		put_out_array_of_ways(data->ways.ways[j]);
-		ft_printf("\n\n");
 		i = -1;
 		while (++i < data->ways.ways[j].iters.i)
 			wrap_directions(&data->ways.ways[j].way_ar[i], i + 1);
 		search_graph_for_way_with_common_links(&data->graph,
 							&data->turn, &data->way_for_algo);
+		ft_printf("way_for_algo\n");
+		put_out_way(data->way_for_algo);
+		ft_printf("\n\n");
 		i = -1;
 		combine_ways_and_cut_common_link(&data->way_for_algo,
 									&data->ways.ways[j]);
 		add_algo_way_to_array(&data->ways.ways[j], &data->way_for_algo);
-		if (j <= data->ways.iters.col - 2)
+		if (j < data->ways.iters.col - 2)
 		{
 			set_ways_to_the_next_iteration(&data->ways.ways[j],
 												&data->ways.ways[j + 1]);
