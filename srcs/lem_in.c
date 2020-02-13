@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 19:43:23 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/13 18:03:14 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/13 20:19:59 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,23 +41,13 @@ void				init_algo(t_data *data)
 	data->turn.arr = turn_create(data->turn.size);
 }
 
-void				put_out(t_data *data)
+void				misha(t_ways *ways, int ants)
 {
-	int i;
-	t_way_room *tmp;
-
-	i = -1;
-	while (++i < data->ways.ways[data->ways.iters.i].iters.i)
-	{
-		tmp = data->ways.ways[data->ways.iters.i].way_ar[i].head;
-		while (tmp)
-		{
-			ft_printf("%s-",tmp->room->name);
-			tmp = tmp->next;
-		}
-		ft_printf("way lenght = %d\n", data->ways.ways[data->ways.iters.i].way_ar[i].weight);
-	}
+	(void)ants;
+	(void)ways;
+	ft_printf("output\n");
 }
+
 int					main(int ac, char **av)
 {
 	t_data			data;
@@ -68,7 +58,7 @@ int					main(int ac, char **av)
 	parsing(&data, av);
 	init_algo(&data);
 	algo(&data);
-	put_out(&data);
+	misha(&data.ways.ways[data.ways.iters.i], data.ants);
 	free_data(&data);
 	return (0);
 }

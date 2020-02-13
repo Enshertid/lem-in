@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 16:10:59 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/13 18:06:22 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/13 20:18:07 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,25 @@ void				get_days(t_ways *ways, int ants)
 	int i;
 
 	i = -1;
-	while (++i < ways->iters.i)
+	while (++i < ways->iters.col)
 		ways->weight_sum += way_weight(&ways->way_ar[i]);
 	ways->days = (ways->weight_sum + ants) / ways->iters.col;
 }
 
 int					optimal(t_data *data, t_ways *new, t_ways *prev, int ants)
 {
-	get_days(new, ants);
-	if (new->days > prev->days)
-		return (0);
-	else if (data->ways.iters.i == data->ways.iters.col)
-	{
-		data->ways.iters.i--;
-		return (0);
-	}
 	data->ways.iters.i++;
+	get_days(new, ants);
+	if (new->days > prev->days || ants < new->iters.col ||
+	data->ways.iters.i == data->ways.iters.col)
+		return (0);
 	return (1);
 }
 
 void				add_algo_way_to_array(t_ways *ways, t_way *new)
 {
-	ways->way_ar[ways->iters.i].head = new->head;
-	ways->way_ar[ways->iters.i].tail = new->tail;
+	ways->way_ar[ways->iters.col - 1].head = new->head;
+	ways->way_ar[ways->iters.col - 1].tail = new->tail;
 	new->head = NULL;
 	new->tail = NULL;
 }
@@ -49,7 +45,6 @@ void				algo(t_data *data)
 	int					i;
 	int					j;
 
-	data->ways.iters.i = 1;
 	j = 1;
 	dijkstra_algo(&data->graph, &data->turn, &data->ways.ways[0].way_ar[0]);
 	set_ways_to_the_next_iteration(&data->ways.ways[0], &data->ways.ways[j]);
@@ -71,4 +66,5 @@ void				algo(t_data *data)
 												&data->ways.ways[j + 1]);
 		j++;
 	}
+	data->ways.iters.i = j - 1;
 }
