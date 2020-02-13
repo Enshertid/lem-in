@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 16:10:59 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/13 20:18:07 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/13 20:56:59 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,20 @@ void				add_algo_way_to_array(t_ways *ways, t_way *new)
 	new->tail = NULL;
 }
 
+void				first_iteration(t_data *data)
+{
+	dijkstra_algo(&data->graph, &data->turn, &data->ways.ways[0].way_ar[0]);
+	set_ways_to_the_next_iteration(&data->ways.ways[0], &data->ways.ways[1]);
+	get_days(&data->ways.ways[0], data->ants);
+}
+
 void				algo(t_data *data)
 {
 	int					i;
 	int					j;
 
 	j = 1;
-	dijkstra_algo(&data->graph, &data->turn, &data->ways.ways[0].way_ar[0]);
-	set_ways_to_the_next_iteration(&data->ways.ways[0], &data->ways.ways[j]);
-	get_days(&data->ways.ways[0], data->ants);
+	first_iteration(data);
 	while (1)
 	{
 		i = -1;
@@ -58,9 +63,10 @@ void				algo(t_data *data)
 							&data->turn, &data->way_for_algo)))
 			break ;
 		combine_ways_and_cut_common_link(&data->way_for_algo,
-									&data->ways.ways[j]);
+									&data->ways.ways[j], i);
 		add_algo_way_to_array(&data->ways.ways[j], &data->way_for_algo);
-		if (!optimal(data, &data->ways.ways[j], &data->ways.ways[j - 1], data->ants))
+		if (!optimal(data, &data->ways.ways[j], &data->ways.ways[j - 1],
+																data->ants))
 			break ;
 		set_ways_to_the_next_iteration(&data->ways.ways[j],
 												&data->ways.ways[j + 1]);

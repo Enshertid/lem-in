@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 19:43:23 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/13 20:19:59 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/13 20:40:18 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,6 @@ void				init_algo(t_data *data)
 	data->turn.arr = turn_create(data->turn.size);
 }
 
-void				misha(t_ways *ways, int ants)
-{
-	(void)ants;
-	(void)ways;
-	ft_printf("output\n");
-}
-
 int					main(int ac, char **av)
 {
 	t_data			data;
@@ -58,7 +51,6 @@ int					main(int ac, char **av)
 	parsing(&data, av);
 	init_algo(&data);
 	algo(&data);
-	misha(&data.ways.ways[data.ways.iters.i], data.ants);
 	free_data(&data);
 	return (0);
 }

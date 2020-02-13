@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 21:16:18 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/13 17:43:56 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/13 20:52:47 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void						get_ready_room_of_way(t_room *room,
 		}
 		else
 			room->fork[0].links[i].status = FALSE;
-
 	}
 	i = -1;
 	while (++i < room->fork[1].iter.col)
@@ -61,7 +60,7 @@ void						wrap_directions(t_way *way, int num_of_way)
 
 	tmp = way->head;
 	i = -1;
- 	while (++i < tmp->room->fork[0].iter.i)
+	while (++i < tmp->room->fork[0].iter.i)
 	{
 		if (tmp->room->fork->links[i].link->room == tmp->next->room)
 			tmp->room->fork->links[i].status = FALSE;

@@ -6,20 +6,19 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 19:57:23 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/12 16:18:02 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/13 21:05:53 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #ifndef GRAPH_H
-#define GRAPH_H
+# define GRAPH_H
 
-#include "libft.h"
+# include "libft.h"
 
 typedef struct				s_iters
 {
 	int						i;
-	int 					col;
+	int						col;
 }							t_iters;
 
 typedef struct				s_coord
@@ -55,8 +54,6 @@ typedef struct				s_room
 	int						hash_index;
 }							t_room;
 
-
-
 typedef struct				s_graph
 {
 	t_room					**rooms;
@@ -65,5 +62,6 @@ typedef struct				s_graph
 
 t_graph						set_graph(void);
 void						graph_free(t_graph *graph);
-void						duplicate_place_for_links(t_fork *first, t_fork *second);
+void						duplicate_place_for_links(t_fork *first,
+														t_fork *second);
 #endif

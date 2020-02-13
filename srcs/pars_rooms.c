@@ -6,23 +6,11 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 21:31:52 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/12 18:13:24 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/13 20:49:43 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
-void					pre_fill_fork(t_room **room)
-{
-	int i;
-
-	i = -1;
-	while (++i < 2)
-		(*room)->fork[i].distance = MAX_INT;
-	i = -1;
-	while (++i < 2)
-		(*room)->fork[i].room = *room;
-}
 
 void					fill_room(t_data *data, t_room **room)
 {
@@ -35,7 +23,7 @@ void					fill_room(t_data *data, t_room **room)
 		ft_error("error in malloc\n", 9);
 	num = ft_atoi(data->pars.str[1]);
 	if (num != ((*room)->coord.x = num))
-		ft_error("overflow int in x coord of room" , 4);
+		ft_error("overflow int in x coord of room", 4);
 	num = ft_atoi(data->pars.str[2]);
 	if (num != ((*room)->coord.y = num))
 		ft_error("overflow int in y coord of room", 4);
@@ -66,7 +54,7 @@ void					check_start(t_data *data)
 		ft_strequ("##end", data->pars.line))
 		ft_error("second ##start or ##end", 3);
 	if (ft_count_words(data->pars.line, ' ') != 3)
-		ft_error("wrong format of start\n",3);
+		ft_error("wrong format of start\n", 3);
 	fill_room(data, &data->graph.rooms[0]);
 	data->graph.rooms[0]->fork->distance = 0;
 	free(data->pars.line);
@@ -89,7 +77,7 @@ void					check_end(t_data *data)
 			ft_strequ("##end", data->pars.line))
 		ft_error("second ##start or ##end", 3);
 	if (ft_count_words(data->pars.line, ' ') != 3)
-		ft_error("wrong format of end\n",3);
+		ft_error("wrong format of end\n", 3);
 	fill_room(data, &data->graph.rooms[1]);
 	free(data->pars.line);
 	ft_free(data->pars.str, 3);
