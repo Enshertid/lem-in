@@ -6,27 +6,27 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 19:07:02 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/23 22:35:48 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/13 22:23:33 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEM_IN
-#define LEM_IN
+#ifndef LEM_IN_H
+# define LEM_IN_H
 
-#include "libft.h"
-#include "graph.h"
-#include "hash_table.h"
-#include "turn.h"
-#include "ways.h"
+# include "libft.h"
+# include "graph.h"
+# include "hash_table.h"
+# include "turn.h"
+# include "ways.h"
 
-typedef struct				s_flags
+typedef struct				s_flags_pars
 {
 	t_bool					flag_ants;
 	t_bool					flag_links;
 	t_bool					flag_start;
 	t_bool					flag_end;
 	t_bool					flag_room;
-}							t_flags;
+}							t_flags_pars;
 
 typedef struct				s_pars
 {
@@ -42,17 +42,29 @@ typedef struct				s_pars
 typedef struct				s_data
 {
 	t_graph					graph;
-	t_flags					flags;
+	t_flags_pars			flags;
 	t_hash_table			hash;
 	t_turn					turn;
 	t_pars					pars;
-	t_ways					ways;
-	t_ways					ways_for_algo;
+	t_storage_w				ways;
+	t_way					way_for_algo;
 	int						ants;
 }							t_data;
 
 void						parsing(t_data *data, char **av);
-void		 				suurballe_algo(t_data *data);
 int							get_next_line(const int fd, char **line);
 
+void						get_way(t_graph *graph, t_way *way);
+void						bfs_algo(t_graph *graph, t_turn *turn, t_way *way);
+void						dijkstra_algo(t_graph *graph, t_turn *turn,
+																t_way *way);
+void						wrap_directions(t_way *way, int num_of_way);
+void						set_ways_to_the_next_iteration(t_ways *prev_iter,
+															t_ways *next_iter);
+void						dijkstra_algo_modifide(t_graph *graph,
+													t_turn *turn, t_way *way);
+
+void						algo(t_data *data);
+t_bool						search_graph_for_way_with_common_links(t_graph
+											*graph, t_turn *turn, t_way *way);
 #endif

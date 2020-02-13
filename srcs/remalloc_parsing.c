@@ -6,55 +6,66 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:12:38 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/23 22:30:57 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/12 16:18:02 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-void						set_hash_to_null(t_hash_table *hash)
+void						set_hash_to_null(t_hash_table *hash,
+													t_graph *graph, int size)
 {
 	int					i;
-	int					j;
+	t_hash				*tmp;
 
 	i = -1;
-	while(++i < hash->size)
+	while (++i < size)
 	{
-		if(hash->hash_table[i].iter.col)
+		if (hash->hash_table[graph->rooms[i]->hash_index].room)
+			hash->hash_table[graph->rooms[i]->hash_index].room = NULL;
+		else if (hash->hash_table[graph->rooms[i]->hash_index].next)
 		{
-			j = -1;
-			while(++j < hash->hash_table[i].iter.i)
-				hash->hash_table[i].rooms[j] = NULL;
+			tmp = hash->hash_table[graph->rooms[i]->hash_index].next;
+			while (tmp)
+			{
+				tmp->room = NULL;
+				tmp = tmp->next;
+			}
 		}
 	}
 }
 
-void						set_relink(t_hash_table *hash, t_graph *graph, int size)
+void						set_relink(t_hash_table *hash,
+													t_graph *graph, int size)
 {
 	int					i;
-	int					j;
+	t_hash				*tmp;
 
 	i = -1;
-	while(++i < size)
+	while (++i < size)
 	{
-		j = 0;
-		if (hash->hash_table[graph->rooms[i]->hash_index].iter.i)
+		if (!hash->hash_table[graph->rooms[i]->hash_index].room)
+			hash->hash_table[graph->rooms[i]->hash_index].room =
+					graph->rooms[i];
+		else if (hash->hash_table[graph->rooms[i]->hash_index].next)
 		{
-			while (j < hash->hash_table[graph->rooms[i]->hash_index].iter.i &&
-					hash->hash_table[graph->rooms[i]->hash_index].rooms[j])
-				j++;
-			hash->hash_table[graph->rooms[i]->hash_index].rooms[j] = graph->rooms[i];
+			tmp = hash->hash_table[graph->rooms[i]->hash_index].next;
+			while (tmp && tmp->room)
+				tmp = tmp->next;
+			if (tmp)
+				tmp->room = graph->rooms[i];
 		}
 	}
 }
 
-void						relink_hash_table(t_hash_table *hash, t_graph *graph, int size)
+void						relink_hash_table(t_hash_table *hash,
+													t_graph *graph, int size)
 {
-	set_hash_to_null(hash);
+	set_hash_to_null(hash, graph, size);
 	set_relink(hash, graph, size);
 }
 
-void					final_remalloc_graph(t_data *data)
+void						final_remalloc_graph(t_data *data)
 {
 	t_room					**tmp;
 	int						i;
@@ -63,14 +74,14 @@ void					final_remalloc_graph(t_data *data)
 	data->graph.iter.i = 0;
 	tmp = ft_memalloc(sizeof(t_room*) * data->graph.iter.col);
 	i = -1;
-	while(++i < data->graph.iter.col)
+	while (++i < data->graph.iter.col)
 		tmp[i] = data->graph.rooms[i];
 	free(data->graph.rooms);
 	data->graph.rooms = tmp;
 	relink_hash_table(&data->hash, &data->graph, data->graph.iter.col);
 }
 
-void					remalloc_of_graph(t_data *data)
+void						remalloc_of_graph(t_data *data)
 {
 	t_room					**tmp;
 	int						i;
@@ -78,7 +89,7 @@ void					remalloc_of_graph(t_data *data)
 	data->graph.iter.col *= 3;
 	tmp = ft_memalloc(sizeof(t_room*) * data->graph.iter.col);
 	i = -1;
-	while(++i < data->graph.iter.i)
+	while (++i < data->graph.iter.i)
 		tmp[i] = data->graph.rooms[i];
 	free(data->graph.rooms);
 	data->graph.rooms = tmp;

@@ -6,35 +6,57 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 18:51:48 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/01/23 22:38:04 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/13 22:24:27 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "turn.h"
 
-t_room						**turn_create(int size)
+t_fork						**turn_create(int size)
 {
-	t_room				**turn;
+	t_fork			**turn;
 
-	turn = ft_memalloc(sizeof(t_room*) * size);
+	turn = ft_memalloc(sizeof(t_fork*) * size);
 	return (turn);
 }
-void 						turn_add(t_turn *turn, t_room *room)
+
+void						turn_free(t_turn *turn)
 {
-	turn->arr[turn->col++] = room;
+	turn->col = 0;
+	turn->size = 0;
+	free(turn->arr);
 }
 
-void 						turn_del(t_turn *turn)
+void						turn_add(t_turn *turn, t_fork *room,
+													t_bool priority)
 {
-	ssize_t					i;
-	ssize_t					j;
+	int				i;
+	int				j;
+
+	if (!priority)
+		turn->arr[turn->col++] = room;
+	else
+	{
+		j = turn->col;
+		i = turn->col;
+		while (j-- > 1)
+			turn->arr[i--] = turn->arr[j];
+		turn->col++;
+		turn->arr[1] = room;
+	}
+}
+
+void						turn_del(t_turn *turn)
+{
+	ssize_t			i;
+	ssize_t			j;
 
 	if (turn->col > 0)
 	{
 		i = -1;
 		j = 0;
-		while(++i < turn->col - 1 && ++j < turn->col)
+		turn->arr[0]->flag = TRUE;
+		while (++i < turn->col - 1 && ++j < turn->col)
 			turn->arr[i] = turn->arr[j];
 		turn->col--;
 		turn->arr[turn->col] = NULL;

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 14:42:04 by dbendu            #+#    #+#             */
-/*   Updated: 2020/01/23 22:13:47 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/13 21:25:11 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,55 +14,7 @@
 
 #define GNL_BUFF 1024
 
-void	ft_lstpurge(t_list **list)
-{
-	register t_list *iter;
-	register t_list *temp;
-
-	if (!list || !*list)
-		return ;
-	iter = *list;
-	while (iter)
-	{
-		temp = iter->next;
-		free(iter->content);
-		free(iter);
-		iter = temp;
-	}
-	*list = NULL;
-}
-
-static void	ft_replace(t_list **to, t_list **from)
-{
-	free((*to)->content);
-	(*to)->content = (*from)->content;
-	(*to)->content_size = (*from)->content_size;
-	(*to)->next = (*from)->next;
-	free(*from);
-}
-
-void		ft_lstdelete(t_list **list, t_list **del)
-{
-	t_list *iter;
-
-	if (!list || !*list || !del || !*del)
-		return ;
-	if (*del == (*list))
-		ft_lstpop(list);
-	else if (*del == (*list)->end)
-		ft_lstpopback(list);
-	else
-	{
-		iter = *list;
-		while (iter && iter != *del)
-			iter = iter->next;
-		if (iter)
-			ft_replace(&iter, &(iter->next));
-	}
-	*del = NULL;
-}
-
-void	ft_lstappend(t_list **list, t_list *new)
+void				ft_lstappend(t_list **list, t_list *new)
 {
 	if (!list || !new)
 		return ;
@@ -78,7 +30,8 @@ void	ft_lstappend(t_list **list, t_list *new)
 	}
 }
 
-static void	add_in_bufs(t_list **bufs, const char *src, size_t strlen, int fd)
+static void			add_in_bufs(t_list **bufs, const char *src, size_t strlen,
+																		int fd)
 {
 	char *str;
 
@@ -89,11 +42,11 @@ static void	add_in_bufs(t_list **bufs, const char *src, size_t strlen, int fd)
 	free(str);
 }
 
-static int	check_bufs(t_list **bufs, t_list **buf, int fd)
+static int			check_bufs(t_list **bufs, t_list **buf, int fd)
 {
-	t_list	*iter;
-	char	*npos;
-	char	*temp;
+	t_list			*iter;
+	char			*npos;
+	char			*temp;
 
 	iter = *bufs;
 	while (iter && (int)iter->content_size != fd)
@@ -102,8 +55,8 @@ static int	check_bufs(t_list **bufs, t_list **buf, int fd)
 		return (0);
 	npos = (char*)ft_memchr(iter->content, '\n', ft_strlen(iter->content));
 	ft_lstappend(buf, ft_lstnew(iter->content, npos ?
-											   (size_t)(npos - (char*)iter->content) :
-											   (size_t)ft_strlen(iter->content)));
+										(size_t)(npos - (char*)iter->content) :
+										(size_t)ft_strlen(iter->content)));
 	if (!npos || (npos && !npos[1]))
 		ft_lstdelete(bufs, &iter);
 	else if (npos[1])
@@ -115,7 +68,7 @@ static int	check_bufs(t_list **bufs, t_list **buf, int fd)
 	return (npos ? 1 : 0);
 }
 
-static char	*lst_to_str(const t_list *list)
+static char			*lst_to_str(const t_list *list)
 {
 	char			*str;
 	char			*striter;
@@ -142,7 +95,7 @@ static char	*lst_to_str(const t_list *list)
 	return (str);
 }
 
-int			get_next_line(const int fd, char **line)
+int					get_next_line(const int fd, char **line)
 {
 	static t_list	*bufs = NULL;
 	t_list			*buf;
@@ -170,4 +123,3 @@ int			get_next_line(const int fd, char **line)
 	ft_lstpurge(&buf);
 	return (*line ? 1 : -1);
 }
-
