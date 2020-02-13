@@ -1,50 +1,42 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/10/14 10:58:26 by ymanilow          #+#    #+#              #
-#    Updated: 2020/01/23 22:38:04 by ymanilow         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+# SRCS = main.c draw_line.c exit.c control/*.c anim.c animation/*.c map/*.c map_actions/*.c ant/*.c tree/*.c room/*.c data/*.c graph/*.c wnd/*.c wnd_state/*.c libft/glibft.a minilibx_macos/libmlx.a
 
-NAME = lem_im
+# H = -I coord -I room -I map/ -I tree/ -I data -I graph -I wnd -I wnd_state -I animation -I libft/includes -I ant -I map_actions -I minilibx_macos -framework OpenGL -framework AppKit
 
-DIR_S = srcs
-
-DIR_O = obj
-
-DIR_H = includes/
-
-LIB = ./libft/
-
-FLAGS = -Wall -Wextra -Werror -I$(DIR_H) -I$(LIB)includes_l -I$(LIB)includes_p
-
-SRCS_C = lem_in.c	parsing.c	pars_rooms.c	pars_links.c	remalloc_parsing.c	\
-hash_table.c	hash_table_malloc.c	graph.c		get_next_line1.c					\
+# all:
+# 	clear
+# 	gcc -g -Wall -Werror -Wextra $(SRCS) $(H)
 
 
-SRCS_O = $(addprefix $(DIR_O)/,$(SRCS_C:.c=.o))
 
-all: $(NAME)
 
-$(DIR_O)/%.o: $(DIR_S)/%.c
-	@mkdir -p $(DIR_O)
-	@$(CC) $(FLAGS) -o $@ -c $<
+SRCS =			animation/animation.c							animation/move_ants.c				animation/print_ants.c			\
+				animation/rotate_ants.c							animation/setup_ants_moving.c		animation/shift_ants.c			\
+				animation/private_get_ants_ways.c				animation/animation_create.c		animation/animation_destroy.c	\
+				control/keyboard.c								control/mouse.c						data/data_create.c				\
+				data/data_destroy.c								graph/graph_create.c				graph/graph_destroy.c			\
+				graph/private_get_rooms_and_coords.c			hashtable/hashtable_find.c			data/private_add_z.c			\
+				graph/private_create_rooms_map.c				hashtable/hashtable_create.c		data/private_get_flags.c		\
+				graph/private_get_links.c						graph/private_setup_graph_center.c	data/private_create_links.c		\
+				hashtable/hashtable_destroy.c					hashtable/hashtable_insert.c		hashtable/hashtable_private.c	\
+				map/print_map.c									map/put_info.c						map/rotate_map.c				\
+				map/move_map.c									data/private_del_dead_lines.c		tree/tree_create.c				\
+				tree/tree_destroy.c								tree/tree_find.c					tree/tree_insert.c				\
+				wnd/wnd.c										data/private_mark_ways.c			data/private_apply_flags.c		\
+				map/private_draw_line.c							exit.c								main.c							\
+				libft/glibft.a									minilibx_macos/libmlx.a				map/draw_map.c
 
-$(NAME): $(SRCS_O)
-	@make -C $(LIB)
-	$(CC) $(FLAGS) $(LIB)libft.a $(SRCS_O) -o $(NAME)
 
-clean:
-	@make clean -C $(LIB)
-	@rm -Rf $(SRCS_O)
-	@rm -Rf $(DIR_O)
+HEADERS =		-I .				-I tree				-I wnd				\
+				-I room				-I graph			-I hashtable		\
+				-I data				-I coord			-I animation		\
+				-I map
 
-fclean: clean
-	@make fclean -C $(LIB)
-	@rm -Rf $(NAME)
-	
-re: fclean all
+
+LIBS_HEADERS =	mlx.h			libft.h
+
+FLAGS = -framework OpenGL -framework AppKit
+
+#FLAGS = -lX11 -lXext
+
+all:
+	gcc -g -Wall -Werror -Wextra $(SRCS) $(HEADERS) -I libft/includes -I minilibx_macos $(FLAGS) -lm
