@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 21:35:03 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/12 16:18:02 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/12 22:17:19 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,10 +111,10 @@ void					check_links(t_data *data)
 			ft_count_symbol(data->pars.line, '-') == 1) ||
 			(*data->pars.line == '#' && *(data->pars.line + 1) != '#')))
 	{
-		if (ft_count_words(data->pars.line, '-') == 2 &&
+		if (*data->pars.line == '#' && *(data->pars.line + 1) != '#')
+			check_comment(data);
+		else if (ft_count_words(data->pars.line, '-') == 2 &&
 			ft_count_symbol(data->pars.line, '-') == 1)
 			pars_link(data);
-		else if (*data->pars.line == '#' && *(data->pars.line + 1) != '#')
-			check_comment(data);
 	}
 }

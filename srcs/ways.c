@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 23:04:20 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/12 16:18:01 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/13 13:13:10 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,16 @@
 
 int							way_weight(t_way *way)
 {
-	int weight;
-	t_way_room *tmp;
+	t_way_room				*tmp;
 
-	weight = 0;
+	way->weight = 0;
 	tmp = way->head;
-	while (tmp)
+	while (tmp->next)
 	{
 		tmp = tmp->next;
-		weight++;
+		way->weight++;
 	}
-	return(weight);
+	return(way->weight);
 }
 
 t_way_room					*way_point_create(t_room *room)
@@ -55,7 +54,7 @@ void							way_storage_set(t_graph *graph, t_storage_w *ways)
 {
 	int						i;
 
-	ways->iters.i = -1;
+	ways->iters.i = - 1;
 	ways->iters.col = graph->rooms[0]->fork[0].iter.col;
 	if (ways->iters.col > graph->rooms[graph->iter.col - 1]->fork[0].iter.col)
 		ways->iters.col = graph->rooms[graph->iter.col - 1]->fork[0].iter.col;

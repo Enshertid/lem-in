@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 17:25:00 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/12 16:18:02 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/12 22:33:50 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,39 +24,29 @@ void				get_copy_of_way(t_way *prev, t_way *new)
 	}
 }
 
-void				throw_links(t_way_room **start1, t_way_room **start2, t_way_room **end1, t_way_room **end2)
+void				throw_links(t_way_room **start1, t_way_room **start2,
+									t_way_room **end1, t_way_room **end2)
 {
 	(*start2)->next = (*start1)->next;
 	(*start1)->next->prev = *start2;
 	(*end1)->next = (*end2)->next;
 	(*end2)->next->prev = *end1;
-//	while ((*end2)->room != (*start2)->room)
-//	{
-//		*end2 = (*end2)->prev;
-//		free((*end2)->next);
-//	}
-//	while ((*start1)->room != (*end1)->room)
-//	{
-//		*start1 = (*start1)->prev;
-//		free((*start1)->next);
-//	}
-	while ((*start1)->prev)
+	while ((*end2)->prev && (*end2)->prev->room != (*start2)->room)
+	{
+		*end2 = (*end2)->prev;
+		free((*end2)->next);
+	}
+	free(*end2);
+	while ((*start1)->prev && (*start1)->prev->room != (*end1)->room)
+	{
 		*start1 = (*start1)->prev;
-	while ((*start2)->prev)
-		*start2 =(*start2)->prev;
-//	while (*start1)
-//	{
-//		ft_printf("%s\n", (*start1)->room->name);
-//		*start1 = (*start1)->next;
-//	}
-//	while (*start2)
-//	{
-//		ft_printf("%s\n", (*start2)->room->name);
-//		*start2 = (*start2)->next;
-//	}
+		free((*start1)->next);
+	}
+	free(*start1);
 }
 
-void					pre_throw_links(t_way_room **first, t_way_room **second)
+void					pre_throw_links(t_way_room **first,
+											t_way_room **second)
 {
 	t_way_room *tmp;
 	t_way_room *tmp1;
@@ -67,7 +57,8 @@ void					pre_throw_links(t_way_room **first, t_way_room **second)
 		 tmp = tmp->next;
 	tmp1 = *first;
 	tmp2 = tmp;
-	while (tmp1->prev->prev && tmp2->next->next && tmp2->room == tmp1->room)
+	while (tmp1->prev->prev && tmp2->next->next && tmp2->next->room ==
+															tmp1->prev->room)
 	{
 		tmp1 = tmp1->prev;
 		tmp2 = tmp2->next;
@@ -77,11 +68,14 @@ void					pre_throw_links(t_way_room **first, t_way_room **second)
 
 short int				func(t_way_room *first, t_way_room *second, int col)
 {
-	while (col-- && second->next)
+	while (col && second->next)
+	{
+		col--;
 		second = second->next;
+	}
 	if (col && !second->next)
 		return (1);
-	if (first->room == second->room && first->prev->room == second->next->room)
+	if (first->room == second->room && first->prev == second->next)
 		return (2);
 	return (0);
 }
@@ -98,7 +92,8 @@ void				put_out_way1(t_way way)
 	}
 }
 
-int						check_coincidence(t_way_room *first, t_ways *ways, t_bool **array)
+int						check_coincidence(t_way_room *first, t_ways *ways,
+																t_bool **array)
 {
 	int					i;
 	int					col;
@@ -131,7 +126,8 @@ int						check_coincidence(t_way_room *first, t_ways *ways, t_bool **array)
 	return (i);
 }
 
-void				combine_ways_and_cut_common_link(t_way *way_f, t_ways *ways)
+void				combine_ways_and_cut_common_link(t_way *way_f,
+															t_ways *ways)
 {
 	t_way_room			*tmp;
 	t_way_room			*tmp1;
@@ -147,7 +143,7 @@ void				combine_ways_and_cut_common_link(t_way *way_f, t_ways *ways)
 		{
 			pre_throw_links(&tmp, &ways->way_ar[i].head);
 			ft_memset(array, TRUE, ways->iters.i);
-			tmp1 = way_f->tail->prev;
+			tmp1 = way_f->tail;
 			way_f->tail = ways->way_ar[i].tail;
 			ways->way_ar[i].tail = tmp1;
 			tmp = way_f->tail->prev;

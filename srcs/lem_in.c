@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 19:43:23 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/12 18:16:16 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/12 21:20:11 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,28 @@ void				init_data(t_data *data)
 	data->graph = set_graph();
 }
 
+void				init_algo(t_data *data)
+{
+	int				i;
+
+	i = -1;
+	while (++i < data->graph.iter.col)
+		duplicate_place_for_links(&data->graph.rooms[i]->fork[0],
+									&data->graph.rooms[i]->fork[1]);
+	way_storage_set(&data->graph, &data->ways);
+	data->turn.size = data->graph.iter.col;
+	data->turn.arr = turn_create(data->turn.size);
+}
+
 int					main(int ac, char **av)
 {
 	t_data			data;
-	int				i;
 
 	if (ac < 0)
 		ft_error("haha, ac < 0\n", 1);
 	init_data(&data);
 	parsing(&data, av);
-	i = -1;
-	while (++i < data.graph.iter.col)
-		duplicate_place_for_links(&data.graph.rooms[i]->fork[0],
-				&data.graph.rooms[i]->fork[1]);
-	way_storage_set(&data.graph, &data.ways);
-	data.turn.size = data.graph.iter.col;
-	data.turn.arr = turn_create(data.turn.size);
+	init_algo(&data);
 	algo(&data);
 	free_data(&data);
 	return (0);
