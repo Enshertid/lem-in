@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 19:07:02 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/13 14:18:11 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/13 17:42:20 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,4 @@ void						dijkstra_algo_modifide(t_graph *graph, t_turn *turn, t_way *way);
 
 void						algo(t_data *data);
 t_bool						search_graph_for_way_with_common_links(t_graph *graph, t_turn *turn, t_way *way);
-
-void						put_out_links_of_rooms(t_data *data);
-void						put_out_array_of_ways(t_ways ways, int num);
-void						put_out_way(t_way *way);
 #endif

@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 17:25:00 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/12 22:33:50 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/13 15:17:00 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void				get_copy_of_way(t_way *prev, t_way *new)
 {
-	t_way_room			*tmp_prev;
+	t_way_room		*tmp_prev;
 
 	tmp_prev = prev->tail;
 	while (tmp_prev)
@@ -48,9 +48,9 @@ void				throw_links(t_way_room **start1, t_way_room **start2,
 void					pre_throw_links(t_way_room **first,
 											t_way_room **second)
 {
-	t_way_room *tmp;
-	t_way_room *tmp1;
-	t_way_room *tmp2;
+	t_way_room			*tmp;
+	t_way_room			*tmp1;
+	t_way_room			*tmp2;
 
 	tmp = *second;
 	while ((*first)->room != tmp->room)
@@ -66,7 +66,8 @@ void					pre_throw_links(t_way_room **first,
 	throw_links(first, &tmp, &tmp1, &tmp2);
 }
 
-short int				func(t_way_room *first, t_way_room *second, int col)
+short int				coincidence(t_way_room *first, t_way_room *second,
+																	 int col)
 {
 	while (col && second->next)
 	{
@@ -100,25 +101,23 @@ int						check_coincidence(t_way_room *first, t_ways *ways,
 	int					flag;
 	int					end;
 
-	flag = FALSE;
 	col = 0;
-	i = -1;
 	end = ways->iters.i;
 	while (end)
 	{
+		flag = FALSE;
 		col++;
 		i = -1;
 		while (!flag && ++i < ways->iters.i)
 		{
 			if ((*array)[i])
-				flag = func(first, ways->way_ar[i].head, col);
+				flag = coincidence(first, ways->way_ar[i].head, col);
 		}
 		if (flag == 2)
-			break;
+			break ;
 		if (flag == TRUE)
 		{
 			end--;
-			flag = FALSE;
 			(*array)[i] = FALSE;
 			i = -1;
 		}

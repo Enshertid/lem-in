@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 15:02:26 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/13 13:10:21 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/13 14:57:45 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct					s_ways
 	t_way						*way_ar;
 	t_iters						iters;
 	int 						weight_sum;
+	int							days;
 }								t_ways;
 
 typedef struct					s_storage_w

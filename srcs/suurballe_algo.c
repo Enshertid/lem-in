@@ -6,14 +6,14 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 21:16:18 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/13 13:55:30 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/13 17:43:56 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
 void						set_ways_to_the_next_iteration(t_ways *prev,
-																t_ways *new)
+									t_ways *new)
 {
 	prev->iters.i = -1;
 	new->iters.i = -1;
