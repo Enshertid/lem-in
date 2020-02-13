@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 21:31:52 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/13 22:24:24 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/14 02:18:57 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void					check_start(t_data *data)
 		ft_error("wrong format of start\n", 3);
 	fill_room(data, &data->graph.rooms[0]);
 	data->graph.rooms[0]->fork->distance = 0;
+	buf_add_str(data->pars.line);
+	buf_add_chr('\n', 1);
 	free(data->pars.line);
 	ft_free(data->pars.str, 3);
 }
@@ -79,6 +81,8 @@ void					check_end(t_data *data)
 	if (ft_count_words(data->pars.line, ' ') != 3)
 		ft_error("wrong format of end\n", 3);
 	fill_room(data, &data->graph.rooms[1]);
+	buf_add_str(data->pars.line);
+	buf_add_chr('\n', 1);
 	free(data->pars.line);
 	ft_free(data->pars.str, 3);
 }
@@ -91,6 +95,8 @@ void					check_side_room(t_data *data)
 			ft_error("another start\n", 3);
 		data->flags.flag_start = TRUE;
 		data->flags.flag_room = TRUE;
+		buf_add_str(data->pars.line);
+		buf_add_chr('\n', 1);
 		check_start(data);
 	}
 	else if (ft_strequ(data->pars.line, "##end"))
@@ -99,11 +105,13 @@ void					check_side_room(t_data *data)
 			ft_error("another end\n", 3);
 		data->flags.flag_end = TRUE;
 		data->flags.flag_room = TRUE;
+		buf_add_str(data->pars.line);
+		buf_add_chr('\n', 1);
 		check_end(data);
 	}
-	else
+	else if (*data->pars.line == '#')
 	{
-		ft_printf("%s\n", data->pars.line);
+		buf_add_str(data->pars.line);
 		free(data->pars.line);
 	}
 }

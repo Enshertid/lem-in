@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 19:43:23 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/13 22:23:15 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/14 02:19:32 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void				free_data(t_data *data)
 	way_storage_free(&data->ways);
 	graph_free(&data->graph);
 	turn_free(&data->turn);
+	buf_destroy();
 }
 
 void				init_data(t_data *data)
@@ -33,6 +34,10 @@ void				init_algo(t_data *data)
 	int				i;
 
 	i = -1;
+	if (data->graph.rooms[data->graph.iter.col - 1]->fork[0].iter.col == 0)
+		ft_error("have no links at end\n", 10);
+	if (data->graph.rooms[0]->fork[0].iter.col == 0)
+		ft_error("have no links at start\n", 10);
 	while (++i < data->graph.iter.col)
 		duplicate_place_for_links(&data->graph.rooms[i]->fork[0],
 									&data->graph.rooms[i]->fork[1]);
@@ -46,7 +51,8 @@ int					main(int ac, char **av)
 	t_data			data;
 
 	if (ac < 0)
-		ft_error("haha, ac < 0\n", 1);
+		ft_error("ahahhah\n" ,1);
+	buf_init(1, 0);
 	init_data(&data);
 	parsing(&data, av);
 	init_algo(&data);

@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 16:10:59 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/13 20:56:59 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/14 00:57:51 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,16 @@ void				add_algo_way_to_array(t_ways *ways, t_way *new)
 	new->tail = NULL;
 }
 
-void				first_iteration(t_data *data)
+int					first_iteration(t_data *data)
 {
 	dijkstra_algo(&data->graph, &data->turn, &data->ways.ways[0].way_ar[0]);
+	if (data->ways.ways[0].way_ar[0].head->room == data->graph.rooms[0] &&
+			data->ways.ways[0].way_ar[0].head->next->room == data->graph.
+											rooms[data->graph.iter.col - 1])
+		return (0);
 	set_ways_to_the_next_iteration(&data->ways.ways[0], &data->ways.ways[1]);
 	get_days(&data->ways.ways[0], data->ants);
+	return (1);
 }
 
 void				algo(t_data *data)
@@ -52,8 +57,8 @@ void				algo(t_data *data)
 	int					i;
 	int					j;
 
-	j = 1;
-	first_iteration(data);
+	if ((j = first_iteration(data)) != 1)
+		return ;
 	while (1)
 	{
 		i = -1;

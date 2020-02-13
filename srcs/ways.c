@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 23:04:20 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/13 22:24:34 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/14 00:58:07 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void						way_storage_set(t_graph *graph,
 {
 	int						i;
 
-	ways->iters.i = 0;
 	ways->iters.col = graph->rooms[0]->fork[0].iter.col;
 	if (ways->iters.col > graph->rooms[graph->iter.col - 1]->fork[0].iter.col)
 		ways->iters.col = graph->rooms[graph->iter.col - 1]->fork[0].iter.col;

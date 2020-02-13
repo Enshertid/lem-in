@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 21:35:03 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/12 22:17:19 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/14 02:18:31 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ void					check_links(t_data *data)
 {
 	if (!data->flags.flag_links)
 		finish_rooms(data);
+	buf_add_str(data->pars.line);
+	buf_add_chr('\n', 1);
 	pars_link(data);
 	while (get_next_line(data->pars.fd, &data->pars.line) > 0 &&
 			((ft_count_words(data->pars.line, '-') == 2 &&
@@ -115,6 +117,10 @@ void					check_links(t_data *data)
 			check_comment(data);
 		else if (ft_count_words(data->pars.line, '-') == 2 &&
 			ft_count_symbol(data->pars.line, '-') == 1)
+		{
+			buf_add_str(data->pars.line);
+			buf_add_chr('\n', 1);
 			pars_link(data);
+		}
 	}
 }

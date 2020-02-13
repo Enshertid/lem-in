@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 21:54:43 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/13 22:24:14 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/14 01:35:58 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ t_room						*hash_search(t_hash_table *hash, int index,
 {
 	t_hash				*tmp;
 
+	if (!(hash_check(hash, index, name)))
+		return (0);
 	tmp = &hash->hash_table[index];
 	while (tmp)
 	{

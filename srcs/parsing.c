@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 20:12:52 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/12 16:18:01 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/14 02:18:22 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,13 @@ void					check_coord(t_data *data)
 				ft_error("same coords\n", 6);
 		}
 	}
+	buf_add_chr('\n', 1);
 }
 
 void					check_comment(t_data *data)
 {
-	ft_printf("%s\n", (data->pars.line));
+	buf_add_str(data->pars.line);
+	buf_add_chr('\n', 1);
 	free(data->pars.line);
 }
 
@@ -57,6 +59,8 @@ void					check_ants(t_data *data)
 		ft_error("overflow int at ants\n", 2);
 	if (data->ants < 0)
 		ft_error("negative value of ants\n", 2);
+	buf_add_str(data->pars.line);
+	buf_add_chr('\n', 1);
 	free(data->pars.line);
 }
 
