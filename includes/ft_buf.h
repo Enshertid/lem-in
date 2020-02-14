@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 02:09:11 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/14 02:09:12 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/14 03:08:14 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,5 @@ void					buf_add_str(const char *str);
 void					buf_add_chr(char chr, size_t times);
 
 t_buf					**get_buf(void);
-
 
 #endif

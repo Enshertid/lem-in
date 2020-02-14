@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 19:07:02 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/14 01:45:44 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/14 03:08:19 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@
 # include "turn.h"
 # include "ways.h"
 # include "ft_buf.h"
+
+typedef struct				s_ant
+{
+	t_bool					is_active;
+	t_way_room				*cur_room;
+}							t_ant;
 
 typedef struct				s_flags_pars
 {
@@ -68,4 +74,5 @@ t_bool						search_graph_for_way_with_common_links(t_graph
 											*graph, t_turn *turn, t_way *way);
 void						wrap_directions(t_way *way, int num_of_way);
 void						algo(t_data *data);
+void						print(t_ways *ways, int ants_amount);
 #endif

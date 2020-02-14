@@ -6,7 +6,7 @@
 #    By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/14 10:58:26 by ymanilow          #+#    #+#              #
-#    Updated: 2020/02/14 02:10:43 by ymanilow         ###   ########.fr        #
+#    Updated: 2020/02/14 02:57:34 by ymanilow         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ hash_table.c	hash_table_malloc.c	graph.c		get_next_line1.c	suurballe_algo.c\
 search_of_shortest_way.c	ways.c		ways_operations.c	turn.c	algo.c\
 dijkstra_modifide.c		fill_fork.c		throw_links.c	private_buf_storage.c\
 buf_add_chr.c	buf_add_str.c	buf_destroy.c	buf_flush_to.c	buf_flush.c\
-buf_get.c		buf_init.c		\
+buf_get.c		buf_init.c		print.c\
 
 
 SRCS_O = $(addprefix $(DIR_O)/,$(SRCS_C:.c=.o))

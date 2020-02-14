@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 19:43:23 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/14 02:19:32 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/14 03:06:29 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,13 @@ int					main(int ac, char **av)
 	t_data			data;
 
 	if (ac < 0)
-		ft_error("ahahhah\n" ,1);
+		ft_error("ahahhah\n", 1);
 	buf_init(1, 0);
 	init_data(&data);
 	parsing(&data, av);
 	init_algo(&data);
 	algo(&data);
+	print(&data.ways.ways[data.ways.iters.i], data.ants);
 	free_data(&data);
 	return (0);
 }
