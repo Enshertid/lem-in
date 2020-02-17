@@ -56,5 +56,6 @@ void							way_clear(t_way *way);
 
 void							get_copy_of_way(t_way *prev, t_way *new);
 int								way_weight(t_way *way);
+void							ft_print(t_ways *ways);
 
 #endif

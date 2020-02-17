@@ -45,8 +45,8 @@ void				pre_throw_links(t_way_room **first,
 		tmp = tmp->next;
 	tmp1 = *first;
 	tmp2 = tmp;
-	while (tmp1->prev->prev && tmp2->next->next && tmp2->next->room ==
-															tmp1->prev->room)
+	while (tmp1->prev->prev&& tmp2->next->next
+	 && tmp2->next->room == tmp1->prev->room)
 	{
 		tmp1 = tmp1->prev;
 		tmp2 = tmp2->next;
@@ -63,9 +63,10 @@ short int			coincidence(t_way_room *first, t_way_room *second,
 		second = second->next;
 	}
 	if (col && !second->next)
-		return (1);
-	if (first->room == second->room && first->prev == second->next)
 		return (2);
+	if (first->room == second->room && first->prev &&
+	 first->prev->room == second->next->room)
+		return (1);
 	return (0);
 }
 
@@ -80,15 +81,15 @@ int					check_coincidence(t_way_room *first, t_ways *ways,
 	end = ways->iters.i;
 	while (end)
 	{
+				col++;
 		flag = FALSE;
-		col++;
 		i = -1;
 		while (!flag && ++i < ways->iters.i)
 			if ((*array)[i])
 				flag = coincidence(first, ways->way_ar[i].head, col);
-		if (flag == 2)
-			break ;
 		if (flag == TRUE)
+			break ;
+		if (flag == 2)
 		{
 			end--;
 			(*array)[i] = FALSE;
@@ -98,26 +99,64 @@ int					check_coincidence(t_way_room *first, t_ways *ways,
 	return (i);
 }
 
-void				combine_ways_and_cut_common_link(t_way *way_f,
+void				check_repeat(t_way *way)
+{
+	t_way_room *tmp;
+	t_way_room *tmp2;
+	
+	tmp = way->head;
+	while (tmp->next)
+	{
+		while (tmp->room == tmp->next->room)
+		{
+			tmp2 = tmp->next;
+			tmp->next = tmp2->next;
+			tmp->next->prev = tmp;
+			free(tmp2);
+			tmp = tmp->next;
+		}
+		tmp = tmp->next;
+	}
+}
+
+void				print_way1(t_way_room *head, char *name)
+{
+	t_way_room *tmp;
+	
+	tmp = head;
+	ft_printf("%s\n", name);
+	while (tmp->next)
+	{
+		ft_printf("%s ", tmp->room->name);
+		tmp = tmp->next;
+	}
+	ft_printf("%s\n", tmp->room->name);
+}
+
+void				combine_ways_and_cut_common_link(t_way *first,
 														t_ways *ways, int i)
 {
 	t_way_room			*tmp;
 	t_way_room			*tmp1;
 	t_bool				*array;
 
+	check_repeat(first);
+	// print_way1(first->head, "hello\n\n");
 	array = ft_memalloc(sizeof(t_bool) * ways->iters.i);
 	ft_memset(array, TRUE, ways->iters.i);
-	tmp = way_f->tail->prev;
-	while (tmp->room != way_f->head->room)
+	tmp = first->tail->prev;
+	int j = 0;
+	while (tmp->room != first->head->room)
 	{
+		j++;
 		if ((i = check_coincidence(tmp, ways, &array, i)) >= 0)
 		{
 			pre_throw_links(&tmp, &ways->way_ar[i].head);
 			ft_memset(array, TRUE, ways->iters.i);
-			tmp1 = way_f->tail;
-			way_f->tail = ways->way_ar[i].tail;
+			tmp1 = first->tail;
+			first->tail = ways->way_ar[i].tail;
 			ways->way_ar[i].tail = tmp1;
-			tmp = way_f->tail->prev;
+			tmp = first->tail->prev;
 		}
 		else
 		{

@@ -50,7 +50,6 @@ typedef struct				s_room
 	char					*name;
 	t_fork					*fork;
 	t_coord					coord;
-	t_bool					flag;
 	int						hash_index;
 }							t_room;
 

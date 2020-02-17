@@ -23,6 +23,7 @@ int							way_weight(t_way *way)
 		tmp = tmp->next;
 		way->weight++;
 	}
+	way->weight++;
 	return (way->weight);
 }
 

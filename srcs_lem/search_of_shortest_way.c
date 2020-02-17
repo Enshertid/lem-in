@@ -30,7 +30,7 @@ void					get_way(t_graph *graph, t_way *way)
 		j = -1;
 		while (++j < graph->rooms[i]->fork[0].iter.col - 1)
 		{
-			graph->rooms[i]->fork[0].links[j].link->room->flag = FALSE;
+			graph->rooms[i]->fork[0].links[j].link->flag = FALSE;
 			graph->rooms[i]->fork[0].links[j].link->prev_in_algo = NULL;
 			graph->rooms[i]->fork[0].links[j].link->distance = MAX_INT;
 		}
@@ -47,7 +47,7 @@ void					dijkstra_algo(t_graph *graph, t_turn *turn, t_way *way)
 	{
 		i = -1;
 		while (++i < turn->arr[0]->iter.col)
-			if (turn->arr[0]->links[i].status &&
+			if (turn->arr[0]->links[i].status && !turn->arr[0]->flag &&
 				turn->arr[0]->distance + 1 <= turn->arr[0]->links[i].
 				link->distance && !turn->arr[0]->flag)
 			{

@@ -40,13 +40,19 @@ static t_ant		*create_ants(int ants_amount, t_way *ways_arr,
 {
 	t_ant			*ants;
 	int				iter;
+	int				ways;
 
 	ants = malloc(sizeof(t_ant) * ants_amount);
 	if (!ants)
 		exit(1);
 	iter = 0;
+	ways = 1;
 	while (iter < ants_amount)
 	{
+		while (ways_amount > 1 && ants_amount - iter == ways_arr[ways_amount].weight)
+			ways_amount--;
+		while (ways < ways_amount && iter == ways_arr[ways].weight)
+			ways++;
 		ants[iter].is_active = TRUE;
 		ants[iter].cur_room = ways_arr[iter % ways_amount].head;
 		++iter;
@@ -100,7 +106,9 @@ void				print(t_ways *ways, int ants_amount)
 {
 	t_ant				*ants;
 
+	// (void)ants_amount;
 	sort_ways_arr(ways->way_ar, ways->iters.col);
+	// ft_print(ways);
 	ants = create_ants(ants_amount, ways->way_ar, ways->iters.col);
 	print_ants(ants, ants_amount, ways->iters.col);
 	free(ants);

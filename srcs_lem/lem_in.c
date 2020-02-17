@@ -46,15 +46,37 @@ void				init_algo(t_data *data)
 	data->turn.arr = turn_create(data->turn.size);
 }
 
-int					main(void)
+void				ft_print(t_ways *ways)
+{
+	int i;
+	t_way_room *tmp;
+	i = -1;
+	while (++i < ways->iters.col)
+	{
+		tmp = ways->way_ar[i].head->next;
+		while (tmp->next)
+		{
+			ft_printf("%s ",tmp->room->name);
+			tmp = tmp->next;
+		}
+		ft_printf("%s, way lenght == %d\n\n", tmp->room->name, ways->way_ar[i].weight);
+	}
+	ft_printf ("col of ways ==> %d\n", i);
+}
+
+int					main(int ac, char **av)
 {
 	t_data			data;
 
+	(void)ac;
 	buf_init(1, 0);
 	init_data(&data);
+	data.pars.fd = open(av[1], O_RDONLY);
+	data.pars.fd = 0;
 	parsing(&data);
 	init_algo(&data);
 	algo(&data);
+	// ft_print(&data.ways.ways[data.ways.iters.i]);
 	print(&data.ways.ways[data.ways.iters.i], data.ants);
 	free_data(&data);
 	return (0);

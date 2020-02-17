@@ -52,6 +52,20 @@ int					first_iteration(t_data *data)
 	return (1);
 }
 
+void				print_way(t_way_room *head, char *name)
+{
+	t_way_room *tmp;
+	
+	tmp = head;
+	ft_printf("%s\n", name);
+	while (tmp->next)
+	{
+		ft_printf("%s ", tmp->room->name);
+		tmp = tmp->next;
+	}
+	ft_printf("%s\n", tmp->room->name);
+}
+
 void				algo(t_data *data)
 {
 	int					i;
@@ -59,6 +73,7 @@ void				algo(t_data *data)
 
 	if ((j = first_iteration(data)) != 1)
 		return ;
+	// print_way(data->ways.ways[0].way_ar[0].head, "first");
 	while (1)
 	{
 		i = -1;
@@ -67,6 +82,7 @@ void				algo(t_data *data)
 		if (!(search_graph_for_way_with_common_links(&data->graph,
 							&data->turn, &data->way_for_algo)))
 			break ;
+		// print_way(data->way_for_algo.head, "way for algo");
 		combine_ways_and_cut_common_link(&data->way_for_algo,
 									&data->ways.ways[j], i);
 		add_algo_way_to_array(&data->ways.ways[j], &data->way_for_algo);

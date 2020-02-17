@@ -28,7 +28,7 @@ DIR_V_H = includes_viz/
 
 LIB = ./libft/
 
-LIB_V = -I minilibx_macos -L minilibx_macos -lmlx -framework OpenGL -framework AppKit
+LIB_V = -Iminilibx_macos -L minilibx_macos -lmlx -framework OpenGL -framework AppKit
 
 FLAGS_L = -g -Wall -Wextra -Werror -I$(DIR_L_H) -I$(LIB)includes_l -I$(LIB)includes_p
 
@@ -62,7 +62,7 @@ SRCS_L_O = $(addprefix $(DIR_L_O)/,$(SRCS_L:.c=.o))
 
 SRCS_V_O = $(addprefix $(DIR_V_O)/,$(SRCS_V:.c=.o))
 
-all: $(NAME_VIZ) $(NAME_LEM)
+all:$(NAME_LEM) 
 
 $(DIR_L_O)/%.o: $(DIR_L_S)/%.c
 	@mkdir -p $(DIR_L_O)
