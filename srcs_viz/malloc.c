@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_malloc.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/14 04:32:21 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/25 21:55:14 by ymanilow         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 #include "vector.h"
 
@@ -51,6 +39,10 @@ void				ft_my_free(void *ptr)
 	{
 		while (iter->next && iter->next->ptr != ptr)
 			iter = iter->next;
+		if (!iter->next)
+			ft_error(
+		"Cannot find the pointer that must be freed among the allocated memory",
+				0);
 		temp = iter->next->next;
 		free(iter->next);
 		iter->next = temp;
@@ -64,6 +56,8 @@ static void			*ft_memadd(size_t size)
 
 	memory = mem_list();
 	new_ptr = (t_memory*)malloc(sizeof(t_memory) + size);
+	if (!new_ptr)
+		ft_error("Can't allocate the memory", 0);
 	new_ptr->ptr = (void*)((char*)new_ptr + sizeof(t_memory));
 	new_ptr->next = *memory;
 	*memory = new_ptr;

@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 19:43:23 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/14 04:57:28 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/25 22:52:12 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,20 @@ void				free_data(t_data *data)
 {
 	hash_free(&data->hash);
 	way_storage_free(&data->ways);
+	if (data->way_for_algo.head)
+	{
+		t_way_room *tmp;
+		t_way_room *tmp1;
+		tmp1 = data->way_for_algo.head;
+		tmp = data->way_for_algo.head->next;
+		while (tmp)
+		{
+			free(tmp1);
+			tmp1 = tmp;
+			tmp = tmp->next;
+		}
+		free(tmp1);
+	}
 	graph_free(&data->graph);
 	turn_free(&data->turn);
 	buf_destroy();
@@ -71,13 +85,12 @@ int					main(int ac, char **av)
 	(void)ac;
 	buf_init(1, 0);
 	init_data(&data);
-	data.pars.fd = open(av[1], O_RDONLY);
 	data.pars.fd = 0;
 	parsing(&data);
 	init_algo(&data);
 	algo(&data);
-	// ft_print(&data.ways.ways[data.ways.iters.i]);
 	print(&data.ways.ways[data.ways.iters.i], data.ants);
 	free_data(&data);
+	(void)av;
 	return (0);
 }

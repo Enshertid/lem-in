@@ -6,26 +6,41 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 16:10:59 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/14 05:40:34 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/25 22:42:51 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void				get_days(t_ways *ways, int ants)
+static int			eval_days(t_way *ways, int ways_amount, int ants)
 {
-	int i;
+	int				days;
+	int				iter;
 
-	i = -1;
-	while (++i < ways->iters.col)
-		ways->weight_sum += way_weight(&ways->way_ar[i]);
-	ways->days = (ways->weight_sum + ants) / ways->iters.col;
+	days = 0;
+	while (ants > 0)
+	{
+		++days;
+		iter = 0;
+		while (iter < ways_amount)
+		{
+			if (days / ways[iter].weight)
+				--ants;
+			++iter;
+		}
+	}
+	return (days);
 }
 
 int					optimal(t_data *data, t_ways *new, t_ways *prev, int ants)
 {
+	int		i;
+
+	i = -1;
+	while (++i < new->iters.col)
+		new->weight_sum += way_weight(&new->way_ar[i]);
 	data->ways.iters.i++;
-	get_days(new, ants);
+	new->days = eval_days(new->way_ar, new->iters.col, ants);
 	if (new->days >= prev->days || ants < new->iters.col ||
 	data->ways.iters.i == data->ways.iters.col)
 		return (0);
@@ -48,14 +63,15 @@ int					first_iteration(t_data *data)
 											rooms[data->graph.iter.col - 1])
 		return (0);
 	set_ways_to_the_next_iteration(&data->ways.ways[0], &data->ways.ways[1]);
-	get_days(&data->ways.ways[0], data->ants);
+	data->ways.ways[0].weight_sum = way_weight(&data->ways.ways[0].way_ar[0]);
+	data->ways.ways[0].days = eval_days(data->ways.ways[0].way_ar, 1, data->ants);
 	return (1);
 }
 
 void				print_way(t_way_room *head, char *name)
 {
 	t_way_room *tmp;
-	
+
 	tmp = head;
 	ft_printf("%s\n", name);
 	while (tmp->next)

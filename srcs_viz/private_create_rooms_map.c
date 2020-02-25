@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   private_create_rooms_map.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbendu <dbendu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 19:27:08 by user              #+#    #+#             */
-/*   Updated: 2020/02/14 01:43:07 by dbendu           ###   ########.fr       */
+/*   Updated: 2020/02/25 22:07:41 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "private_graph.h"
+#include "vector.h"
 
 t_map			create_rooms_map(t_room *rooms)
 {

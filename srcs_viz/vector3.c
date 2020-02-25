@@ -6,11 +6,12 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 04:16:50 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/14 04:18:06 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/25 21:55:36 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "vector.h"
 
 static void	*vec_increase(void **vec)
 {

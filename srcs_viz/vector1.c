@@ -6,11 +6,12 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 04:16:16 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/14 04:16:21 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/25 21:55:34 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "vector.h"
 
 size_t	vec_size(const void *vec)
 {

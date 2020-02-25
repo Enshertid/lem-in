@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   private_add_z.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbendu <dbendu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 22:42:42 by user              #+#    #+#             */
-/*   Updated: 2020/02/14 01:39:19 by dbendu           ###   ########.fr       */
+/*   Updated: 2020/02/25 21:46:06 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "private_data.h"
+#include "vector.h"
 
 static size_t		find_best_z_scale(t_coord *coords)
 {

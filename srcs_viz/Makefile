@@ -23,7 +23,7 @@ SRCS =			animation/animation.c							animation/move_ants.c				animation/print_an
 				tree/tree_destroy.c								tree/tree_find.c					tree/tree_insert.c				\
 				wnd/wnd.c										data/private_mark_ways.c			data/private_apply_flags.c		\
 				map/private_draw_line.c							exit.c								main.c							\
-				libft/glibft.a									minilibx_macos/libmlx.a				map/draw_map.c
+				libft/glibft.a									minilibx_macos/libmlx.a				map/draw_map.c		get_next_line.c		malloc.c
 
 
 HEADERS =		-I .				-I tree				-I wnd				\

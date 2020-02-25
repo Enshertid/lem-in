@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 16:12:02 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/14 05:37:33 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/25 21:03:58 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ t_bool				search_graph_for_way_with_common_links(t_graph *graph,
 	int				i;
 
 	turn_add(turn, &graph->rooms[0]->fork[0], FALSE);
-	while (turn->arr[0] && 
+	while (turn->arr[0] &&
 	turn->arr[0]->room != graph->rooms[graph->iter.col - 1])
 	{
 		i = -1;

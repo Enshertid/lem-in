@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   graph_destroy.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbendu <dbendu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 22:59:20 by dbendu            #+#    #+#             */
-/*   Updated: 2020/02/13 23:56:06 by dbendu           ###   ########.fr       */
+/*   Updated: 2020/02/25 21:45:31 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "graph.h"
+#include "vector.h"
 
 void					graph_destroy(t_graph *graph)
 {

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   tree_insert.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbendu <dbendu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 21:34:57 by dbendu            #+#    #+#             */
-/*   Updated: 2020/02/14 01:35:48 by dbendu           ###   ########.fr       */
+/*   Updated: 2020/02/25 21:51:24 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tree.h"
+#include "lemin.h"
 
 static t_node		*node_create(void *key, void *value)
 {

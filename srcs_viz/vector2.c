@@ -6,11 +6,12 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 04:16:34 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/14 04:17:50 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/25 21:55:25 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "vector.h"
 
 void	*vec_init(size_t rows, size_t elems, size_t type_size)
 {

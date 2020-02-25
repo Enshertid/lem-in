@@ -6,12 +6,14 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 02:15:11 by dbendu            #+#    #+#             */
-/*   Updated: 2020/02/14 04:26:24 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/25 21:45:56 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "private_graph.h"
 #include "libft.h"
+#include "lemin.h"
+#include "vector.h"
 
 static t_room			get_room(char *str)
 {

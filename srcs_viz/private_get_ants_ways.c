@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   private_get_ants_ways.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbendu <dbendu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 17:49:57 by user              #+#    #+#             */
-/*   Updated: 2020/02/14 01:31:20 by dbendu           ###   ########.fr       */
+/*   Updated: 2020/02/25 21:40:49 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "private_animation.h"
+#include "vector.h"
+#include "lemin.h"
 
 static void		add_ways(t_map *rooms_map, t_ant *ants, char *str, int day)
 {

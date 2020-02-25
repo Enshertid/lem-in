@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 21:31:52 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/14 02:18:57 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/25 22:26:32 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void					check_side_room(t_data *data)
 		buf_add_chr('\n', 1);
 		check_end(data);
 	}
-	else if (*data->pars.line == '#')
+	else if (data->pars.line && *data->pars.line == '#')
 	{
 		buf_add_str(data->pars.line);
 		free(data->pars.line);
@@ -126,6 +126,8 @@ void					check_rooms(t_data *data)
 	if (data->graph.iter.i == data->graph.iter.col)
 		remalloc_of_graph(data);
 	fill_room(data, &data->graph.rooms[data->graph.iter.i++]);
+	buf_add_str(data->pars.line);
+	buf_add_chr('\n', 1);
 	free(data->pars.line);
 	ft_free(data->pars.str, 3);
 }

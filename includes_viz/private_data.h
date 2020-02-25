@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 01:38:46 by dbendu            #+#    #+#             */
-/*   Updated: 2020/02/14 04:24:42 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/25 21:47:23 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <time.h>
 # include "data.h"
+# include "vector.h"
 
 uint64_t			get_flags(char **argv);
 void				apply_flags(t_data *data);

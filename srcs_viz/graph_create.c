@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   graph_create.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbendu <dbendu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 22:02:55 by dbendu            #+#    #+#             */
-/*   Updated: 2020/02/14 02:14:58 by dbendu           ###   ########.fr       */
+/*   Updated: 2020/02/25 22:06:51 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "graph.h"
 #include "private_graph.h"
+#include "lemin.h"
+#include "vector.h"
 
 static int			get_ants(void)
 {

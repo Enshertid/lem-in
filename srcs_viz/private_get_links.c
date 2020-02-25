@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   private_get_links.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbendu <dbendu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 20:51:27 by user              #+#    #+#             */
-/*   Updated: 2020/02/14 02:22:53 by dbendu           ###   ########.fr       */
+/*   Updated: 2020/02/25 22:06:01 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "private_graph.h"
+#include "vector.h"
+#include "lemin.h"
 
 static void			find_rooms(t_map *rooms_map, char *str,
 										t_room **room1, t_room **room2)
@@ -36,6 +38,8 @@ t_link				*get_links(t_map *rooms_map, char *str)
 		if (*str != '#')
 		{
 			find_rooms(rooms_map, str, &link.room1, &link.room2);
+			if (!link.room1 || !link.room2)
+				ft_printf("Cannot find links: %s - %s\n", link.room1->name, link.room2->name);
 			vec_pushback(&links, &link);
 		}
 		free(str);

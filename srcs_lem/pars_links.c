@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 21:35:03 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/14 02:18:31 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/25 22:19:38 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,10 @@ void					pars_link(t_data *data)
 			data->pars.room_s->fork[0].iter.col)
 		malloc_links(data->pars.room_s);
 	if (check_repeated_link(data->pars.room_f, data->pars.room_s))
+	{
+		ft_printf("\n%s-%s\n", data->pars.room_f->name, data->pars.room_s->name);
 		ft_error("link has been repeat\n", 5);
+	}
 	data->pars.room_f->fork[0].links[data->pars.room_f->fork[0].iter.i++].
 											link = &data->pars.room_s->fork[0];
 	data->pars.room_s->fork[0].links[data->pars.room_s->fork[0].iter.i++].

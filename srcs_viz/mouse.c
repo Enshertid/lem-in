@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 23:06:51 by dbendu            #+#    #+#             */
-/*   Updated: 2020/02/14 04:21:53 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/25 21:44:34 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int					mouse_release(int button, int x, int y, t_data *data)
 {
 	if (button == LEFT_BUTTON)
 		data->mouse.is_left_button_active = FALSE;
-	UNUSED_VAR(x);
-	UNUSED_VAR(y);
+	(void)(x);
+	(void)(y);
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/14 10:58:26 by ymanilow          #+#    #+#              #
-#    Updated: 2020/02/14 04:58:41 by ymanilow         ###   ########.fr        #
+#    Updated: 2020/02/25 22:00:08 by ymanilow         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,15 +54,15 @@ SRCS_V =		animation.c								move_ants.c					print_ants.c			\
 				move_map.c								private_del_dead_lines.c	tree_create.c				\
 				tree_destroy.c							tree_find.c					tree_insert.c				\
 				wnd.c									private_mark_ways.c			private_apply_flags.c		\
-				private_draw_line.c						exit.c						main.c			ft_malloc.c			\
-				vector1.c								vector2.c					vector3.c	ft_my_itoa.c
+				private_draw_line.c						exit.c						main.c						\
+				vector1.c								vector2.c					vector3.c	ft_my_itoa.c		get_next_line.c		malloc.c
 
 
 SRCS_L_O = $(addprefix $(DIR_L_O)/,$(SRCS_L:.c=.o))
 
 SRCS_V_O = $(addprefix $(DIR_V_O)/,$(SRCS_V:.c=.o))
 
-all:$(NAME_LEM) 
+all:$(NAME_LEM) $(NAME_VIZ)
 
 $(DIR_L_O)/%.o: $(DIR_L_S)/%.c
 	@mkdir -p $(DIR_L_O)
