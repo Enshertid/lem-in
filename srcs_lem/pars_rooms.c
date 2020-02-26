@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 21:31:52 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/26 15:52:33 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/26 19:43:01 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,18 @@ static void				fill_room(t_data *data, t_room **room)
 		ft_error("error in malloc\n", 9);
 	num = ft_atoi(data->pars.str[1]);
 	if (num != ((*room)->coord.x = num))
-		ft_error("overflow int in x coord of room", 4);
+		ft_error("error", 4);
 	num = ft_atoi(data->pars.str[2]);
 	if (num != ((*room)->coord.y = num))
-		ft_error("overflow int in y coord of room", 4);
+		ft_error("error", 4);
 	if (!ft_check_num(data->pars.str[1]) || !ft_check_num(data->pars.str[2]))
-		ft_error("wrong value in coord\n", 4);
+		ft_error("error\n", 4);
 	(*room)->hash_index = hash_index_create(data->hash.size, (*room)->name);
 	if (hash_check(&data->hash, (*room)->hash_index, (*room)->name))
-		ft_error("same names in rooms\n", 4);
+		ft_error("error\n", 4);
 	hash_add(&data->hash, (*room));
 	if (!((*room)->fork = ft_memalloc(sizeof(t_fork) * 2)))
-		ft_error("error in malloc\n", 9);
+		ft_error("error\n", 9);
 	pre_fill_fork(room);
 }
 
@@ -42,9 +42,9 @@ void					check_start(t_data *data)
 {
 	free(data->pars.line);
 	if (data->flags.flag_links)
-		ft_error("start after links\n", 3);
+		ft_error("error\n", 3);
 	if (!data->flags.flag_ants)
-		ft_error("start before ants\n", 3);
+		ft_error("error\n", 3);
 	while (get_next_line(data->pars.fd, &data->pars.line) > 0 &&
 				!ft_strequ("##start", data->pars.line) &&
 				!ft_strequ("##end", data->pars.line) &&
@@ -52,9 +52,9 @@ void					check_start(t_data *data)
 		check_comment(data);
 	if (ft_strequ("##start", data->pars.line) ||
 		ft_strequ("##end", data->pars.line))
-		ft_error("second ##start or ##end", 3);
+		ft_error("error\n", 3);
 	if (ft_count_words(data->pars.line, ' ') != 3)
-		ft_error("wrong format of start\n", 3);
+		ft_error("error\n", 3);
 	fill_room(data, &data->graph.rooms[0]);
 	data->graph.rooms[0]->fork->distance = 0;
 	buf_add_str(data->pars.line);
@@ -67,9 +67,9 @@ void					check_end(t_data *data)
 {
 	free(data->pars.line);
 	if (data->flags.flag_links)
-		ft_error("end after links\n", 3);
+		ft_error("error\n", 3);
 	if (!data->flags.flag_ants)
-		ft_error("end before ants\n", 3);
+		ft_error("error\n", 3);
 	while (get_next_line(data->pars.fd, &data->pars.line) > 0 &&
 					!ft_strequ("##start", data->pars.line) &&
 					!ft_strequ("##end", data->pars.line) &&
@@ -77,9 +77,9 @@ void					check_end(t_data *data)
 		check_comment(data);
 	if (ft_strequ("##start", data->pars.line) ||
 			ft_strequ("##end", data->pars.line))
-		ft_error("second ##start or ##end", 3);
+		ft_error("error", 3);
 	if (ft_count_words(data->pars.line, ' ') != 3)
-		ft_error("wrong format of end\n", 3);
+		ft_error("error\n", 3);
 	fill_room(data, &data->graph.rooms[1]);
 	buf_add_str(data->pars.line);
 	buf_add_chr('\n', 1);
@@ -92,7 +92,7 @@ void					check_side_room(t_data *data)
 	if (ft_strequ(data->pars.line, "##start"))
 	{
 		if (data->flags.flag_start)
-			ft_error("another start\n", 3);
+			ft_error("error\n", 3);
 		data->flags.flag_start = TRUE;
 		data->flags.flag_room = TRUE;
 		buf_add_str(data->pars.line);
@@ -102,7 +102,7 @@ void					check_side_room(t_data *data)
 	else if (ft_strequ(data->pars.line, "##end"))
 	{
 		if (data->flags.flag_end)
-			ft_error("another end\n", 3);
+			ft_error("error\n", 3);
 		data->flags.flag_end = TRUE;
 		data->flags.flag_room = TRUE;
 		buf_add_str(data->pars.line);
@@ -119,9 +119,9 @@ void					check_side_room(t_data *data)
 void					check_rooms(t_data *data)
 {
 	if (data->flags.flag_links)
-		ft_error("room after links\n", 3);
+		ft_error("error\n", 3);
 	if (!data->flags.flag_ants)
-		ft_error("room before ants\n", 3);
+		ft_error("error\n", 3);
 	data->flags.flag_room = 1;
 	if (data->graph.iter.i == data->graph.iter.col)
 		remalloc_of_graph(data);

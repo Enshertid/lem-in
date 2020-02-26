@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 20:12:52 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/26 19:17:47 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/26 19:45:21 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void				check_coord(t_data *data)
 			if (i != j && data->graph.rooms[i]->coord.x ==
 				data->graph.rooms[j]->coord.x &&
 				data->graph.rooms[i]->coord.y == data->graph.rooms[j]->coord.y)
-				ft_error("same coords\n", 6);
+				ft_error("error\n", 6);
 		}
 	}
 	buf_add_chr('\n', 1);
@@ -46,19 +46,20 @@ static void				check_ants(t_data *data)
 	__int128_t			num;
 
 	if (data->flags.flag_ants)
-		ft_error("ants again\n", 2);
+		ft_error("error\n", 2);
 	else if (data->flags.flag_links)
-		ft_error("ants after links\n", 2);
+		ft_error("error\n", 2);
 	else if (data->flags.flag_start)
-		ft_error("ants after start\n", 2);
+		ft_error("error\n", 2);
 	data->flags.flag_ants = TRUE;
 	num = ft_atoi(data->pars.line);
 	if (!ft_check_num(data->pars.line))
-		ft_error("wrong value in ants", 2);
+		ft_error("error\n", 2);
 	if (num != (data->ants = num))
-		ft_error("overflow int at ants\n", 2);
-	if (data->ants < 0)
-		ft_error("negative value of ants\n", 2);
+		ft_error("error\n", 2);
+	if (data->ants <= 0)
+		ft_error("error\n", 2);
+	ft_printf("\n\nANTS:%d\n\n", data->ants);
 	buf_add_str(data->pars.line);
 	buf_add_chr('\n', 1);
 	free(data->pars.line);
@@ -68,15 +69,13 @@ static void				ants(t_data *data)
 {
 	while (get_next_line(data->pars.fd, &data->pars.line) > 0 &&
 			((*data->pars.line == '#') ||
-			(ft_count_words(data->pars.line, ' ') == 1 &&
-			!ft_count_symbol(data->pars.line, '-'))))
+			(ft_count_words(data->pars.line, ' ') == 1)))
 	{
 		if ((*data->pars.line == '#' && *(data->pars.line + 1) != '#'))
 			check_comment(data);
 		else if (*(data->pars.line) == '#' && *(data->pars.line + 1) == '#')
 			check_side_room(data);
-		else if (ft_count_words(data->pars.line, ' ') == 1 &&
-			!ft_count_symbol(data->pars.line, '-'))
+		else if (ft_count_words(data->pars.line, ' ') == 1)
 		{
 			check_ants(data);
 			break ;
@@ -100,13 +99,13 @@ void					parsing(t_data *data)
 					ft_count_symbol(data->pars.line, '-') == 1)
 			check_links(data);
 		else
-			ft_error("invalid input\n", 1);
+			ft_error("error\n", 1);
 	}
 	if (!data->flags.flag_links)
-		ft_error("have no links\n", 2);
+		ft_error("error\n", 2);
 	else if (!data->flags.flag_ants)
-		ft_error("have no ants\n", 2);
+		ft_error("error\n", 2);
 	else if (!data->flags.flag_room)
-		ft_error("have no rooms\n", 2);
+		ft_error("error\n", 2);
 	check_coord(data);
 }
