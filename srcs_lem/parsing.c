@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 20:12:52 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/26 19:45:21 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/26 19:49:25 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ static void				check_ants(t_data *data)
 		ft_error("error\n", 2);
 	if (data->ants <= 0)
 		ft_error("error\n", 2);
-	ft_printf("\n\nANTS:%d\n\n", data->ants);
 	buf_add_str(data->pars.line);
 	buf_add_chr('\n', 1);
 	free(data->pars.line);
