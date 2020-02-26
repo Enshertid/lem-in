@@ -6,13 +6,13 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 21:35:03 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/25 22:19:38 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/26 14:50:28 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-void					finish_rooms(t_data *data)
+static void					finish_rooms(t_data *data)
 {
 	t_room			*end;
 
@@ -28,7 +28,7 @@ void					finish_rooms(t_data *data)
 		final_remalloc_graph(data);
 }
 
-void					malloc_links(t_room *room)
+static void					malloc_links(t_room *room)
 {
 	t_link					*links;
 	int						i;
@@ -55,7 +55,7 @@ void					malloc_links(t_room *room)
 	room->fork[0].links = links;
 }
 
-int						check_repeated_link(t_room *room_f, t_room *room_s)
+static int						check_repeated_link(t_room *room_f, t_room *room_s)
 {
 	int				i;
 	int				flag;
@@ -72,7 +72,7 @@ int						check_repeated_link(t_room *room_f, t_room *room_s)
 	return (flag);
 }
 
-void					pars_link(t_data *data)
+static void					pars_link(t_data *data)
 {
 	data->pars.str = ft_strsplit(data->pars.line, '-');
 	data->pars.hash_f = hash_index_create(data->hash.size,
@@ -92,10 +92,7 @@ void					pars_link(t_data *data)
 			data->pars.room_s->fork[0].iter.col)
 		malloc_links(data->pars.room_s);
 	if (check_repeated_link(data->pars.room_f, data->pars.room_s))
-	{
-		ft_printf("\n%s-%s\n", data->pars.room_f->name, data->pars.room_s->name);
 		ft_error("link has been repeat\n", 5);
-	}
 	data->pars.room_f->fork[0].links[data->pars.room_f->fork[0].iter.i++].
 											link = &data->pars.room_s->fork[0];
 	data->pars.room_s->fork[0].links[data->pars.room_s->fork[0].iter.i++].

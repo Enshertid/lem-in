@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 02:25:07 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/25 23:00:50 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/26 12:49:50 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,5 +114,6 @@ void				print(t_ways *ways, int ants_amount)
 	sort_ways_arr(ways->way_ar, ways->iters.col);
 	ants = create_ants(ants_amount);
 	print_ants(ants, ants_amount, ways, ways->iters.col);
+	// ft_print(ways);
 	free(ants);
 }

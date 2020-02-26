@@ -6,13 +6,13 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 19:43:23 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/25 22:52:12 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/26 14:52:01 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void				free_data(t_data *data)
+static void				free_data(t_data *data)
 {
 	hash_free(&data->hash);
 	way_storage_free(&data->ways);
@@ -35,15 +35,7 @@ void				free_data(t_data *data)
 	buf_destroy();
 }
 
-void				init_data(t_data *data)
-{
-	ft_memset(data, 0, sizeof(t_data));
-	data->hash.size = HASH_SIZE;
-	data->hash.hash_table = hash_array_create(data->hash.size);
-	data->graph = set_graph();
-}
-
-void				init_algo(t_data *data)
+static void				init_algo(t_data *data)
 {
 	int				i;
 
@@ -58,6 +50,18 @@ void				init_algo(t_data *data)
 	way_storage_set(&data->graph, &data->ways);
 	data->turn.size = data->graph.iter.col;
 	data->turn.arr = turn_create(data->turn.size);
+}
+
+static void				init_data(t_data *data)
+{
+	ft_memset(data, 0, sizeof(t_data));
+	data->hash.size = HASH_SIZE;
+	data->hash.hash_table = hash_array_create(data->hash.size);
+	data->graph = set_graph();
+	// data.pars.fd = open(av[1], O_RDONLY);
+	data->pars.fd = 0;
+	parsing(data);
+	init_algo(data);
 }
 
 void				ft_print(t_ways *ways)
@@ -85,9 +89,6 @@ int					main(int ac, char **av)
 	(void)ac;
 	buf_init(1, 0);
 	init_data(&data);
-	data.pars.fd = 0;
-	parsing(&data);
-	init_algo(&data);
 	algo(&data);
 	print(&data.ways.ways[data.ways.iters.i], data.ants);
 	free_data(&data);

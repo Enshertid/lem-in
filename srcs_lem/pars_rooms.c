@@ -6,13 +6,13 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 21:31:52 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/25 22:26:32 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/26 14:49:48 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-void					fill_room(t_data *data, t_room **room)
+static void					fill_room(t_data *data, t_room **room)
 {
 	__int128_t				num;
 

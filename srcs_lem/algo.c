@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 16:10:59 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/25 22:42:51 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/26 14:48:48 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int			eval_days(t_way *ways, int ways_amount, int ants)
 	return (days);
 }
 
-int					optimal(t_data *data, t_ways *new, t_ways *prev, int ants)
+int					optimal(t_data *data, t_ways *new, int ants)
 {
 	int		i;
 
@@ -41,8 +41,8 @@ int					optimal(t_data *data, t_ways *new, t_ways *prev, int ants)
 		new->weight_sum += way_weight(&new->way_ar[i]);
 	data->ways.iters.i++;
 	new->days = eval_days(new->way_ar, new->iters.col, ants);
-	if (new->days >= prev->days || ants < new->iters.col ||
-	data->ways.iters.i == data->ways.iters.col)
+	if (ants < new->iters.col ||
+	data->ways.iters.i + 1 == data->ways.iters.col)
 		return (0);
 	return (1);
 }
@@ -55,7 +55,7 @@ void				add_algo_way_to_array(t_ways *ways, t_way *new)
 	new->tail = NULL;
 }
 
-int					first_iteration(t_data *data)
+static int					first_iteration(t_data *data)
 {
 	dijkstra_algo(&data->graph, &data->turn, &data->ways.ways[0].way_ar[0]);
 	if (data->ways.ways[0].way_ar[0].head->room == data->graph.rooms[0] &&
@@ -82,6 +82,26 @@ void				print_way(t_way_room *head, char *name)
 	ft_printf("%s\n", tmp->room->name);
 }
 
+int					check_optimal(t_storage_w *ways)
+{
+	int i;
+	int j;
+	int min;
+
+	min = MAX_INT;
+	i = -1;
+	j = ways->iters.i;
+	while (++i <= ways->iters.i)
+	{
+		if (min >= ways->ways[i].days)
+		{
+			min = ways->ways[i].days;
+			j = i;
+		}
+	}
+	return (j);
+}
+
 void				algo(t_data *data)
 {
 	int					i;
@@ -89,7 +109,6 @@ void				algo(t_data *data)
 
 	if ((j = first_iteration(data)) != 1)
 		return ;
-	// print_way(data->ways.ways[0].way_ar[0].head, "first");
 	while (1)
 	{
 		i = -1;
@@ -98,16 +117,15 @@ void				algo(t_data *data)
 		if (!(search_graph_for_way_with_common_links(&data->graph,
 							&data->turn, &data->way_for_algo)))
 			break ;
-		// print_way(data->way_for_algo.head, "way for algo");
 		combine_ways_and_cut_common_link(&data->way_for_algo,
 									&data->ways.ways[j], i);
 		add_algo_way_to_array(&data->ways.ways[j], &data->way_for_algo);
-		if (!optimal(data, &data->ways.ways[j], &data->ways.ways[j - 1],
-																data->ants))
+		if (!optimal(data, &data->ways.ways[j], data->ants))
 			break ;
 		set_ways_to_the_next_iteration(&data->ways.ways[j],
 												&data->ways.ways[j + 1]);
 		j++;
 	}
 	data->ways.iters.i = j - 1;
+	data->ways.iters.i = check_optimal(&data->ways);
 }
