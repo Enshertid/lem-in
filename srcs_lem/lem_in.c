@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 19:43:23 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/26 16:14:26 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/26 19:19:35 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,29 +53,24 @@ static void				init_algo(t_data *data)
 	data->turn.arr = turn_create(data->turn.size);
 }
 
-static void				init_data(t_data *data, char **av)
+static void				init_data(t_data *data)
 {
 	buf_init(1, 10000);
 	ft_memset(data, 0, sizeof(t_data));
 	data->hash.size = HASH_SIZE;
 	data->hash.hash_table = hash_array_create(data->hash.size);
 	data->graph = set_graph();
-	// data->pars.fd = open(av[1], O_RDONLY);
-	(void)av;
-	data->pars.fd = 0;
 	parsing(data);
 	init_algo(data);
 }
 
-int						main(int ac, char **av)
+int						main(void)
 {
 	t_data			data;
 
-	(void)ac;
-	init_data(&data, av);
+	init_data(&data);
 	algo(&data);
 	print(&data.ways.ways[data.ways.iters.i], data.ants);
 	free_data(&data);
-	(void)av;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 21:35:03 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/26 15:56:25 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/26 19:19:00 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ static void					pars_link(t_data *data)
 	if (!(data->pars.room_s = hash_search(&data->hash, data->pars.hash_s,
 			data->pars.str[1])))
 		ft_error("wrong second room in link\n", 5);
+	if (data->pars.room_f == data->pars.room_s)
+		ft_error("link on himself\n", 5);
 	if (data->pars.room_f->fork[0].iter.i ==
 			data->pars.room_f->fork[0].iter.col)
 		malloc_links(data->pars.room_f);
@@ -98,8 +100,6 @@ static void					pars_link(t_data *data)
 											link = &data->pars.room_s->fork[0];
 	data->pars.room_s->fork[0].links[data->pars.room_s->fork[0].iter.i++].
 											link = &data->pars.room_f->fork[0];
-	free(data->pars.line);
-	ft_free(data->pars.str, 2);
 }
 
 void						check_links(t_data *data)
@@ -109,6 +109,8 @@ void						check_links(t_data *data)
 	buf_add_str(data->pars.line);
 	buf_add_chr('\n', 1);
 	pars_link(data);
+	free(data->pars.line);
+	ft_free(data->pars.str, 2);
 	while (get_next_line(data->pars.fd, &data->pars.line) > 0 &&
 			((ft_count_words(data->pars.line, '-') == 2 &&
 			ft_count_symbol(data->pars.line, '-') == 1) ||
@@ -122,6 +124,8 @@ void						check_links(t_data *data)
 			buf_add_str(data->pars.line);
 			buf_add_chr('\n', 1);
 			pars_link(data);
+			free(data->pars.line);
+			ft_free(data->pars.str, 2);
 		}
 	}
 }

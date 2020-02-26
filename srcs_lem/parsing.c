@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 20:12:52 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/26 16:41:08 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/26 19:17:47 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,17 +67,20 @@ static void				check_ants(t_data *data)
 static void				ants(t_data *data)
 {
 	while (get_next_line(data->pars.fd, &data->pars.line) > 0 &&
-			((*data->pars.line == '#' && *(data->pars.line + 1) != '#') ||
+			((*data->pars.line == '#') ||
 			(ft_count_words(data->pars.line, ' ') == 1 &&
 			!ft_count_symbol(data->pars.line, '-'))))
 	{
 		if ((*data->pars.line == '#' && *(data->pars.line + 1) != '#'))
 			check_comment(data);
 		else if (*(data->pars.line) == '#' && *(data->pars.line + 1) == '#')
-			break ;
+			check_side_room(data);
 		else if (ft_count_words(data->pars.line, ' ') == 1 &&
 			!ft_count_symbol(data->pars.line, '-'))
+		{
 			check_ants(data);
+			break ;
+		}
 	}
 }
 
