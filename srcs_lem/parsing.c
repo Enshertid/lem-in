@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 20:12:52 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/26 19:49:25 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/26 21:26:24 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ static void				ants(t_data *data)
 void					parsing(t_data *data)
 {
 	ants(data);
-	check_side_room(data);
 	while (get_next_line(data->pars.fd, &data->pars.line) > 0)
 	{
 		if (*(data->pars.line) == '#' && *(data->pars.line + 1) == '#')
