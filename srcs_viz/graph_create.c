@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graph_create.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dbendu <dbendu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 22:02:55 by dbendu            #+#    #+#             */
-/*   Updated: 2020/02/25 22:06:51 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/26 15:20:35 by dbendu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,12 @@
 #include "lemin.h"
 #include "vector.h"
 
-static int			get_ants(void)
+static int			get_ants(char *str)
 {
 	int				ants;
-	char			*str;
 
 	while (TRUE)
 	{
-		get_next_line(0, &str);
 		if (*str == '#')
 			free(str);
 		else
@@ -31,6 +29,7 @@ static int			get_ants(void)
 			free(str);
 			break ;
 		}
+		get_next_line(0, &str);
 	}
 	return (ants);
 }
@@ -59,13 +58,29 @@ static void			setup_graph_center(t_graph *graph)
 	graph->center.y = sum_y / coords_amount;
 }
 
+static char			*check_intput(void)
+{
+	char			*str;
+	while (TRUE)
+	{
+		get_next_line(0, &str);
+		if (*str == '#')
+			free(str);
+		else if (!ft_isdifit(*str))
+			exit(0);
+		else
+			break ;
+	}
+}
+
 t_graph				graph_create(void)
 {
 	t_graph			graph;
 	char			*str;
 
+	check_input(&str);
 	ft_memset(&graph, 0, sizeof(t_graph));
-	graph.ants = get_ants();
+	graph.ants = get_ants(str);
 	get_rooms_and_coords(&graph, &str);
 	graph.rooms_map = create_rooms_map(graph.rooms);
 	graph.links = get_links(&graph.rooms_map, str);
