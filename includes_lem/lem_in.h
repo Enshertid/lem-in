@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 19:07:02 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/14 04:57:59 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/26 16:46:52 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,8 @@ t_bool						search_graph_for_way_with_common_links(t_graph
 void						wrap_directions(t_way *way, int num_of_way);
 void						algo(t_data *data);
 void						print(t_ways *ways, int ants_amount);
+int							check_optimal(t_storage_w *ways);
+void						sort_ways_arr(t_way *ways_arr, int j);
+t_ant						*create_ants(int ants_amount);
+
 #endif

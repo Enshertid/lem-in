@@ -6,13 +6,13 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 21:02:49 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/13 21:03:28 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/26 16:49:29 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ways.h"
 
-void				throw_links(t_way_room **start1, t_way_room **start2,
+static void				throw_links(t_way_room **start1, t_way_room **start2,
 									t_way_room **end1, t_way_room **end2)
 {
 	(*start2)->next = (*start1)->next;
@@ -33,7 +33,7 @@ void				throw_links(t_way_room **start1, t_way_room **start2,
 	free(*start1);
 }
 
-void				pre_throw_links(t_way_room **first,
+static void				pre_throw_links(t_way_room **first,
 											t_way_room **second)
 {
 	t_way_room			*tmp;
@@ -45,8 +45,8 @@ void				pre_throw_links(t_way_room **first,
 		tmp = tmp->next;
 	tmp1 = *first;
 	tmp2 = tmp;
-	while (tmp1->prev->prev&& tmp2->next->next
-	 && tmp2->next->room == tmp1->prev->room)
+	while (tmp1->prev->prev && tmp2->next->next
+	&& tmp2->next->room == tmp1->prev->room)
 	{
 		tmp1 = tmp1->prev;
 		tmp2 = tmp2->next;
@@ -54,7 +54,7 @@ void				pre_throw_links(t_way_room **first,
 	throw_links(first, &tmp, &tmp1, &tmp2);
 }
 
-short int			coincidence(t_way_room *first, t_way_room *second,
+static short int		coincidence(t_way_room *first, t_way_room *second,
 																	int col)
 {
 	while (col && second->next)
@@ -65,12 +65,12 @@ short int			coincidence(t_way_room *first, t_way_room *second,
 	if (col && !second->next)
 		return (2);
 	if (first->room == second->room && first->prev &&
-	 first->prev->room == second->next->room)
+	first->prev->room == second->next->room)
 		return (1);
 	return (0);
 }
 
-int					check_coincidence(t_way_room *first, t_ways *ways,
+static int				check_coincidence(t_way_room *first, t_ways *ways,
 														t_bool **array, int i)
 {
 	int					col;
@@ -81,7 +81,7 @@ int					check_coincidence(t_way_room *first, t_ways *ways,
 	end = ways->iters.i;
 	while (end)
 	{
-				col++;
+		col++;
 		flag = FALSE;
 		i = -1;
 		while (!flag && ++i < ways->iters.i)
@@ -99,70 +99,29 @@ int					check_coincidence(t_way_room *first, t_ways *ways,
 	return (i);
 }
 
-void				check_repeat(t_way *way)
+void					combine_ways_and_cut_common_link(t_way *first,
+													t_ways *ways, int i)
 {
-	t_way_room *tmp;
-	t_way_room *tmp2;
-	
-	tmp = way->head;
-	while (tmp->next)
-	{
-		while (tmp->room == tmp->next->room)
-		{
-			tmp2 = tmp->next;
-			tmp->next = tmp2->next;
-			tmp->next->prev = tmp;
-			free(tmp2);
-			tmp = tmp->next;
-		}
-		tmp = tmp->next;
-	}
-}
-
-void				print_way1(t_way_room *head, char *name)
-{
-	t_way_room *tmp;
-	
-	tmp = head;
-	ft_printf("%s\n", name);
-	while (tmp->next)
-	{
-		ft_printf("%s ", tmp->room->name);
-		tmp = tmp->next;
-	}
-	ft_printf("%s\n", tmp->room->name);
-}
-
-void				combine_ways_and_cut_common_link(t_way *first,
-														t_ways *ways, int i)
-{
-	t_way_room			*tmp;
-	t_way_room			*tmp1;
-	t_bool				*array;
+	t_way_room		*tmp;
+	t_way_room		*tmp1;
+	t_bool			*array;
 
 	check_repeat(first);
-	// print_way1(first->head, "hello\n\n");
 	array = ft_memalloc(sizeof(t_bool) * ways->iters.i);
-	ft_memset(array, TRUE, ways->iters.i);
 	tmp = first->tail->prev;
-	int j = 0;
 	while (tmp->room != first->head->room)
 	{
-		j++;
+		ft_memset(array, TRUE, ways->iters.i);
 		if ((i = check_coincidence(tmp, ways, &array, i)) >= 0)
 		{
 			pre_throw_links(&tmp, &ways->way_ar[i].head);
-			ft_memset(array, TRUE, ways->iters.i);
 			tmp1 = first->tail;
 			first->tail = ways->way_ar[i].tail;
 			ways->way_ar[i].tail = tmp1;
 			tmp = first->tail->prev;
 		}
 		else
-		{
 			tmp = tmp->prev;
-			ft_memset(array, TRUE, ways->iters.i);
-		}
 	}
 	free(array);
 }

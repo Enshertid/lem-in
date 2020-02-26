@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 01:39:28 by dbendu            #+#    #+#             */
-/*   Updated: 2020/02/14 04:27:21 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/26 16:32:32 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ uint64_t			get_flags(char **argv)
 		{
 			if (**argv == 'a')
 				flags |= FLAG_ADD_Z;
-			else if (**argv == 'd')
-				flags |= FLAG_DEL_DEAD_LINES;
 			else if (**argv == 'm')
 				flags |= FLAG_MARK_WAYS;
 		}

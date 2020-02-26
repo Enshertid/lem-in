@@ -6,26 +6,24 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 21:54:43 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/14 01:35:58 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/26 16:42:32 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "hash_table.h"
 
-int							hash_index_create(int size, char *str)
+unsigned int				hash_index_create(int size, char *str)
 {
 	const char			*name;
 	int					lenght;
-	int					hash;
+	unsigned int		hash;
 
 	name = str;
 	hash = 0;
 	lenght = (int)ft_strlen(name) + 1;
 	while (--lenght > 0)
 		hash += *name++ * ft_pow(31, lenght);
-	if (hash < 0)
-		hash *= -1;
 	hash = hash % size;
 	return (hash);
 }

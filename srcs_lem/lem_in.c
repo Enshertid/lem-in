@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 19:43:23 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/26 14:52:01 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/26 16:14:26 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 
 static void				free_data(t_data *data)
 {
+	t_way_room *tmp;
+	t_way_room *tmp1;
+
 	hash_free(&data->hash);
 	way_storage_free(&data->ways);
 	if (data->way_for_algo.head)
 	{
-		t_way_room *tmp;
-		t_way_room *tmp1;
 		tmp1 = data->way_for_algo.head;
 		tmp = data->way_for_algo.head->next;
 		while (tmp)
@@ -52,43 +53,26 @@ static void				init_algo(t_data *data)
 	data->turn.arr = turn_create(data->turn.size);
 }
 
-static void				init_data(t_data *data)
+static void				init_data(t_data *data, char **av)
 {
+	buf_init(1, 10000);
 	ft_memset(data, 0, sizeof(t_data));
 	data->hash.size = HASH_SIZE;
 	data->hash.hash_table = hash_array_create(data->hash.size);
 	data->graph = set_graph();
-	// data.pars.fd = open(av[1], O_RDONLY);
+	// data->pars.fd = open(av[1], O_RDONLY);
+	(void)av;
 	data->pars.fd = 0;
 	parsing(data);
 	init_algo(data);
 }
 
-void				ft_print(t_ways *ways)
-{
-	int i;
-	t_way_room *tmp;
-	i = -1;
-	while (++i < ways->iters.col)
-	{
-		tmp = ways->way_ar[i].head->next;
-		while (tmp->next)
-		{
-			ft_printf("%s ",tmp->room->name);
-			tmp = tmp->next;
-		}
-		ft_printf("%s, way lenght == %d\n\n", tmp->room->name, ways->way_ar[i].weight);
-	}
-	ft_printf ("col of ways ==> %d\n", i);
-}
-
-int					main(int ac, char **av)
+int						main(int ac, char **av)
 {
 	t_data			data;
 
 	(void)ac;
-	buf_init(1, 0);
-	init_data(&data);
+	init_data(&data, av);
 	algo(&data);
 	print(&data.ways.ways[data.ways.iters.i], data.ants);
 	free_data(&data);

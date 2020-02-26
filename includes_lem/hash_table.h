@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 21:54:57 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/13 21:09:38 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/26 16:25:12 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct					s_hash_table
 
 t_room							*hash_search(t_hash_table *hash,
 											int index, char *name);
-int								hash_index_create(int size, char *str);
+unsigned int					hash_index_create(int size, char *str);
 int								hash_check(t_hash_table *hash,
 											int index, char *name);
 void							hash_add(t_hash_table *hash, t_room *room);

@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 15:02:26 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/13 21:10:22 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/26 16:49:09 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,7 @@ void							way_clear(t_way *way);
 void							get_copy_of_way(t_way *prev, t_way *new);
 int								way_weight(t_way *way);
 void							ft_print(t_ways *ways);
+
+void							check_repeat(t_way *way);
 
 #endif

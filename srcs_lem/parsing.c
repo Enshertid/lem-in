@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 20:12:52 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/26 14:49:29 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/26 16:41:08 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "graph.h"
 #include "parsing.h"
 
-static void					check_coord(t_data *data)
+static void				check_coord(t_data *data)
 {
 	int			i;
 	int			j;
@@ -41,7 +41,7 @@ void					check_comment(t_data *data)
 	free(data->pars.line);
 }
 
-static void					check_ants(t_data *data)
+static void				check_ants(t_data *data)
 {
 	__int128_t			num;
 
@@ -64,7 +64,7 @@ static void					check_ants(t_data *data)
 	free(data->pars.line);
 }
 
-static void					ants(t_data *data)
+static void				ants(t_data *data)
 {
 	while (get_next_line(data->pars.fd, &data->pars.line) > 0 &&
 			((*data->pars.line == '#' && *(data->pars.line + 1) != '#') ||

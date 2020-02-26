@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 16:10:59 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/26 14:48:48 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/26 16:44:52 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,51 +55,21 @@ void				add_algo_way_to_array(t_ways *ways, t_way *new)
 	new->tail = NULL;
 }
 
-static int					first_iteration(t_data *data)
+static int			first_iteration(t_data *data)
 {
 	dijkstra_algo(&data->graph, &data->turn, &data->ways.ways[0].way_ar[0]);
 	if (data->ways.ways[0].way_ar[0].head->room == data->graph.rooms[0] &&
 			data->ways.ways[0].way_ar[0].head->next->room == data->graph.
 											rooms[data->graph.iter.col - 1])
+	{
+		data->ways.ways[0].days = 1;
 		return (0);
+	}
 	set_ways_to_the_next_iteration(&data->ways.ways[0], &data->ways.ways[1]);
 	data->ways.ways[0].weight_sum = way_weight(&data->ways.ways[0].way_ar[0]);
-	data->ways.ways[0].days = eval_days(data->ways.ways[0].way_ar, 1, data->ants);
+	data->ways.ways[0].days = eval_days(data->ways.ways[0].way_ar, 1,
+															data->ants);
 	return (1);
-}
-
-void				print_way(t_way_room *head, char *name)
-{
-	t_way_room *tmp;
-
-	tmp = head;
-	ft_printf("%s\n", name);
-	while (tmp->next)
-	{
-		ft_printf("%s ", tmp->room->name);
-		tmp = tmp->next;
-	}
-	ft_printf("%s\n", tmp->room->name);
-}
-
-int					check_optimal(t_storage_w *ways)
-{
-	int i;
-	int j;
-	int min;
-
-	min = MAX_INT;
-	i = -1;
-	j = ways->iters.i;
-	while (++i <= ways->iters.i)
-	{
-		if (min >= ways->ways[i].days)
-		{
-			min = ways->ways[i].days;
-			j = i;
-		}
-	}
-	return (j);
 }
 
 void				algo(t_data *data)

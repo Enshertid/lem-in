@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 18:05:53 by user              #+#    #+#             */
-/*   Updated: 2020/02/25 21:47:06 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/26 18:07:05 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,14 @@ void			draw_map(t_data *data)
 	iter = 0;
 	while (iter < links_amount)
 	{
-		if (links->room1->color == __BROWN && links->room2->color == __BROWN)
+		if (links->room1->color == __BROWN || links->room2->color == __BROWN)
 			color = links->room1->color;
 		else
 			color = __WHITE;
-		draw_line(&data->wnd.graph_img, links->room1->coord,
+		if (!(data->flags & FLAG_MARK_WAYS) ||
+			(data->flags & FLAG_MARK_WAYS && links->room1->color == __BROWN
+			&& links->room2->color == __BROWN))
+			draw_line(&data->wnd.graph_img, links->room1->coord,
 										links->room2->coord,
 										color);
 		++links;

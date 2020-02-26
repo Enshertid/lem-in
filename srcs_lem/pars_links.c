@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 21:35:03 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/26 14:50:28 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/26 15:56:25 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ static void					malloc_links(t_room *room)
 	room->fork[0].links = links;
 }
 
-static int						check_repeated_link(t_room *room_f, t_room *room_s)
+static int					check_repeated_link(t_room *room_f,
+														t_room *room_s)
 {
 	int				i;
 	int				flag;
@@ -101,7 +102,7 @@ static void					pars_link(t_data *data)
 	ft_free(data->pars.str, 2);
 }
 
-void					check_links(t_data *data)
+void						check_links(t_data *data)
 {
 	if (!data->flags.flag_links)
 		finish_rooms(data);

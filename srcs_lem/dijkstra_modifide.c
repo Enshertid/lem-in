@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 16:12:02 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/25 21:03:58 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/26 15:54:08 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ void				room_of_way(t_graph *graph, t_turn *turn, int i)
 				turn_add(turn, turn->arr[0]->links[i].link, FALSE);
 			}
 			else if (turn->arr[0]->num_of_way !=
-						turn->arr[0]->links[i].link->num_of_way && turn->arr[0]->distance + 1 <
-				turn->arr[0]->links[i].link->distance)
+			turn->arr[0]->links[i].link->num_of_way && turn->arr[0]->distance
+			+ 1 < turn->arr[0]->links[i].link->distance)
 			{
 				turn->arr[0]->links[i].link->distance =
 										turn->arr[0]->distance + 1;
@@ -121,7 +121,7 @@ t_bool				search_graph_for_way_with_common_links(t_graph *graph,
 			usual_room(graph, turn, i);
 		turn_del(turn);
 	}
-	while(turn->arr[0])
+	while (turn->arr[0])
 		turn_del(turn);
 	if (!get_way1(graph, way))
 		return (0);

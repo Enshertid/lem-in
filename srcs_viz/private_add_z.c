@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 22:42:42 by user              #+#    #+#             */
-/*   Updated: 2020/02/25 21:46:06 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/02/26 18:38:20 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void				add_z(t_coord *coords)
 	iter = 0;
 	while (iter < rooms)
 	{
-		z = rand() % scale;
+		z = rand() % scale / 2;
 		if (z & 1)
 			z = -z;
 		coords[iter].z = z;

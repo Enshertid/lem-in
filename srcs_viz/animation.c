@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   animation.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 21:51:17 by dbendu            #+#    #+#             */
-/*   Updated: 2020/02/05 16:45:23 by user             ###   ########.fr       */
+/*   Updated: 2020/02/26 16:18:19 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@ int			animation(t_data *data)
 		data->animation.cur_tick = 0;
 		++data->animation.cur_day;
 	}
-	usleep(10000);
+	usleep(500);
 	return (0);
 }

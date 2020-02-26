@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graph_create.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbendu <dbendu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/25 22:02:55 by dbendu            #+#    #+#             */
-/*   Updated: 2020/02/26 15:20:35 by dbendu           ###   ########.fr       */
+/*   Updated: 2020/02/26 15:31:42 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,19 +58,21 @@ static void			setup_graph_center(t_graph *graph)
 	graph->center.y = sum_y / coords_amount;
 }
 
-static char			*check_intput(void)
+static char			*check_input(void)
 {
 	char			*str;
+
 	while (TRUE)
 	{
 		get_next_line(0, &str);
 		if (*str == '#')
 			free(str);
-		else if (!ft_isdifit(*str))
+		else if (!ft_isdigit(*str))
 			exit(0);
 		else
 			break ;
 	}
+	return (str);
 }
 
 t_graph				graph_create(void)
@@ -78,7 +80,7 @@ t_graph				graph_create(void)
 	t_graph			graph;
 	char			*str;
 
-	check_input(&str);
+	str = check_input();
 	ft_memset(&graph, 0, sizeof(t_graph));
 	graph.ants = get_ants(str);
 	get_rooms_and_coords(&graph, &str);
