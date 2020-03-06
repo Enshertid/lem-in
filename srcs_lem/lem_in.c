@@ -6,31 +6,34 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 19:43:23 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/26 21:24:00 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/03/06 14:34:11 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static void				free_data(t_data *data)
+static void				free_way_for_algo(t_data *data)
 {
 	t_way_room *tmp;
 	t_way_room *tmp1;
 
+	tmp1 = data->way_for_algo.head;
+	tmp = data->way_for_algo.head->next;
+	while (tmp)
+	{
+		free(tmp1);
+		tmp1 = tmp;
+		tmp = tmp->next;
+	}
+	free(tmp1);
+}
+
+static void				free_data(t_data *data)
+{
 	hash_free(&data->hash);
 	way_storage_free(&data->ways);
 	if (data->way_for_algo.head)
-	{
-		tmp1 = data->way_for_algo.head;
-		tmp = data->way_for_algo.head->next;
-		while (tmp)
-		{
-			free(tmp1);
-			tmp1 = tmp;
-			tmp = tmp->next;
-		}
-		free(tmp1);
-	}
+		free_way_for_algo(data);
 	graph_free(&data->graph);
 	turn_free(&data->turn);
 	buf_destroy();
@@ -42,9 +45,9 @@ static void				init_algo(t_data *data)
 
 	i = -1;
 	if (data->graph.rooms[data->graph.iter.col - 1]->fork[0].iter.col == 0)
-		ft_error("have no links at end\n", 10);
+		ft_error("have no links at end", 10);
 	if (data->graph.rooms[0]->fork[0].iter.col == 0)
-		ft_error("have no links at start\n", 10);
+		ft_error("have no links at start", 10);
 	while (++i < data->graph.iter.col)
 		duplicate_place_for_links(&data->graph.rooms[i]->fork[0],
 									&data->graph.rooms[i]->fork[1]);

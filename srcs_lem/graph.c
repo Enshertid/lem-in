@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 19:59:56 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/13 22:23:28 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/03/06 14:33:43 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void						duplicate_place_for_links(t_fork *first,
 {
 	second->iter.col = first->iter.i + 1;
 	if (!(second->links = ft_memalloc(sizeof(t_link) * second->iter.col)))
-		ft_error("error in malloc\n", 9);
+		ft_error("error in malloc", 9);
 	second->iter.i = -1;
 	while (++second->iter.i < second->iter.col - 1)
 	{
@@ -27,7 +27,7 @@ void						duplicate_place_for_links(t_fork *first,
 	free(first->links);
 	first->iter.col = second->iter.col;
 	if (!(first->links = ft_memalloc(sizeof(t_link) * first->iter.col)))
-		ft_error("error in malloc\n", 9);
+		ft_error("error in malloc", 9);
 	first->iter.i = -1;
 	while (++first->iter.i < first->iter.col - 1)
 	{
@@ -64,6 +64,6 @@ t_graph						set_graph(void)
 	graph.iter.col = 5000;
 	graph.iter.i = 2;
 	if (!(graph.rooms = ft_memalloc(sizeof(t_room*) * graph.iter.col)))
-		ft_error("error in malloc\n", 9);
+		ft_error("error in malloc", 9);
 	return (graph);
 }

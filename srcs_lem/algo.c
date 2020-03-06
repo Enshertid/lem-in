@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 16:10:59 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/03/06 13:01:36 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/03/06 14:34:03 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int			first_iteration(t_data *data)
 	dijkstra_algo(&data->graph, &data->turn, &data->ways.ways[0].way_ar[0]);
 	if (data->ways.ways[0].way_ar[0].head->room
 				== data->graph.rooms[data->graph.iter.col - 1])
-		ft_error("error\n", 500);
+		ft_error("start & end are not connected", 500);
 	if (data->ways.ways[0].way_ar[0].head->room == data->graph.rooms[0] &&
 			data->ways.ways[0].way_ar[0].head->next->room == data->graph.
 											rooms[data->graph.iter.col - 1])

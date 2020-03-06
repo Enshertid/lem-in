@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 21:35:03 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/26 19:19:00 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/03/06 14:42:50 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ static void					finish_rooms(t_data *data)
 	t_room			*end;
 
 	if (!data->flags.flag_end)
-		ft_error("have no end room\n", 2);
+		ft_error("have no end room", 2);
 	else if (!data->flags.flag_start)
-		ft_error("have no start room\n", 2);
+		ft_error("have no start room", 2);
 	data->flags.flag_links = TRUE;
 	end = data->graph.rooms[data->graph.iter.i - 1];
 	data->graph.rooms[data->graph.iter.i - 1] = data->graph.rooms[1];
@@ -73,7 +73,7 @@ static int					check_repeated_link(t_room *room_f,
 	return (flag);
 }
 
-static void					pars_link(t_data *data)
+void						pars_link(t_data *data)
 {
 	data->pars.str = ft_strsplit(data->pars.line, '-');
 	data->pars.hash_f = hash_index_create(data->hash.size,
@@ -82,12 +82,12 @@ static void					pars_link(t_data *data)
 			data->pars.str[1]);
 	if (!(data->pars.room_f = hash_search(&data->hash, data->pars.hash_f,
 			data->pars.str[0])))
-		ft_error("wrong first room in link\n", 5);
+		ft_error("error", 5);
 	if (!(data->pars.room_s = hash_search(&data->hash, data->pars.hash_s,
 			data->pars.str[1])))
-		ft_error("wrong second room in link\n", 5);
+		ft_error("error", 5);
 	if (data->pars.room_f == data->pars.room_s)
-		ft_error("link on himself\n", 5);
+		ft_error("error", 5);
 	if (data->pars.room_f->fork[0].iter.i ==
 			data->pars.room_f->fork[0].iter.col)
 		malloc_links(data->pars.room_f);
@@ -95,7 +95,7 @@ static void					pars_link(t_data *data)
 			data->pars.room_s->fork[0].iter.col)
 		malloc_links(data->pars.room_s);
 	if (check_repeated_link(data->pars.room_f, data->pars.room_s))
-		ft_error("link has been repeat\n", 5);
+		ft_error("error", 5);
 	data->pars.room_f->fork[0].links[data->pars.room_f->fork[0].iter.i++].
 											link = &data->pars.room_s->fork[0];
 	data->pars.room_s->fork[0].links[data->pars.room_s->fork[0].iter.i++].
@@ -106,26 +106,20 @@ void						check_links(t_data *data)
 {
 	if (!data->flags.flag_links)
 		finish_rooms(data);
-	buf_add_str(data->pars.line);
-	buf_add_chr('\n', 1);
-	pars_link(data);
-	free(data->pars.line);
-	ft_free(data->pars.str, 2);
+	ft_costyl(data);
 	while (get_next_line(data->pars.fd, &data->pars.line) > 0 &&
 			((ft_count_words(data->pars.line, '-') == 2 &&
 			ft_count_symbol(data->pars.line, '-') == 1) ||
-			(*data->pars.line == '#' && *(data->pars.line + 1) != '#')))
+			(*data->pars.line == '#')))
 	{
 		if (*data->pars.line == '#' && *(data->pars.line + 1) != '#')
 			check_comment(data);
+		else if (*data->pars.line == '#' && *(data->pars.line + 1) == '#')
+			check_side_room(data);
 		else if (ft_count_words(data->pars.line, '-') == 2 &&
 			ft_count_symbol(data->pars.line, '-') == 1)
-		{
-			buf_add_str(data->pars.line);
-			buf_add_chr('\n', 1);
-			pars_link(data);
-			free(data->pars.line);
-			ft_free(data->pars.str, 2);
-		}
+			ft_costyl(data);
 	}
+	if (data->pars.line)
+		ft_error("error", 2);
 }

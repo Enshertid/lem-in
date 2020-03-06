@@ -6,7 +6,7 @@
 #    By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/14 10:58:26 by ymanilow          #+#    #+#              #
-#    Updated: 2020/02/26 16:50:38 by ymanilow         ###   ########.fr        #
+#    Updated: 2020/03/06 14:40:14 by ymanilow         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ hash_table.c	hash_table_malloc.c	graph.c		get_next_line1.c	suurballe_algo.c\
 search_of_shortest_way.c	ways.c		ways_operations.c	turn.c	algo.c\
 dijkstra_modifide.c		fill_fork.c		throw_links.c	private_buf_storage.c\
 buf_add_chr.c	buf_add_str.c	buf_destroy.c	buf_flush_to.c	buf_flush.c\
-buf_get.c		buf_init.c		print.c		helpful_functions.c	check_repeat.c\
+buf_get.c		buf_init.c		print.c		helpful_functions.c	check_repeat.c	costyl.c\
 
 SRCS_V =		animation.c								move_ants.c					print_ants.c			\
 				rotate_ants.c							setup_ants_moving.c			shift_ants.c			\
