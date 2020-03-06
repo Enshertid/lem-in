@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 19:07:02 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/26 16:46:52 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/03/06 17:36:53 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ typedef struct				s_flags_pars
 typedef struct				s_pars
 {
 	int						fd;
-	int						hash_f;
-	int						hash_s;
+	unsigned int			hash_f;
+	unsigned int			hash_s;
 	t_room					*room_f;
 	t_room					*room_s;
 	char					*line;
@@ -73,7 +73,7 @@ void						set_ways_to_the_next_iteration(t_ways *prev_iter,
 t_bool						search_graph_for_way_with_common_links(t_graph
 											*graph, t_turn *turn, t_way *way);
 void						wrap_directions(t_way *way, int num_of_way);
-void						algo(t_data *data);
+int							algo(t_data *data);
 void						print(t_ways *ways, int ants_amount);
 int							check_optimal(t_storage_w *ways);
 void						sort_ways_arr(t_way *ways_arr, int j);

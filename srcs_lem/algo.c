@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 16:10:59 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/03/06 14:34:03 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/03/06 18:19:01 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int					optimal(t_data *data, t_ways *new, int ants)
 	data->ways.iters.i++;
 	new->days = eval_days(new->way_ar, new->iters.col, ants);
 	if (ants < new->iters.col ||
-	data->ways.iters.i + 1 == data->ways.iters.col)
+	data->ways.iters.i == data->ways.iters.col)
 		return (0);
 	return (1);
 }
@@ -72,16 +72,17 @@ static int			first_iteration(t_data *data)
 	data->ways.ways[0].weight_sum = way_weight(&data->ways.ways[0].way_ar[0]);
 	data->ways.ways[0].days = eval_days(data->ways.ways[0].way_ar, 1,
 															data->ants);
+	data->ways.ways[0].flag = TRUE;
 	return (1);
 }
 
-void				algo(t_data *data)
+int						algo(t_data *data)
 {
 	int					i;
 	int					j;
 
 	if ((j = first_iteration(data)) != 1)
-		return ;
+		return (j);
 	while (1)
 	{
 		i = -1;
@@ -100,5 +101,5 @@ void				algo(t_data *data)
 		j++;
 	}
 	data->ways.iters.i = j - 1;
-	data->ways.iters.i = check_optimal(&data->ways);
+	return (check_optimal(&data->ways));
 }

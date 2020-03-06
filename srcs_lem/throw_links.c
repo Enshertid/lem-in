@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 21:02:49 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/26 16:49:29 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/03/06 18:14:01 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,10 @@ static void				pre_throw_links(t_way_room **first,
 		tmp1 = tmp1->prev;
 		tmp2 = tmp2->next;
 	}
+	if (tmp1->prev->prev)
+		tmp1 = tmp1->prev;
+	if (tmp2->next->next)
+		tmp2 = tmp2->next;
 	throw_links(first, &tmp, &tmp1, &tmp2);
 }
 

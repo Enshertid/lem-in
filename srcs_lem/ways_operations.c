@@ -15,7 +15,7 @@
 void				get_copy_of_way(t_way *prev, t_way *new)
 {
 	t_way_room		*tmp_prev;
-
+	
 	tmp_prev = prev->tail;
 	while (tmp_prev)
 	{

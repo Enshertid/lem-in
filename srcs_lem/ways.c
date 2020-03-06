@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 23:04:20 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/14 05:07:43 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/03/06 18:20:56 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ void						way_storage_set(t_graph *graph,
 {
 	int						i;
 
-	ways->iters.col = graph->rooms[0]->fork[0].iter.col;
-	if (ways->iters.col > graph->rooms[graph->iter.col - 1]->fork[0].iter.col)
-		ways->iters.col = graph->rooms[graph->iter.col - 1]->fork[0].iter.col;
+	ways->iters.col = graph->rooms[0]->fork[0].iter.i + 1;
+	if (ways->iters.col > graph->rooms[graph->iter.col - 1]->fork[0].iter.i + 1)
+		ways->iters.col = graph->rooms[graph->iter.col - 1]->fork[0].iter.i + 1;
 	ways->ways = ft_memalloc(sizeof(t_ways) * ways->iters.col);
 	i = -1;
 	while (++i < ways->iters.col)
@@ -73,25 +73,28 @@ void						way_storage_free(t_storage_w *ways)
 {
 	t_way_room				*tmp;
 	t_way_room				*tmp1;
+	int						i;
 
-	ways->iters.i = -1;
-	while (++ways->iters.i < ways->iters.col)
+	i = -1;
+	while (++i < ways->iters.col)
 	{
-		ways->ways[ways->iters.i].iters.i = -1;
-		while (++ways->ways[ways->iters.i].iters.i <
-				ways->ways[ways->iters.i].iters.col)
+		if (ways->ways[i].flag)
 		{
-			tmp = ways->ways[ways->iters.i].way_ar[ways->ways[ways->iters.i].
-																iters.i].head;
-			while (tmp)
+			ways->ways[i].iters.i = -1;
+			while (++ways->ways[i].iters.i <
+					ways->ways[i].iters.col)
 			{
-				tmp1 = tmp;
-				tmp = tmp->next;
-				ft_memset(tmp1, 0, sizeof(t_way_room));
-				free(tmp1);
+				tmp = ways->ways[i].way_ar[ways->ways[i].iters.i].head;
+				while (tmp)
+				{
+					tmp1 = tmp;
+					tmp = tmp->next;
+					ft_memset(tmp1, 0, sizeof(t_way_room));
+					free(tmp1);
+				}
 			}
 		}
-		free(ways->ways[ways->iters.i].way_ar);
+		free(ways->ways[i].way_ar);
 	}
 	free(ways->ways);
 }

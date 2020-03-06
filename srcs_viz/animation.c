@@ -22,19 +22,16 @@ int			animation(t_data *data)
 		data->animation.is_animation_active = FALSE;
 		return (0);
 	}
-	if (!data->animation.cur_tick)
-		setup_ants_moving(data);
-	mlx_put_image_to_window(data->wnd.mlxptr, data->wnd.wndptr,
-							data->wnd.graph_img.imgptr, 0, 0);
-	put_info(data);
-	move_ants(data);
-	print_ants(data);
-	++data->animation.cur_tick;
-	if (data->animation.cur_tick == data->animation.ticks)
-	{
-		data->animation.cur_tick = 0;
-		++data->animation.cur_day;
+	setup_ants_moving(data);
+	for (int i = 0; i < data->animation.ticks; ++i) {
+		mlx_put_image_to_window(data->wnd.mlxptr, data->wnd.wndptr,
+								data->wnd.graph_img.imgptr, 0, 0);
+		put_info(data);
+		move_ants(data);
+		print_ants(data);
+		mlx_do_sync(data->wnd.mlxptr);
 	}
+	++data->animation.cur_day;
 	usleep(500);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 21:16:18 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/02/14 05:39:49 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/03/06 18:19:27 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void						set_ways_to_the_next_iteration(t_ways *prev,
 		new->iters.i++;
 	}
 	new->iters.i++;
+	new->flag = TRUE;
 }
 
 void						get_ready_room_of_way(t_room *room,
