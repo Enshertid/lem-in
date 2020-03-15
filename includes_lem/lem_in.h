@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 19:07:02 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/03/06 17:36:53 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/03/14 19:54:07 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include "hash_table.h"
 # include "turn.h"
 # include "ways.h"
-# include "ft_buf.h"
 
 typedef struct				s_ant
 {

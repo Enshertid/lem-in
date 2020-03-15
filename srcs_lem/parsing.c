@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 20:12:52 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/03/06 14:32:18 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/03/14 19:36:59 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ static void				ants(t_data *data)
 			break ;
 		}
 	}
+	if (data->pars.line)
+		ft_strdel(&data->pars.line);
 }
 
 void					parsing(t_data *data)
@@ -102,5 +104,7 @@ void					parsing(t_data *data)
 	if (!data->flags.flag_links || !data->flags.flag_ants ||
 									!data->flags.flag_room)
 		ft_error("error", 2);
+	if (data->pars.line)
+		ft_strdel(&data->pars.line);
 	check_coord(data);
 }

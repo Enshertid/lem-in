@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 21:02:49 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/03/06 18:14:01 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/03/15 15:48:41 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ static void				throw_links(t_way_room **start1, t_way_room **start2,
 	(*start1)->next->prev = *start2;
 	(*end1)->next = (*end2)->next;
 	(*end2)->next->prev = *end1;
-	while ((*end2)->prev && (*end2)->prev->room != (*start2)->room)
+	while ((*end2)->prev->room != (*start2)->room)
 	{
 		*end2 = (*end2)->prev;
 		free((*end2)->next);
 	}
 	free(*end2);
-	while ((*start1)->prev && (*start1)->prev->room != (*end1)->room)
+	while ((*start1)->prev->room != (*end1)->room)
 	{
 		*start1 = (*start1)->prev;
 		free((*start1)->next);
@@ -45,16 +45,12 @@ static void				pre_throw_links(t_way_room **first,
 		tmp = tmp->next;
 	tmp1 = *first;
 	tmp2 = tmp;
-	while (tmp1->prev->prev && tmp2->next->next
+	while (tmp1->prev && tmp2->next
 	&& tmp2->next->room == tmp1->prev->room)
 	{
 		tmp1 = tmp1->prev;
 		tmp2 = tmp2->next;
 	}
-	if (tmp1->prev->prev)
-		tmp1 = tmp1->prev;
-	if (tmp2->next->next)
-		tmp2 = tmp2->next;
 	throw_links(first, &tmp, &tmp1, &tmp2);
 }
 
@@ -86,20 +82,21 @@ static int				check_coincidence(t_way_room *first, t_ways *ways,
 	while (end)
 	{
 		col++;
-		flag = FALSE;
 		i = -1;
-		while (!flag && ++i < ways->iters.i)
+		while (++i < ways->iters.i)
 			if ((*array)[i])
+			{
 				flag = coincidence(first, ways->way_ar[i].head, col);
-		if (flag == TRUE)
-			break ;
-		if (flag == 2)
-		{
-			end--;
-			(*array)[i] = FALSE;
-			i = -1;
-		}
+				if (flag == 2)
+				{
+					end--;
+					(*array)[i] = FALSE;
+				}
+				else if (flag == TRUE)
+					return (i);
+			}
 	}
+	i = -1;
 	return (i);
 }
 
@@ -111,7 +108,7 @@ void					combine_ways_and_cut_common_link(t_way *first,
 	t_bool			*array;
 
 	check_repeat(first);
-	array = ft_memalloc(sizeof(t_bool) * ways->iters.i);
+	array = ft_memalloc(sizeof(t_bool) * (ways->iters.i + 1));
 	tmp = first->tail->prev;
 	while (tmp->room != first->head->room)
 	{

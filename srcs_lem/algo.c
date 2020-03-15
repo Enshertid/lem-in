@@ -6,13 +6,13 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 16:10:59 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/03/06 18:19:01 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/03/15 15:51:03 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static int			eval_days(t_way *ways, int ways_amount, int ants)
+static int				eval_days(t_way *ways, int ways_amount, int ants)
 {
 	int				days;
 	int				iter;
@@ -32,7 +32,7 @@ static int			eval_days(t_way *ways, int ways_amount, int ants)
 	return (days);
 }
 
-int					optimal(t_data *data, t_ways *new, int ants)
+int						optimal(t_data *data, t_ways *new, int ants)
 {
 	int		i;
 
@@ -47,7 +47,7 @@ int					optimal(t_data *data, t_ways *new, int ants)
 	return (1);
 }
 
-void				add_algo_way_to_array(t_ways *ways, t_way *new)
+void					add_algo_way_to_array(t_ways *ways, t_way *new)
 {
 	ways->way_ar[ways->iters.col - 1].head = new->head;
 	ways->way_ar[ways->iters.col - 1].tail = new->tail;
@@ -55,7 +55,7 @@ void				add_algo_way_to_array(t_ways *ways, t_way *new)
 	new->tail = NULL;
 }
 
-static int			first_iteration(t_data *data)
+static int				first_iteration(t_data *data)
 {
 	dijkstra_algo(&data->graph, &data->turn, &data->ways.ways[0].way_ar[0]);
 	if (data->ways.ways[0].way_ar[0].head->room

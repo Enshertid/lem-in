@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 23:04:20 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/03/06 18:20:56 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/03/15 15:49:15 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,7 @@ void						way_storage_free(t_storage_w *ways)
 		if (ways->ways[i].flag)
 		{
 			ways->ways[i].iters.i = -1;
-			while (++ways->ways[i].iters.i <
-					ways->ways[i].iters.col)
+			while (++ways->ways[i].iters.i < ways->ways[i].iters.col)
 			{
 				tmp = ways->ways[i].way_ar[ways->ways[i].iters.i].head;
 				while (tmp)

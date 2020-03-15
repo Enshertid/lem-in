@@ -6,7 +6,7 @@
 /*   By: ymanilow <ymanilow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 19:43:23 by ymanilow          #+#    #+#             */
-/*   Updated: 2020/03/06 17:37:34 by ymanilow         ###   ########.fr       */
+/*   Updated: 2020/03/15 15:50:05 by ymanilow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static void				init_data(t_data *data)
 int						main(void)
 {
 	t_data			data;
-	
+
 	init_data(&data);
 	print(&data.ways.ways[algo(&data)], data.ants);
 	free_data(&data);
